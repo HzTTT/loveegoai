@@ -2,28 +2,30 @@ import { useEffect, useState } from 'react'
 import { motion } from 'motion/react'
 
 /*
-  Paywall C · 内在工程 · 禅修风格
+  Paywall C · 内在工程 · 白色禅意风格
   文案：ELENA 原文 (msg=be977470)，一字不改
-  UI：禅修 / 暗金 / 温暖深棕 / 轻盈细字 / 呼吸球
+  UI：白底 / 暖金点缀 / 大量留白 / 轻盈细字 / 禅意极简
+  价格：$1200 USD
 */
 
 const C = {
-  bg: '#14110F',
-  bgSoft: '#1C1917',
-  card: 'rgba(250,250,249,0.04)',
-  cardBorder: 'rgba(196,168,130,0.14)',
-  gold: '#C4A882',
-  goldSoft: 'rgba(196,168,130,0.7)',
-  goldFaint: 'rgba(196,168,130,0.12)',
-  white: '#FAFAF9',
-  textMid: '#A8A29E',
-  textDim: '#78716C',
+  bg: '#FAFAF8',
+  bgAlt: '#F5F2EE',
+  text: '#1C1917',
+  textMid: '#78716C',
+  textDim: '#A8A29E',
+  gold: '#B8956A',
+  goldSoft: 'rgba(184,149,106,0.6)',
+  goldFaint: 'rgba(184,149,106,0.15)',
+  border: 'rgba(28,25,23,0.08)',
+  borderMid: 'rgba(28,25,23,0.14)',
 }
 
-const FONT = '-apple-system, "PingFang SC", "Hiragino Sans GB", system-ui, sans-serif'
-const MODULE_PAD = { maxWidth: 720, margin: '0 auto', padding: '0 24px' } as const
+const FONT = '"Noto Serif SC", "Source Han Serif SC", Georgia, "PingFang SC", serif'
+const FONT_SANS = '-apple-system, "PingFang SC", "Hiragino Sans GB", system-ui, sans-serif'
+const MODULE_PAD = { maxWidth: 680, margin: '0 auto', padding: '0 24px' } as const
 
-/* ── 呼吸球 ── */
+/* ── 呼吸球（浅色版） ── */
 const PHASE_LABEL: Record<'inhale' | 'hold' | 'exhale', string> = {
   inhale: '吸气', hold: '停留', exhale: '呼气',
 }
@@ -44,26 +46,26 @@ function BreathingOrb() {
     return () => clearTimeout(id)
   }, [])
 
-  const scale = phase === 'inhale' ? 1.35 : phase === 'hold' ? 1.35 : 0.85
-  const duration = phase === 'inhale' ? 4 : phase === 'hold' ? 2 : 6
+  const scale = phase === 'inhale' ? 1.3 : phase === 'hold' ? 1.3 : 0.82
+  const dur = phase === 'inhale' ? 4 : phase === 'hold' ? 2 : 6
 
   return (
-    <div style={{ position: 'relative', width: 220, height: 220, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+    <div style={{ position: 'relative', width: 180, height: 180, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <motion.div
-        animate={{ scale: scale * 0.88, opacity: 0.18 }}
-        transition={{ duration, ease: 'easeInOut' }}
+        animate={{ scale: scale * 0.9, opacity: 0.25 }}
+        transition={{ duration: dur, ease: 'easeInOut' }}
         style={{
-          position: 'absolute', width: 200, height: 200, borderRadius: '50%',
+          position: 'absolute', width: 160, height: 160, borderRadius: '50%',
           background: `radial-gradient(circle, ${C.gold} 0%, transparent 70%)`,
         }}
       />
       <motion.div
         animate={{ scale }}
-        transition={{ duration, ease: 'easeInOut' }}
+        transition={{ duration: dur, ease: 'easeInOut' }}
         style={{
-          width: 140, height: 140, borderRadius: '50%',
-          background: 'radial-gradient(circle at 35% 35%, rgba(196,168,130,0.85) 0%, rgba(120,113,108,0.5) 100%)',
-          boxShadow: '0 0 48px rgba(196,168,130,0.2)',
+          width: 110, height: 110, borderRadius: '50%',
+          background: `radial-gradient(circle at 38% 38%, rgba(184,149,106,0.55) 0%, rgba(184,149,106,0.2) 100%)`,
+          border: `1px solid rgba(184,149,106,0.3)`,
         }}
       />
       <motion.div
@@ -71,7 +73,7 @@ function BreathingOrb() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
-        style={{ position: 'absolute', color: 'rgba(255,255,255,0.8)', fontSize: 11, letterSpacing: 4, fontWeight: 300 }}
+        style={{ position: 'absolute', color: C.gold, fontSize: 10, letterSpacing: 4, fontFamily: FONT_SANS }}
       >
         {PHASE_LABEL[phase]}
       </motion.div>
@@ -81,16 +83,16 @@ function BreathingOrb() {
 
 function Divider() {
   return (
-    <div style={{
-      width: 1, height: 60, margin: '72px auto',
-      background: `linear-gradient(to bottom, transparent, ${C.goldFaint}, transparent)`,
-    }} />
+    <div style={{ width: 1, height: 48, margin: '72px auto', background: `linear-gradient(to bottom, transparent, ${C.goldFaint}, transparent)` }} />
   )
 }
 
 function Label({ children }: { children: React.ReactNode }) {
   return (
-    <div style={{ fontSize: 10, letterSpacing: 3, color: C.goldSoft, fontWeight: 500, textTransform: 'uppercase', marginBottom: 14 }}>
+    <div style={{
+      fontSize: 9, letterSpacing: 4, color: C.gold, fontWeight: 400,
+      textTransform: 'uppercase', marginBottom: 16, fontFamily: FONT_SANS,
+    }}>
       {children}
     </div>
   )
@@ -99,48 +101,55 @@ function Label({ children }: { children: React.ReactNode }) {
 export default function PaywallC() {
   return (
     <div translate="no" style={{
-      minHeight: '100vh', background: C.bg, color: C.white,
-      fontFamily: FONT, lineHeight: 1.8, paddingBottom: 120,
+      minHeight: '100vh', background: C.bg, color: C.text,
+      fontFamily: FONT, lineHeight: 1.9, paddingBottom: 120,
     }}>
       {/* 顶部 bar */}
       <div style={{
         maxWidth: 960, margin: '0 auto', padding: '24px 24px',
         display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+        borderBottom: `1px solid ${C.border}`,
+        fontFamily: FONT_SANS,
       }}>
-        <div style={{ fontSize: 12, letterSpacing: 3, color: C.goldSoft }}>LOVE · EGO · AI</div>
+        <div style={{ fontSize: 11, letterSpacing: 3, color: C.gold }}>LOVE · EGO · AI</div>
         <div style={{ fontSize: 10, color: C.textDim, letterSpacing: 2 }}>内在工程</div>
       </div>
 
       {/* ── 1. HERO ── */}
-      <section style={{ paddingTop: 72, paddingBottom: 40 }}>
+      <section style={{ paddingTop: 96, paddingBottom: 56 }}>
         <div style={{ ...MODULE_PAD, textAlign: 'center' }}>
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.4 }}
+            transition={{ duration: 1.6, ease: 'easeOut' }}
           >
             <Label>什么是内在工程</Label>
             <h1 style={{
-              fontSize: 'clamp(28px, 5vw, 44px)', fontWeight: 300, letterSpacing: 1,
-              lineHeight: 1.6, margin: '0 0 32px', color: C.white,
+              fontSize: 'clamp(28px, 5vw, 48px)', fontWeight: 300, letterSpacing: '0.04em',
+              lineHeight: 1.55, margin: '0 0 36px', color: C.text,
             }}>
               一门源自创造<br />
-              <span style={{ color: C.gold }}>内在幸福</span>的技术。
+              <em style={{ color: C.gold, fontStyle: 'italic' }}>内在幸福</em>的技术
             </h1>
+            <p style={{ fontSize: 14, color: C.textMid, fontFamily: FONT_SANS, letterSpacing: 0.5, lineHeight: 2 }}>
+              改变你对生活、工作<br />以及所生活的世界的认知与感受
+            </p>
           </motion.div>
 
-          <div style={{ display: 'flex', justifyContent: 'center', margin: '24px 0 40px' }}>
+          <div style={{ display: 'flex', justifyContent: 'center', margin: '48px 0' }}>
             <BreathingOrb />
           </div>
 
           <motion.a
             href="#pricing"
-            whileHover={{ opacity: 0.85 }}
+            whileHover={{ background: C.gold, color: C.bg }}
             whileTap={{ scale: 0.98 }}
+            transition={{ duration: 0.2 }}
             style={{
-              display: 'inline-block', padding: '14px 40px',
-              background: C.gold, color: C.bg, textDecoration: 'none',
-              fontSize: 13, fontWeight: 500, letterSpacing: 2, borderRadius: 2,
+              display: 'inline-block', padding: '14px 44px',
+              border: `1px solid ${C.gold}`, color: C.gold,
+              background: 'transparent', textDecoration: 'none',
+              fontSize: 11, fontFamily: FONT_SANS, letterSpacing: 3,
             }}
           >
             现在就可以开始
@@ -151,35 +160,30 @@ export default function PaywallC() {
       <Divider />
 
       {/* ── 2. 介绍段落 ── */}
-      <section>
+      <section style={{ background: C.bgAlt, padding: '72px 0' }}>
         <div style={{ ...MODULE_PAD }}>
-          <motion.p
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-60px' }}
-            transition={{ duration: 1 }}
-            style={{ fontSize: 17, color: C.white, fontWeight: 300, lineHeight: 2, marginBottom: 28 }}
-          >
-            内在工程是一门个人成长的综合课程，会改变你对生活、工作、以及所生活的世界的认知与感受。
-          </motion.p>
-          <motion.p
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-60px' }}
-            transition={{ duration: 1, delay: 0.15 }}
-            style={{ fontSize: 15, color: C.textMid, lineHeight: 2, marginBottom: 28 }}
-          >
-            让你通过强大的自我转化过程、探索自己最大的潜能，解决生活中的关键问题，获取古代智慧的秘密。内在工程为自我探索和转化提供了一个独特的机会，带领我们走向充实和快乐的生活。
-          </motion.p>
-          <motion.p
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-60px' }}
-            transition={{ duration: 1, delay: 0.3 }}
-            style={{ fontSize: 15, color: C.textMid, lineHeight: 2 }}
-          >
-            这些工具具备改变你生活、行为和体验生命的方式的潜力。你可以在自己的空间里，按你自己的节奏与我们一起体验内在工程课程。
-          </motion.p>
+          {[
+            '内在工程是一门个人成长的综合课程，会改变你对生活、工作、以及所生活的世界的认知与感受。',
+            '让你通过强大的自我转化过程、探索自己最大的潜能，解决生活中的关键问题，获取古代智慧的秘密。内在工程为自我探索和转化提供了一个独特的机会，带领我们走向充实和快乐的生活。',
+            '这些工具具备改变你生活、行为和体验生命的方式的潜力。你可以在自己的空间里，按你自己的节奏与我们一起体验内在工程课程。',
+          ].map((p, i) => (
+            <motion.p
+              key={i}
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ duration: 1, delay: i * 0.12 }}
+              style={{
+                fontSize: i === 0 ? 18 : 15,
+                color: i === 0 ? C.text : C.textMid,
+                fontWeight: i === 0 ? 400 : 300,
+                lineHeight: 2, margin: '0 0 28px',
+                fontFamily: i === 0 ? FONT : FONT_SANS,
+              }}
+            >
+              {p}
+            </motion.p>
+          ))}
         </div>
       </section>
 
@@ -199,18 +203,18 @@ export default function PaywallC() {
           ].map((item, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, x: -8 }}
+              initial={{ opacity: 0, x: -6 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: '-60px' }}
-              transition={{ duration: 0.7, delay: i * 0.08 }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ duration: 0.7, delay: i * 0.07 }}
               style={{
-                padding: '20px 0',
-                borderBottom: `1px solid ${C.goldFaint}`,
-                fontSize: 16, color: C.white, fontWeight: 300,
-                display: 'flex', alignItems: 'baseline', gap: 16,
+                padding: '18px 0', borderBottom: `1px solid ${C.border}`,
+                fontSize: 15, color: C.text, fontWeight: 300,
+                display: 'flex', alignItems: 'baseline', gap: 18,
+                fontFamily: FONT_SANS,
               }}
             >
-              <span style={{ color: C.goldSoft, fontSize: 10, minWidth: 20 }}>0{i + 1}</span>
+              <span style={{ color: C.goldSoft, fontSize: 9, minWidth: 20, letterSpacing: 1 }}>0{i + 1}</span>
               <span>{item}</span>
             </motion.div>
           ))}
@@ -220,30 +224,26 @@ export default function PaywallC() {
       <Divider />
 
       {/* ── 4. 研究数据 ── */}
-      <section>
+      <section style={{ background: C.bgAlt, padding: '80px 0' }}>
         <div style={{ ...MODULE_PAD, textAlign: 'center' }}>
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
+            initial={{ opacity: 0, scale: 0.96 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 1 }}
-            style={{
-              border: `1px solid ${C.cardBorder}`,
-              background: C.card,
-              padding: '56px 32px',
-            }}
+            transition={{ duration: 1.2 }}
           >
             <div style={{
-              fontSize: 'clamp(56px, 10vw, 96px)',
-              fontWeight: 200,
-              color: C.gold,
-              letterSpacing: '-0.03em',
-              lineHeight: 1,
-              marginBottom: 20,
+              fontSize: 'clamp(64px, 12vw, 112px)',
+              fontWeight: 200, color: C.gold,
+              letterSpacing: '-0.04em', lineHeight: 1, marginBottom: 24,
+              fontFamily: FONT_SANS,
             }}>
               50%
             </div>
-            <p style={{ fontSize: 14, color: C.textMid, letterSpacing: 1, lineHeight: 1.8, margin: 0 }}>
+            <p style={{
+              fontSize: 13, color: C.textMid, letterSpacing: 1,
+              lineHeight: 2, margin: 0, fontFamily: FONT_SANS,
+            }}>
               内在工程在线课程让受试参与者<br />压力减轻 50% 以上
             </p>
           </motion.div>
@@ -275,19 +275,19 @@ export default function PaywallC() {
           ].map((w, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 16 }}
+              initial={{ opacity: 0, y: 14 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-60px' }}
+              viewport={{ once: true, margin: '-40px' }}
               transition={{ duration: 0.9, delay: i * 0.1 }}
-              style={{
-                padding: '40px 0',
-                borderBottom: `1px solid ${C.goldFaint}`,
-              }}
+              style={{ padding: '44px 0', borderBottom: `1px solid ${C.border}` }}
             >
-              <p style={{ fontSize: 16, color: C.white, fontWeight: 300, lineHeight: 2, margin: '0 0 16px' }}>
+              <p style={{
+                fontSize: 16, color: C.text, fontWeight: 300,
+                lineHeight: 2, margin: '0 0 18px', fontStyle: 'italic',
+              }}>
                 "{w.quote}"
               </p>
-              <div style={{ fontSize: 11, color: C.goldSoft, letterSpacing: 2 }}>
+              <div style={{ fontSize: 11, color: C.gold, letterSpacing: 2, fontFamily: FONT_SANS }}>
                 — {w.name}，{w.title}
               </div>
             </motion.div>
@@ -298,60 +298,33 @@ export default function PaywallC() {
       <Divider />
 
       {/* ── 6. 智慧语录 ── */}
-      <section>
+      <section style={{ background: C.bgAlt, padding: '72px 0' }}>
         <div style={{ ...MODULE_PAD }}>
           <Label>生命的智慧</Label>
           {[
-            {
-              title: '生命的机制',
-              quote: '世界上最精密的机器是人体。但你还没看过用户手册。让我们来一起探索。',
-            },
-            {
-              title: '唯一的束缚',
-              quote: '释放你的欲望，不要把它限制在有限之中。在欲望的无限里面，是你的终极本性。',
-            },
-            {
-              title: '活着并全然地活',
-              quote: '只有当"你是谁"不断地扩展，生命才允许你全然地活。全然地活或者活到极致，是你这个生命所能知晓的唯一成就。',
-            },
-            {
-              title: '你不是你所想的',
-              quote: '在绝对的自愿中度过你生命的每一刻，你会创造出天堂。你在不情愿中所做的一切必然是地狱。',
-            },
-            {
-              title: '头脑·奇迹',
-              quote: '大多数人都在试图控制自己的头脑。我想让你解放你的头脑，让它达到最高的可能性。',
-            },
-            {
-              title: '创造的声音',
-              quote: '文字和意义属于人类头脑的领域，声音则是创造必不可少的一部分。',
-            },
-            {
-              title: '创造你想要的',
-              quote: '你的健康和你的疾病，你的快乐和你的痛苦，都来自于内在。如果你想要幸福，是时候转向内在了。',
-            },
+            { title: '生命的机制', quote: '世界上最精密的机器是人体。但你还没看过用户手册。让我们来一起探索。' },
+            { title: '唯一的束缚', quote: '释放你的欲望，不要把它限制在有限之中。在欲望的无限里面，是你的终极本性。' },
+            { title: '活着并全然地活', quote: '只有当"你是谁"不断地扩展，生命才允许你全然地活。全然地活或者活到极致，是你这个生命所能知晓的唯一成就。' },
+            { title: '你不是你所想的', quote: '在绝对的自愿中度过你生命的每一刻，你会创造出天堂。你在不情愿中所做的一切必然是地狱。' },
+            { title: '头脑·奇迹', quote: '大多数人都在试图控制自己的头脑。我想让你解放你的头脑，让它达到最高的可能性。' },
+            { title: '创造的声音', quote: '文字和意义属于人类头脑的领域，声音则是创造必不可少的一部分。' },
+            { title: '创造你想要的', quote: '你的健康和你的疾病，你的快乐和你的痛苦，都来自于内在。如果你想要幸福，是时候转向内在了。' },
           ].map((q, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 12 }}
+              initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-60px' }}
-              transition={{ duration: 0.8, delay: i * 0.06 }}
-              style={{
-                padding: '36px 0',
-                borderBottom: `1px solid ${C.goldFaint}`,
-              }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ duration: 0.8, delay: i * 0.05 }}
+              style={{ padding: '32px 0', borderBottom: `1px solid ${C.border}` }}
             >
               <div style={{
-                fontSize: 10, color: C.gold, letterSpacing: 3,
-                textTransform: 'uppercase', marginBottom: 12,
+                fontSize: 9, color: C.gold, letterSpacing: 4,
+                textTransform: 'uppercase', marginBottom: 12, fontFamily: FONT_SANS,
               }}>
                 {q.title}
               </div>
-              <p style={{
-                fontSize: 15, color: C.textMid, fontWeight: 300,
-                lineHeight: 2, margin: 0, fontStyle: 'italic',
-              }}>
+              <p style={{ fontSize: 15, color: C.textMid, fontWeight: 300, lineHeight: 2, margin: 0, fontStyle: 'italic' }}>
                 "{q.quote}"
               </p>
             </motion.div>
@@ -368,35 +341,38 @@ export default function PaywallC() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 1 }}
+            transition={{ duration: 1.2 }}
           >
             <Label>开始你的内在旅程</Label>
             <h2 style={{
-              fontSize: 'clamp(28px, 4vw, 40px)', fontWeight: 300,
-              color: C.white, letterSpacing: 1, marginBottom: 48,
+              fontSize: 'clamp(28px, 4vw, 42px)', fontWeight: 300,
+              color: C.text, letterSpacing: '0.04em', marginBottom: 56,
             }}>
               内在工程
             </h2>
 
             <div style={{
-              border: `1px solid ${C.cardBorder}`,
-              background: C.card,
-              padding: '48px 32px',
-              marginBottom: 32,
+              border: `1px solid ${C.borderMid}`,
+              padding: '56px 40px', marginBottom: 36,
+              background: C.bgAlt,
             }}>
               <div style={{
-                fontSize: 'clamp(44px, 8vw, 72px)',
+                fontSize: 'clamp(48px, 8vw, 80px)',
                 fontWeight: 200, color: C.gold,
                 letterSpacing: '-0.02em', lineHeight: 1,
-                marginBottom: 12,
+                marginBottom: 10, fontFamily: FONT_SANS,
               }}>
-                ¥———
+                $1,200
               </div>
-              <div style={{ fontSize: 10, color: C.textDim, letterSpacing: 3, marginBottom: 40 }}>
-                一次付款 · 永久使用
+              <div style={{
+                fontSize: 10, color: C.textDim,
+                letterSpacing: 3, marginBottom: 44,
+                fontFamily: FONT_SANS,
+              }}>
+                USD · 一次付款 · 永久使用
               </div>
 
-              <div style={{ height: 1, background: C.goldFaint, marginBottom: 32 }} />
+              <div style={{ height: 1, background: C.border, marginBottom: 32 }} />
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
                 {[
@@ -407,7 +383,8 @@ export default function PaywallC() {
                 ].map((item, i) => (
                   <div key={i} style={{
                     display: 'flex', gap: 14, alignItems: 'center',
-                    fontSize: 14, color: C.white, lineHeight: 1.6,
+                    fontSize: 13, color: C.text, lineHeight: 1.6,
+                    fontFamily: FONT_SANS,
                   }}>
                     <span style={{ color: C.goldSoft, flexShrink: 0 }}>—</span>
                     {item}
@@ -418,27 +395,31 @@ export default function PaywallC() {
 
             <motion.a
               href="#"
-              whileHover={{ opacity: 0.85 }}
+              whileHover={{ background: C.gold, color: C.bg, borderColor: C.gold }}
               whileTap={{ scale: 0.98 }}
+              transition={{ duration: 0.2 }}
               style={{
-                display: 'inline-block', padding: '16px 44px',
-                background: C.gold, color: C.bg, textDecoration: 'none',
-                fontSize: 13, fontWeight: 500, letterSpacing: 2, borderRadius: 2,
+                display: 'inline-block', padding: '16px 52px',
+                border: `1px solid ${C.gold}`, color: C.gold,
+                background: 'transparent', textDecoration: 'none',
+                fontSize: 11, fontFamily: FONT_SANS, letterSpacing: 3,
               }}
             >
               现在就可以开始
             </motion.a>
+
+            <p style={{ fontSize: 10, color: C.textDim, marginTop: 20, letterSpacing: 2, fontFamily: FONT_SANS }}>
+              你可以在自己的空间里，按你自己的节奏开始
+            </p>
           </motion.div>
         </div>
       </section>
 
       {/* Footer */}
       <div style={{
-        padding: '48px 24px',
-        textAlign: 'center',
-        borderTop: `1px solid ${C.goldFaint}`,
-        fontSize: 10, letterSpacing: 3, color: C.textDim,
-        marginTop: 80,
+        padding: '48px 24px', textAlign: 'center',
+        borderTop: `1px solid ${C.border}`, marginTop: 80,
+        fontSize: 9, letterSpacing: 4, color: C.textDim, fontFamily: FONT_SANS,
       }}>
         LOVE · EGO · AI · 2026
       </div>
