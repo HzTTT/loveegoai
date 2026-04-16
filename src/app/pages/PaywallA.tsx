@@ -363,12 +363,18 @@ function Modules() {
 
 /* ─── 定价 CTA ─── */
 function PricingCTA() {
+  const includes = [
+    '改变的科学',
+    '超越自我',
+    '重新编程你的潜意识',
+    '活出你的新现实',
+  ]
   return (
     <Section style={{
       padding: '180px 0 200px', position: 'relative', zIndex: 1,
       borderTop: `1px solid ${C.border}`,
     }}>
-      <div style={{ maxWidth: 760, width: '100%', padding: '0 32px', textAlign: 'center' }}>
+      <div style={{ maxWidth: 680, width: '100%', padding: '0 32px', textAlign: 'center' }}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -377,7 +383,7 @@ function PricingCTA() {
         >
           <div style={{
             fontSize: 10, letterSpacing: 5, color: C.textMid,
-            marginBottom: 24, textTransform: 'uppercase', fontWeight: 700,
+            marginBottom: 32, textTransform: 'uppercase', fontWeight: 700,
           }}>
             Quantum · Access
           </div>
@@ -388,55 +394,71 @@ function PricingCTA() {
             color: C.white,
             letterSpacing: '-0.03em',
             lineHeight: 1.05,
-            marginBottom: 40,
+            marginBottom: 64,
             textTransform: 'uppercase',
           }}>
             ENTER<br />THE FIELD
           </h2>
 
+          {/* 定价卡片 */}
           <div style={{
-            margin: '0 auto 56px', maxWidth: 560,
-            fontSize: 15, lineHeight: 1.9, color: C.textMid,
-            fontWeight: 400,
-          }}>
-            完整五模块课程 · 量子场深度内在旅程<br />
-            实时见证转化的可衡量证据<br />
-            改变你的能量，创造一个新的未来
-          </div>
-
-          <div style={{
-            display: 'inline-flex', flexDirection: 'column',
-            padding: '48px 56px',
+            padding: '48px 36px',
             border: `1px solid ${C.borderStrong}`,
             background: C.bgCard,
-            marginBottom: 40,
+            marginBottom: 48,
           }}>
-            <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', gap: 8, marginBottom: 8 }}>
-              <span style={{ fontSize: 20, color: C.white, fontWeight: 600 }}>$</span>
-              <span style={{
-                fontSize: 'clamp(64px, 9vw, 104px)',
+            {/* 价格 */}
+            <div style={{ textAlign: 'center', marginBottom: 40 }}>
+              <div style={{
+                fontSize: 'clamp(40px, 6vw, 64px)',
                 fontWeight: 800,
                 color: C.white,
-                letterSpacing: '-0.04em',
+                letterSpacing: '-0.02em',
                 lineHeight: 1,
+                marginBottom: 14,
               }}>
-                ———
-              </span>
+                ¥ TBD
+              </div>
+              <div style={{
+                fontSize: 10, color: C.textDim,
+                letterSpacing: 3, textTransform: 'uppercase', fontWeight: 500,
+              }}>
+                Price · 价格待 ELENA 确认
+              </div>
             </div>
+
+            {/* 分隔线 */}
+            <div style={{ height: 1, background: C.border, marginBottom: 32 }} />
+
+            {/* 课程包含（4 个模块标题，来自原文） */}
             <div style={{
-              fontSize: 10, color: C.textDim,
-              letterSpacing: 3, textTransform: 'uppercase', fontWeight: 500,
+              fontSize: 10, letterSpacing: 4, color: C.textMid,
+              marginBottom: 20, textTransform: 'uppercase', fontWeight: 700,
+              textAlign: 'center',
             }}>
-              Price TBD · 价格待 ELENA 确认
+              课程包含
             </div>
+            <ul style={{
+              listStyle: 'none', padding: 0, margin: 0,
+              display: 'flex', flexDirection: 'column', gap: 14,
+            }}>
+              {includes.map((item, i) => (
+                <li key={i} style={{
+                  display: 'flex', gap: 14, alignItems: 'center',
+                  fontSize: 15, color: C.white, lineHeight: 1.4,
+                  fontWeight: 500, justifyContent: 'center',
+                }}>
+                  <span style={{ color: C.white, fontWeight: 700, flexShrink: 0 }}>—</span>
+                  {item}
+                </li>
+              ))}
+            </ul>
           </div>
 
-          <div style={{ marginTop: 8 }}>
-            <CTAButton label="ENTER THE FIELD" large />
-          </div>
+          <CTAButton label="ENTER THE FIELD" large />
 
           <p style={{
-            fontSize: 11, color: C.textDim, marginTop: 28,
+            fontSize: 11, color: C.textDim, marginTop: 24,
             letterSpacing: 2, fontWeight: 500,
           }}>
             受邀制 · 深度内在旅程
