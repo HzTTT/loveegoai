@@ -39,6 +39,7 @@ export default function PaywallA() {
       <Paragraph4 />
       <VisionSection />
       <Modules />
+      <CasesSection />
       <PricingCTA />
       <Footer />
     </div>
@@ -419,6 +420,99 @@ function Modules() {
                   </li>
                 ))}
               </ul>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </Section>
+  )
+}
+
+/* ─── 用户 CASE（ELENA 确认文案） ─── */
+function CasesSection() {
+  const cases = [
+    {
+      tag: '灵感创造',
+      body: '练到第三周，脑子里突然冒出一个产品 idea——不是从市场分析里挤出来的，是在停顿的那几秒里来的。上线第一年 ARR 就做到了 $10M，团队至今不敢相信节奏这么顺。不是我变聪明，是我不再挡自己的路。',
+      author: 'SaaS 创始人 · B2B 赛道 · 38',
+    },
+    {
+      tag: '第一性原理',
+      body: '我在供应链里卡了两年，一直用战术思维堆方案。进入量子场那次深度旅程之后，第一次真的把问题抽到了第一性原理——同一个月砍掉了 37% 的冗余成本，毛利率翻倍。不是多想了一步，是站到了"从未想过的那一层"。',
+      author: '消费品创始人 · 41',
+    },
+    {
+      tag: '能量转换 · 销售额',
+      body: '我一直在推销售团队"更努力"。自己先从生存模式切到创造模式之后，团队也松了，Q3 销售额环比 +62%。我以为是方法问题，其实是能量问题。',
+      author: '区域销售总监 · 34',
+    },
+    {
+      tag: '决策清晰 · 融资',
+      body: '融资轮卡了 11 个月，一直在"更努力证明自己"。放下之后第一次 pitch，估值从 $8M 跳到 $22M。不是 deck 改了，是我终于不想从他们那里拿东西了。',
+      author: 'Pre-A 创始人 · 36',
+    },
+  ]
+  return (
+    <Section style={{
+      padding: '180px 0',
+      position: 'relative', zIndex: 1,
+      borderTop: `1px solid ${C.border}`,
+    }}>
+      <div style={{ maxWidth: 1040, width: '100%', padding: '0 32px' }}>
+        <motion.h2
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.9 }}
+          style={{
+            fontSize: 'clamp(28px, 5vw, 52px)',
+            fontWeight: 800,
+            color: C.white,
+            letterSpacing: '-0.02em',
+            textAlign: 'center',
+            marginBottom: 80,
+            textTransform: 'uppercase',
+          }}
+        >
+          FIELD REPORTS
+        </motion.h2>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+          {cases.map((c, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{ duration: 0.8, delay: i * 0.08 }}
+              style={{
+                padding: '56px 4px',
+                borderTop: `1px solid ${C.border}`,
+                borderBottom: i === cases.length - 1 ? `1px solid ${C.border}` : 'none',
+              }}
+            >
+              <div style={{
+                fontSize: 10, letterSpacing: 4, color: C.textMid,
+                fontWeight: 700, textTransform: 'uppercase', marginBottom: 20,
+              }}>
+                {c.tag}
+              </div>
+              <p style={{
+                fontSize: 'clamp(16px, 1.8vw, 20px)',
+                lineHeight: 1.8,
+                color: C.white,
+                fontWeight: 400,
+                margin: '0 0 28px',
+                maxWidth: 740,
+              }}>
+                {c.body}
+              </p>
+              <div style={{
+                fontSize: 11, letterSpacing: 3, color: C.textDim,
+                fontWeight: 500,
+              }}>
+                — {c.author}
+              </div>
             </motion.div>
           ))}
         </div>
