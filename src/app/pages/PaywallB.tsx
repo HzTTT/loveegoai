@@ -573,19 +573,19 @@ function Vision() {
 function Core() {
   const cards = [
     {
-      symbol: '◎',
+      symbol: '✦',
       title: '旧程序识别',
       desc: '看见那些在关系里让你讨好、切断、过度分析的自动程序——它们不是你，它们只是你学来的生存策略',
       color: C.rose,
     },
     {
-      symbol: '❋',
+      symbol: '✦',
       title: 'BEING 能量激活',
       desc: '从头脑的 DOING 回到身体的存在，找回属于你的阴性能量——它不是技巧，而是你原本就拥有的',
       color: C.gold,
     },
     {
-      symbol: '∞',
+      symbol: '✦',
       title: '极性吸引重建',
       desc: '当你回到身体，关系里的极性自然重建，吸引力从内部流出——不是你追，是他靠近',
       color: C.violet,
@@ -874,11 +874,11 @@ function Witness() {
 function Promise() {
   const outcomes = [
     { label: '高标准', desc: '不是挑剔，是清楚自己配得上什么', icon: '✦' },
-    { label: '安全感', desc: '从身体里来，不是从他的行为来', icon: '◎' },
-    { label: '真实的边界', desc: '不是冷漠，而是知道自己是谁', icon: '❋' },
-    { label: '极性吸引', desc: '当你在身体里，他自然会靠近', icon: '∞' },
+    { label: '安全感', desc: '从身体里来，不是从他的行为来', icon: '✦' },
+    { label: '真实的边界', desc: '不是冷漠，而是知道自己是谁', icon: '✦' },
+    { label: '极性吸引', desc: '当你在身体里，他自然会靠近', icon: '✦' },
     { label: '神圣的爱', desc: '不靠委屈换来的，是真正相互流动的', icon: '✦' },
-    { label: '与生俱来的价值感', desc: '存在本身就有，不需要他来确认', icon: '◎' },
+    { label: '与生俱来的价值感', desc: '存在本身就有，不需要他来确认', icon: '✦' },
   ]
 
   return (
@@ -1287,7 +1287,7 @@ function Footer() {
         gap: 10,
         opacity: 0.25,
       }}>
-        {['✦', '◎', '❋'].map((s, i) => (
+        {['✦', '✦', '✦'].map((s, i) => (
           <span key={i} style={{ color: i === 1 ? C.rose : C.gold, fontSize: 10 }}>{s}</span>
         ))}
       </div>
