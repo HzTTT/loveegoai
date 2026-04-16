@@ -410,20 +410,29 @@ function PricingCTA() {
             {/* 价格 */}
             <div style={{ textAlign: 'center', marginBottom: 40 }}>
               <div style={{
-                fontSize: 'clamp(40px, 6vw, 64px)',
-                fontWeight: 800,
-                color: C.white,
-                letterSpacing: '-0.02em',
-                lineHeight: 1,
+                display: 'flex', alignItems: 'baseline', justifyContent: 'center', gap: 4,
                 marginBottom: 14,
               }}>
-                ¥ TBD
+                <span style={{
+                  fontSize: 'clamp(22px, 3vw, 32px)',
+                  fontWeight: 700,
+                  color: C.white,
+                }}>$</span>
+                <span style={{
+                  fontSize: 'clamp(48px, 8vw, 80px)',
+                  fontWeight: 800,
+                  color: C.white,
+                  letterSpacing: '-0.02em',
+                  lineHeight: 1,
+                }}>
+                  888
+                </span>
               </div>
               <div style={{
                 fontSize: 10, color: C.textDim,
                 letterSpacing: 3, textTransform: 'uppercase', fontWeight: 500,
               }}>
-                Price · 价格待 ELENA 确认
+                USD · 美金
               </div>
             </div>
 
