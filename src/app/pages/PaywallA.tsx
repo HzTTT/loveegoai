@@ -317,55 +317,42 @@ function Modules() {
                 padding: '56px 4px',
                 borderTop: `1px solid ${C.border}`,
                 borderBottom: i === modules.length - 1 ? `1px solid ${C.border}` : 'none',
-                display: 'grid',
-                gridTemplateColumns: '120px 1fr',
-                gap: 32,
-                alignItems: 'flex-start',
               }}
             >
               <div style={{
-                fontSize: 'clamp(48px, 7vw, 80px)',
+                fontSize: 'clamp(26px, 3.2vw, 40px)',
                 fontWeight: 800,
                 color: C.white,
-                lineHeight: 0.9,
-                letterSpacing: '-0.04em',
+                marginBottom: 28,
+                letterSpacing: '-0.02em',
+                lineHeight: 1.1,
               }}>
-                0{m.no}
+                {m.title}
               </div>
-              <div>
-                <div style={{
-                  fontSize: 'clamp(20px, 2.4vw, 28px)',
-                  fontWeight: 700,
-                  color: C.white,
-                  marginBottom: 24,
-                  letterSpacing: '-0.01em',
-                }}>
-                  模块 {m.no}：{m.title}
-                </div>
-                <ul style={{
-                  listStyle: 'none', padding: 0, margin: 0,
-                  display: 'flex', flexDirection: 'column', gap: 12,
-                }}>
-                  {m.items.map((it, j) => (
-                    <li key={j} style={{
-                      fontSize: 16,
-                      lineHeight: 1.75,
-                      color: C.textMid,
-                      display: 'flex', gap: 16, alignItems: 'flex-start',
-                      fontWeight: 400,
+              <ul style={{
+                listStyle: 'none', padding: 0, margin: 0,
+                display: 'flex', flexDirection: 'column', gap: 14,
+                maxWidth: 680,
+              }}>
+                {m.items.map((it, j) => (
+                  <li key={j} style={{
+                    fontSize: 17,
+                    lineHeight: 1.75,
+                    color: C.textMid,
+                    display: 'flex', gap: 16, alignItems: 'flex-start',
+                    fontWeight: 400,
+                  }}>
+                    <span style={{
+                      color: C.white, fontSize: 12,
+                      marginTop: 10, flexShrink: 0,
+                      fontWeight: 700,
                     }}>
-                      <span style={{
-                        color: C.white, fontSize: 12,
-                        marginTop: 9, flexShrink: 0,
-                        fontWeight: 700,
-                      }}>
-                        —
-                      </span>
-                      <span>{it}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+                      —
+                    </span>
+                    <span>{it}</span>
+                  </li>
+                ))}
+              </ul>
             </motion.div>
           ))}
         </div>
@@ -377,41 +364,83 @@ function Modules() {
 /* ─── 定价 CTA ─── */
 function PricingCTA() {
   return (
-    <Section style={{ padding: '180px 0 200px', position: 'relative', zIndex: 1 }}>
-      <div style={{ maxWidth: 700, width: '100%', padding: '0 32px', textAlign: 'center' }}>
+    <Section style={{
+      padding: '180px 0 200px', position: 'relative', zIndex: 1,
+      borderTop: `1px solid ${C.border}`,
+    }}>
+      <div style={{ maxWidth: 760, width: '100%', padding: '0 32px', textAlign: 'center' }}>
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 1 }}
         >
           <div style={{
             fontSize: 10, letterSpacing: 5, color: C.textMid,
-            marginBottom: 28, textTransform: 'uppercase', fontWeight: 700,
+            marginBottom: 24, textTransform: 'uppercase', fontWeight: 700,
           }}>
             Quantum · Access
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', gap: 8, marginBottom: 12 }}>
-            <span style={{ fontSize: 18, color: C.white, fontWeight: 600 }}>$</span>
-            <span style={{
-              fontSize: 'clamp(56px, 9vw, 96px)',
-              fontWeight: 800,
-              color: C.white,
-              letterSpacing: '-0.04em',
-              lineHeight: 1,
-            }}>
-              ———
-            </span>
-          </div>
-          <div style={{
-            fontSize: 10, color: C.textDim, marginBottom: 56,
-            letterSpacing: 3, textTransform: 'uppercase', fontWeight: 500,
+          <h2 style={{
+            fontSize: 'clamp(36px, 6vw, 68px)',
+            fontWeight: 800,
+            color: C.white,
+            letterSpacing: '-0.03em',
+            lineHeight: 1.05,
+            marginBottom: 40,
+            textTransform: 'uppercase',
           }}>
-            Price TBD · 价格待确认
+            ENTER<br />THE FIELD
+          </h2>
+
+          <div style={{
+            margin: '0 auto 56px', maxWidth: 560,
+            fontSize: 15, lineHeight: 1.9, color: C.textMid,
+            fontWeight: 400,
+          }}>
+            完整五模块课程 · 量子场深度内在旅程<br />
+            实时见证转化的可衡量证据<br />
+            改变你的能量，创造一个新的未来
           </div>
 
-          <CTAButton label="ENTER THE FIELD" large />
+          <div style={{
+            display: 'inline-flex', flexDirection: 'column',
+            padding: '48px 56px',
+            border: `1px solid ${C.borderStrong}`,
+            background: C.bgCard,
+            marginBottom: 40,
+          }}>
+            <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', gap: 8, marginBottom: 8 }}>
+              <span style={{ fontSize: 20, color: C.white, fontWeight: 600 }}>$</span>
+              <span style={{
+                fontSize: 'clamp(64px, 9vw, 104px)',
+                fontWeight: 800,
+                color: C.white,
+                letterSpacing: '-0.04em',
+                lineHeight: 1,
+              }}>
+                ———
+              </span>
+            </div>
+            <div style={{
+              fontSize: 10, color: C.textDim,
+              letterSpacing: 3, textTransform: 'uppercase', fontWeight: 500,
+            }}>
+              Price TBD · 价格待 ELENA 确认
+            </div>
+          </div>
+
+          <div style={{ marginTop: 8 }}>
+            <CTAButton label="ENTER THE FIELD" large />
+          </div>
+
+          <p style={{
+            fontSize: 11, color: C.textDim, marginTop: 28,
+            letterSpacing: 2, fontWeight: 500,
+          }}>
+            受邀制 · 深度内在旅程
+          </p>
         </motion.div>
       </div>
     </Section>
