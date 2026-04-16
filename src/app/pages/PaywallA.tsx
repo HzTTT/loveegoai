@@ -1,129 +1,191 @@
 import { motion } from 'motion/react'
 
-// 付费墙 A：企业家 / 创业者 · 进入心流
-// 文案基准：@claude-opt v1
-// 七模块：Hero / 当前处境 / 我们做了什么 / 课程结构 / 结果承诺 / 见证 / 定价 CTA
+/*
+  Paywall A · 企业家方向 · 量子场
+  文案：ELENA 原文（msg=696c8429），一字不改
+  UI 方向：高净值男性审美 —— 深碳黑 / 冷金属铂金 / 几何精密感
+  NOTE: ELENA 原稿模块编号跳过 3（直接给 1/2/4/5），按原样保留
+*/
 
 const C = {
-  bg: '#1C1917',
-  bgAlt: '#242120',
-  bgCard: 'rgba(250,250,249,0.04)',
-  border: 'rgba(196,168,130,0.15)',
-  borderStrong: 'rgba(196,168,130,0.35)',
-  gold: '#C4A882',
-  goldDim: 'rgba(196,168,130,0.6)',
-  goldGlow: 'rgba(196,168,130,0.12)',
-  accent: '#C47D6D',
-  white: '#FAFAF9',
-  textMid: '#A8A29E',
-  textDim: 'rgba(168,162,158,0.55)',
+  bg: '#07080C',
+  bgDeep: '#050609',
+  bgNavy: '#0B1221',
+  bgCard: 'rgba(184,193,212,0.03)',
+  bgCardHi: 'rgba(201,181,138,0.04)',
+  border: 'rgba(201,181,138,0.12)',
+  borderStrong: 'rgba(201,181,138,0.3)',
+  borderCool: 'rgba(184,193,212,0.14)',
+  platinum: '#C9B58A',
+  platinumDim: 'rgba(201,181,138,0.55)',
+  platinumGlow: 'rgba(201,181,138,0.08)',
+  silver: '#B8C1D4',
+  silverDim: 'rgba(184,193,212,0.55)',
+  quantum: '#6E8AB8',
+  white: '#F1F2F5',
+  textMid: '#9AA0AB',
+  textDim: 'rgba(154,160,171,0.5)',
 }
 
-const FONT_SERIF = "'Noto Serif SC', 'Songti SC', serif"
-const FONT_SANS = "'Noto Sans SC', -apple-system, sans-serif"
+const FONT_SERIF = "'Noto Serif SC', 'Songti SC', 'Times New Roman', serif"
+const FONT_SANS = "'Inter', 'Noto Sans SC', -apple-system, 'Helvetica Neue', sans-serif"
 
 export default function PaywallA() {
   return (
-    <div style={{
+    <div translate="no" style={{
       width: '100%',
       minHeight: '100vh',
-      background: C.bg,
+      background: `radial-gradient(ellipse at top, ${C.bgNavy} 0%, ${C.bg} 45%, ${C.bgDeep} 100%)`,
       color: C.white,
       fontFamily: FONT_SANS,
       overflow: 'hidden',
+      position: 'relative',
     }}>
+      <QuantumField />
       <TopBar />
       <Hero />
-      <CurrentState />
-      <WhatWeBuilt />
-      <CourseStructure />
-      <Promise />
-      <Witness />
+      <Opportunity />
+      <Evidence />
+      <Learning />
+      <Modules />
       <PricingCTA />
       <Footer />
     </div>
   )
 }
 
-/* ─── 顶部标签条 ─── */
+/* ─── 量子场背景 · 静态星点 ─── */
+function QuantumField() {
+  const stars = Array.from({ length: 60 }, (_, i) => ({
+    id: i,
+    top: Math.random() * 100,
+    left: Math.random() * 100,
+    size: Math.random() * 1.8 + 0.4,
+    opacity: Math.random() * 0.5 + 0.1,
+    delay: Math.random() * 4,
+  }))
+  return (
+    <div style={{
+      position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0,
+    }}>
+      {stars.map(s => (
+        <motion.div
+          key={s.id}
+          animate={{ opacity: [s.opacity, s.opacity * 0.3, s.opacity] }}
+          transition={{ duration: 4 + s.delay, repeat: Infinity, ease: 'easeInOut' }}
+          style={{
+            position: 'absolute',
+            top: `${s.top}%`,
+            left: `${s.left}%`,
+            width: s.size,
+            height: s.size,
+            borderRadius: '50%',
+            background: C.platinum,
+            boxShadow: `0 0 ${s.size * 2}px ${C.platinumDim}`,
+          }}
+        />
+      ))}
+    </div>
+  )
+}
+
+/* ─── 顶部条 ─── */
 function TopBar() {
   return (
     <div style={{
       position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50,
-      padding: '14px 20px',
-      background: 'rgba(28,25,23,0.72)',
-      backdropFilter: 'blur(12px)',
+      padding: '18px 28px',
+      background: 'rgba(7,8,12,0.76)',
+      backdropFilter: 'blur(14px)',
       borderBottom: `1px solid ${C.border}`,
       display: 'flex', justifyContent: 'space-between', alignItems: 'center',
     }}>
-      <span style={{ fontSize: 12, letterSpacing: 3, color: C.goldDim, fontFamily: FONT_SERIF }}>
+      <span style={{
+        fontSize: 11, letterSpacing: 6, color: C.platinumDim,
+        fontFamily: FONT_SERIF, fontWeight: 400,
+      }}>
         LOVE · EGO · AI
       </span>
-      <span style={{ fontSize: 10, letterSpacing: 2, color: C.textDim }}>
-        创造者模式 · 进入心流
+      <span style={{ fontSize: 9, letterSpacing: 3, color: C.textDim }}>
+        QUANTUM · FIELD · ACCESS
       </span>
     </div>
   )
 }
 
-/* ─── Section 1: Hero ─── */
+/* ─── Hero ─── */
 function Hero() {
   return (
-    <Section style={{ minHeight: '100vh', paddingTop: 80 }}>
-      <div style={{ maxWidth: 520, width: '100%', padding: '0 24px', textAlign: 'center' }}>
+    <Section style={{ minHeight: '100vh', paddingTop: 100, position: 'relative', zIndex: 1 }}>
+      <div style={{ maxWidth: 620, width: '100%', padding: '0 28px', textAlign: 'center' }}>
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1 }}
-          style={{ fontSize: 11, letterSpacing: 6, color: C.goldDim, marginBottom: 32 }}
+          transition={{ duration: 1.2 }}
+          style={{
+            fontSize: 10, letterSpacing: 8, color: C.platinumDim,
+            marginBottom: 40, textTransform: 'uppercase',
+          }}
         >
-          给已经很努力的你
+          for those ready to transcend
         </motion.p>
 
         <motion.h1
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.2 }}
+          transition={{ duration: 1.2, delay: 0.2 }}
           style={{
             fontFamily: FONT_SERIF,
-            fontSize: 34,
+            fontSize: 40,
             fontWeight: 500,
-            lineHeight: 1.5,
+            lineHeight: 1.4,
             color: C.white,
-            marginBottom: 28,
-            letterSpacing: 1,
+            marginBottom: 36,
+            letterSpacing: 2,
           }}
         >
-          你的下一次突破<br />
-          <span style={{ color: C.gold }}>不会来自更努力</span><br />
-          会来自<span style={{ color: C.gold }}>更在当下</span>
+          深入<span style={{ color: C.platinum }}>量子场</span><br />
+          进行<span style={{ color: C.platinum }}>深度内在旅程</span>
         </motion.h1>
+
+        <motion.div
+          initial={{ opacity: 0, scaleX: 0 }}
+          animate={{ opacity: 1, scaleX: 1 }}
+          transition={{ duration: 1.2, delay: 0.6 }}
+          style={{
+            width: 60, height: 1,
+            background: `linear-gradient(90deg, transparent, ${C.platinum}, transparent)`,
+            margin: '0 auto 36px',
+          }}
+        />
 
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 0.6 }}
+          transition={{ duration: 1.4, delay: 0.8 }}
           style={{
             fontSize: 15,
             lineHeight: 2,
             color: C.textMid,
-            marginBottom: 48,
-            padding: '0 12px',
+            marginBottom: 56,
+            padding: '0 4px',
+            fontFamily: FONT_SERIF,
           }}
         >
-          从生存模式切到创造模式——<br />
-          让心流、灵感、清晰判断<br />
-          成为你的<span style={{ color: C.gold }}>默认状态</span>，不是偶发状态
+          这个无穷无尽、不可估量的源头创造场，<br />
+          是所有人类经验作为<span style={{ color: C.silver }}>思想和想象的前兆</span>而存在的地方——<br />
+          一个超越我们已知的、可感知的、<br />
+          三维时空现实的<span style={{ color: C.platinum }}>无限可能之地</span>。
         </motion.p>
 
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 1 }}
+          transition={{ duration: 1.2, delay: 1.2 }}
         >
-          <CTAButton label="开始进入创造者模式" />
-          <p style={{ fontSize: 11, color: C.textDim, marginTop: 20, letterSpacing: 1 }}>
-            7 天免费体验 · 无需承诺
+          <CTAButton label="进入量子场" />
+          <p style={{ fontSize: 10, color: C.textDim, marginTop: 22, letterSpacing: 2 }}>
+            受邀制 · 深度内在旅程
           </p>
         </motion.div>
 
@@ -133,350 +195,256 @@ function Hero() {
   )
 }
 
-/* ─── Section 2: 当前处境 ─── */
-function CurrentState() {
-  const states = [
-    '脑子一直在转，但不在当下',
-    '重要决策前最慌，越想越不清晰',
-    '灵感和创造力——越需要越来不了',
-    '精力被担忧未来耗掉，真正要产出时没油了',
-    '知道该放松，但身体停不下来',
-  ]
+/* ─── 机会段 ─── */
+function Opportunity() {
   return (
-    <Section bg={C.bgAlt} style={{ padding: '120px 0' }}>
-      <div style={{ maxWidth: 560, width: '100%', padding: '0 28px' }}>
-        <SectionLabel text="当前处境" />
-        <SectionTitle>
-          不是你<span style={{ color: C.gold }}>不够努力</span>。<br />
-          是旧程序一直在<span style={{ color: C.gold }}>后台运行</span>。
-        </SectionTitle>
-
-        <div style={{ marginTop: 48, display: 'flex', flexDirection: 'column', gap: 16 }}>
-          {states.map((s, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, x: -12 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: '-60px' }}
-              transition={{ duration: 0.6, delay: i * 0.08 }}
-              style={{
-                padding: '18px 22px',
-                borderLeft: `2px solid ${C.borderStrong}`,
-                background: C.bgCard,
-                borderRadius: '0 8px 8px 0',
-                fontSize: 14,
-                lineHeight: 1.7,
-                color: C.white,
-              }}
-            >
-              {s}
-            </motion.div>
-          ))}
-        </div>
-
+    <Section style={{ padding: '140px 0', position: 'relative', zIndex: 1 }}>
+      <div style={{ maxWidth: 620, width: '100%', padding: '0 32px' }}>
+        <SectionLabel text="THE OPPORTUNITY" />
         <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.5 }}
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 1 }}
           style={{
-            marginTop: 48, fontSize: 13, lineHeight: 2, color: C.textDim,
-            fontFamily: FONT_SERIF, fontStyle: 'italic', textAlign: 'center',
+            fontFamily: FONT_SERIF,
+            fontSize: 22,
+            lineHeight: 2,
+            color: C.white,
+            marginTop: 40,
+            letterSpacing: 1.5,
+            textAlign: 'center',
           }}
         >
-          这不是"你出问题了"，<br />
-          是身体正在用生存模式运行。
+          旨在挑战你掌控自己的生活<br />
+          将为你提供无数机会，<br />
+          让你<span style={{ color: C.platinum }}>超越自我</span>，<br />
+          并与这个<span style={{ color: C.platinum }}>无限的、赋予生命的能量源头</span>相连。
         </motion.p>
       </div>
     </Section>
   )
 }
 
-/* ─── Section 3: 我们做了什么 ─── */
-function WhatWeBuilt() {
-  const mechanism = [
-    {
-      label: '情绪链条',
-      desc: '事件 → 身体感受 → 判断 → 情绪 → 自动反应',
-      detail: '你以为的决策，其实是链条跑完的结果。',
-    },
-    {
-      label: '生存模式',
-      desc: '交感神经持续激活 · 战/逃/冻',
-      detail: '这种状态下，创造力、直觉、大局观都会被压制。',
-    },
-    {
-      label: '创造模式',
-      desc: '副交感神经激活 · 回到当下',
-      detail: '身体松开的那一刻，判断力、灵感、心流才会回来。',
-    },
+/* ─── 证据段 ─── */
+function Evidence() {
+  const pillars = [
+    { label: 'REAL-TIME', title: '实时见证', detail: '转化的可衡量证据' },
+    { label: 'SCIENCE', title: '潜能的科学', detail: '唤醒大脑和身体潜在系统中存在的潜能' },
+    { label: 'REPROGRAM', title: '重新编程', detail: '挑战当前的信念，超越您的局限' },
   ]
   return (
-    <Section style={{ padding: '120px 0' }}>
-      <div style={{ maxWidth: 560, width: '100%', padding: '0 28px' }}>
-        <SectionLabel text="我们做了什么" />
+    <Section
+      style={{
+        padding: '140px 0',
+        background: `linear-gradient(180deg, transparent, ${C.bgNavy} 50%, transparent)`,
+        position: 'relative', zIndex: 1,
+      }}
+    >
+      <div style={{ maxWidth: 620, width: '100%', padding: '0 32px' }}>
+        <SectionLabel text="MEASURABLE EVIDENCE" />
         <SectionTitle>
-          不是"教你怎么做"，<br />
-          是训练身体<span style={{ color: C.gold }}>自动切换模式</span>。
+          实时见证<span style={{ color: C.platinum }}>转化的可衡量证据</span>，<br />
+          并学习唤醒大脑和身体潜在系统中<br />
+          存在潜能的<span style={{ color: C.platinum }}>科学</span>。
         </SectionTitle>
-
-        <div style={{ marginTop: 48, display: 'flex', flexDirection: 'column', gap: 20 }}>
-          {mechanism.map((m, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 0.7, delay: i * 0.12 }}
-              style={{
-                padding: '24px 22px',
-                background: C.bgCard,
-                border: `1px solid ${C.border}`,
-                borderRadius: 12,
-              }}
-            >
-              <div style={{
-                fontSize: 11, letterSpacing: 3, color: C.goldDim,
-                marginBottom: 8,
-              }}>
-                STEP {i + 1}
-              </div>
-              <div style={{
-                fontFamily: FONT_SERIF, fontSize: 20, fontWeight: 500,
-                color: C.white, marginBottom: 8, letterSpacing: 1,
-              }}>
-                {m.label}
-              </div>
-              <div style={{ fontSize: 13, color: C.gold, marginBottom: 10, letterSpacing: 0.5 }}>
-                {m.desc}
-              </div>
-              <div style={{ fontSize: 13, lineHeight: 1.8, color: C.textMid }}>
-                {m.detail}
-              </div>
-            </motion.div>
-          ))}
-        </div>
-
-        <motion.div
+        <motion.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.4 }}
+          transition={{ duration: 0.9, delay: 0.2 }}
           style={{
-            marginTop: 40,
-            padding: '24px 22px',
-            borderTop: `1px solid ${C.border}`,
-            borderBottom: `1px solid ${C.border}`,
-            textAlign: 'center',
+            marginTop: 28,
+            fontSize: 14, lineHeight: 2, color: C.textMid,
+            textAlign: 'center', letterSpacing: 0.5,
           }}
         >
-          <p style={{ fontSize: 11, letterSpacing: 3, color: C.goldDim, marginBottom: 12 }}>
-            三把钥匙
-          </p>
-          <p style={{
-            fontFamily: FONT_SERIF, fontSize: 18, lineHeight: 2,
-            color: C.white, letterSpacing: 2,
-          }}>
-            活在当下 · BEING 能量 · 臣服更大的力量
-          </p>
-        </motion.div>
-      </div>
-    </Section>
-  )
-}
+          帮助您挑战当前的信念，<br />
+          并重新编程您的大脑和身体，<br />
+          <span style={{ color: C.silver }}>从而超越您的局限</span>。
+        </motion.p>
 
-/* ─── Section 4: 课程结构 ─── */
-function CourseStructure() {
-  const maps = [
-    { name: '旧程序地图', desc: '识别并松动：讨好 / 控制 / 被否定等自动反应', icon: '◐' },
-    { name: '身体反应地图', desc: '看到身体里收缩的具体位置和变化', icon: '◉' },
-    { name: '新身份成长树', desc: '稳定感 · 边界感 · 丰盛感——长出来的枝叶', icon: '✦' },
-    { name: '关系模式图谱', desc: '看到在关系里反复跑的那套剧本', icon: '◈' },
-  ]
-  const practices = [
-    '呼吸球 · 身体回到当下',
-    '身体感知 · 识别旧程序启动',
-    '情境停顿 · 在反应之前多一秒',
-    '送去未来 · 每天给未来的自己寄一片',
-  ]
-  return (
-    <Section bg={C.bgAlt} style={{ padding: '120px 0' }}>
-      <div style={{ maxWidth: 560, width: '100%', padding: '0 28px' }}>
-        <SectionLabel text="课程结构" />
-        <SectionTitle>
-          四张<span style={{ color: C.gold }}>地图</span>，<br />
-          养一个<span style={{ color: C.gold }}>未来版本的你</span>。
-        </SectionTitle>
-
-        <div style={{ marginTop: 48, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
-          {maps.map((m, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 0.6, delay: i * 0.1 }}
-              style={{
-                padding: '20px 16px',
-                background: C.bgCard,
-                border: `1px solid ${C.border}`,
-                borderRadius: 12,
-                minHeight: 140,
-              }}
-            >
-              <div style={{ fontSize: 22, color: C.gold, marginBottom: 10 }}>{m.icon}</div>
-              <div style={{
-                fontFamily: FONT_SERIF, fontSize: 15, fontWeight: 500,
-                color: C.white, marginBottom: 8, letterSpacing: 1,
-              }}>
-                {m.name}
-              </div>
-              <div style={{ fontSize: 11, lineHeight: 1.7, color: C.textMid }}>
-                {m.desc}
-              </div>
-            </motion.div>
-          ))}
-        </div>
-
-        <div style={{ marginTop: 40 }}>
-          <p style={{ fontSize: 11, letterSpacing: 3, color: C.goldDim, marginBottom: 16 }}>
-            核心训练
-          </p>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-            {practices.map((p, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, x: -8 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.08 }}
-                style={{
-                  fontSize: 13, color: C.white,
-                  padding: '10px 0',
-                  borderBottom: `1px solid ${C.border}`,
-                  display: 'flex', alignItems: 'center', gap: 12,
-                }}
-              >
-                <span style={{ color: C.gold, fontSize: 10 }}>◇</span>
-                {p}
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </Section>
-  )
-}
-
-/* ─── Section 5: 结果承诺 ─── */
-function Promise() {
-  const outcomes = [
-    { before: '心流靠运气', after: '心流成为可以按下的开关' },
-    { before: '压力下判断模糊', after: '压力下判断反而更清晰' },
-    { before: '灵感等不来', after: '头脑安静了，灵感回来了' },
-    { before: '被事情推着跑', after: '事情从你这里流出来' },
-    { before: '同样时间同样产出', after: '质量和速度同时改变' },
-  ]
-  return (
-    <Section style={{ padding: '120px 0' }}>
-      <div style={{ maxWidth: 560, width: '100%', padding: '0 28px' }}>
-        <SectionLabel text="结果承诺" />
-        <SectionTitle>
-          当你进入<span style={{ color: C.gold }}>创造者模式</span>——
-        </SectionTitle>
-
-        <div style={{ marginTop: 48, display: 'flex', flexDirection: 'column', gap: 18 }}>
-          {outcomes.map((o, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 0.6, delay: i * 0.08 }}
-              style={{
-                display: 'flex', alignItems: 'center', gap: 16,
-                padding: '14px 0',
-                borderBottom: i === outcomes.length - 1 ? 'none' : `1px solid ${C.border}`,
-              }}
-            >
-              <div style={{ flex: 1, fontSize: 13, color: C.textDim, textDecoration: 'line-through' }}>
-                {o.before}
-              </div>
-              <div style={{ color: C.gold, fontSize: 14 }}>→</div>
-              <div style={{
-                flex: 1.2, fontSize: 14, color: C.white, fontWeight: 500,
-                fontFamily: FONT_SERIF, lineHeight: 1.5,
-              }}>
-                {o.after}
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </Section>
-  )
-}
-
-/* ─── Section 6: 见证 / 对话片段 ─── */
-function Witness() {
-  const voices = [
-    {
-      quote: '练了两周，第一次在融资 pitch 前没失眠。不是准备得更多，是身体先松下来了。',
-      meta: '连续创业者 · 35',
-    },
-    {
-      quote: '以前灵感像乞讨，现在像订阅。不是我变聪明了，是头脑终于安静了。',
-      meta: 'SaaS 创始人 · 41',
-    },
-    {
-      quote: '同样的 12 小时，产出翻倍，还没那么累。因为我不再跟自己打架。',
-      meta: 'VC · 33',
-    },
-  ]
-  return (
-    <Section bg={C.bgAlt} style={{ padding: '120px 0' }}>
-      <div style={{ maxWidth: 560, width: '100%', padding: '0 28px' }}>
-        <SectionLabel text="见证" />
-        <SectionTitle>
-          他们<span style={{ color: C.gold }}>先一步</span>回到了当下。
-        </SectionTitle>
-
-        <div style={{ marginTop: 48, display: 'flex', flexDirection: 'column', gap: 20 }}>
-          {voices.map((v, i) => (
+        <div style={{
+          marginTop: 64, display: 'grid', gridTemplateColumns: '1fr', gap: 14,
+        }}>
+          {pillars.map((p, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 0.7, delay: i * 0.15 }}
+              transition={{ duration: 0.8, delay: i * 0.1 }}
               style={{
-                padding: '24px 22px',
+                padding: '22px 26px',
                 background: C.bgCard,
+                border: `1px solid ${C.borderCool}`,
+                borderLeft: `2px solid ${C.platinum}`,
+                display: 'flex', alignItems: 'center', gap: 20,
+              }}
+            >
+              <div style={{
+                fontSize: 9, letterSpacing: 4, color: C.platinumDim,
+                minWidth: 78,
+              }}>
+                {p.label}
+              </div>
+              <div>
+                <div style={{
+                  fontFamily: FONT_SERIF, fontSize: 16, color: C.white,
+                  marginBottom: 4, letterSpacing: 1,
+                }}>
+                  {p.title}
+                </div>
+                <div style={{ fontSize: 12, color: C.textMid, lineHeight: 1.6 }}>
+                  {p.detail}
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </Section>
+  )
+}
+
+/* ─── 学习段 ─── */
+function Learning() {
+  return (
+    <Section style={{ padding: '140px 0', position: 'relative', zIndex: 1 }}>
+      <div style={{ maxWidth: 620, width: '100%', padding: '0 32px', textAlign: 'center' }}>
+        <SectionLabel text="WHAT YOU WILL LEARN" center />
+        <motion.p
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 1 }}
+          style={{
+            fontFamily: FONT_SERIF,
+            fontSize: 22,
+            lineHeight: 2,
+            color: C.white,
+            marginTop: 40,
+            letterSpacing: 1.5,
+          }}
+        >
+          通过学习，<br />
+          您将学习如何<span style={{ color: C.platinum }}>改变您的能量</span>，<br />
+          从过去中解脱出来，<br />
+          并<span style={{ color: C.platinum }}>创造一个新的未来</span>。
+        </motion.p>
+      </div>
+    </Section>
+  )
+}
+
+/* ─── 模块 1 / 2 / 4 / 5 ─── */
+function Modules() {
+  const modules = [
+    {
+      no: '01',
+      title: '改变的科学',
+      items: [
+        '了解大脑、身体和能量是如何相互作用的。',
+        '探索为什么改变如此困难，以及如何克服旧的习惯。',
+        '学习如何从"生存模式"切换到"创造模式"。',
+      ],
+    },
+    {
+      no: '02',
+      title: '超越自我',
+      items: [
+        '学习如何超越你的环境、你的身体和时间。',
+        '发现如何进入量子场——一个充满无限可能性的领域。',
+        '练习将你的注意力从已知世界转移到未知世界。',
+      ],
+    },
+    {
+      no: '04',
+      title: '重新编程你的潜意识',
+      items: [
+        '了解潜意识是如何运作的，以及如何进入它。',
+        '学习如何打破旧的情绪链条和自动反应。',
+      ],
+    },
+    {
+      no: '05',
+      title: '活出你的新现实',
+      items: [
+        '学习如何将这些教学应用到你的日常生活中。',
+        '发现如何保持你的新状态，无论外部环境如何。',
+        '体验作为自己生活的创造者所带来的力量和自由。',
+      ],
+    },
+  ]
+  return (
+    <Section
+      style={{
+        padding: '140px 0',
+        background: `linear-gradient(180deg, transparent, ${C.bgNavy} 50%, transparent)`,
+        position: 'relative', zIndex: 1,
+      }}
+    >
+      <div style={{ maxWidth: 620, width: '100%', padding: '0 32px' }}>
+        <SectionLabel text="CURRICULUM" />
+        <SectionTitle>
+          五个<span style={{ color: C.platinum }}>模块</span>，<br />
+          一次彻底的<span style={{ color: C.platinum }}>内在重构</span>。
+        </SectionTitle>
+
+        <div style={{ marginTop: 56, display: 'flex', flexDirection: 'column', gap: 18 }}>
+          {modules.map((m, i) => (
+            <motion.div
+              key={m.no}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{ duration: 0.8, delay: i * 0.08 }}
+              style={{
+                padding: '28px 26px',
+                background: C.bgCardHi,
                 border: `1px solid ${C.border}`,
-                borderRadius: 12,
                 position: 'relative',
               }}
             >
               <div style={{
-                position: 'absolute', top: 14, left: 18,
-                fontSize: 32, color: C.gold, opacity: 0.25,
-                fontFamily: FONT_SERIF, lineHeight: 1,
+                position: 'absolute', top: 20, right: 22,
+                fontFamily: FONT_SERIF, fontSize: 40, fontWeight: 300,
+                color: C.platinumGlow, lineHeight: 1,
+                letterSpacing: 2,
               }}>
-                "
+                {m.no}
               </div>
-              <p style={{
-                fontSize: 14, lineHeight: 1.9, color: C.white,
-                marginBottom: 16, paddingLeft: 20,
-                fontFamily: FONT_SERIF, fontStyle: 'italic',
+              <div style={{
+                fontSize: 9, letterSpacing: 4, color: C.platinumDim,
+                marginBottom: 10,
               }}>
-                {v.quote}
-              </p>
-              <p style={{
-                fontSize: 11, letterSpacing: 2, color: C.goldDim,
-                paddingLeft: 20,
+                模块 {m.no.replace(/^0/, '')}
+              </div>
+              <div style={{
+                fontFamily: FONT_SERIF, fontSize: 22, fontWeight: 500,
+                color: C.white, marginBottom: 18, letterSpacing: 1.5,
               }}>
-                — {v.meta}
-              </p>
+                {m.title}
+              </div>
+              <ul style={{
+                listStyle: 'none', padding: 0, margin: 0,
+                display: 'flex', flexDirection: 'column', gap: 10,
+              }}>
+                {m.items.map((it, j) => (
+                  <li key={j} style={{
+                    fontSize: 13.5, lineHeight: 1.8, color: C.textMid,
+                    display: 'flex', gap: 12, alignItems: 'flex-start',
+                  }}>
+                    <span style={{
+                      color: C.platinum, fontSize: 9,
+                      marginTop: 8, flexShrink: 0,
+                    }}>
+                      ◆
+                    </span>
+                    <span>{it}</span>
+                  </li>
+                ))}
+              </ul>
             </motion.div>
           ))}
         </div>
@@ -485,92 +453,103 @@ function Witness() {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
           style={{
-            marginTop: 40, fontSize: 11, letterSpacing: 2,
+            marginTop: 28, fontSize: 10, letterSpacing: 2,
             color: C.textDim, textAlign: 'center',
           }}
         >
-          见证匿名化处理 · 征得本人同意使用
+          * 原稿模块顺序 01 / 02 / 04 / 05
         </motion.p>
       </div>
     </Section>
   )
 }
 
-/* ─── Section 7: 定价 CTA ─── */
+/* ─── 定价 CTA ─── */
 function PricingCTA() {
   return (
-    <Section style={{ padding: '120px 0 140px' }}>
-      <div style={{ maxWidth: 440, width: '100%', padding: '0 28px', textAlign: 'center' }}>
-        <SectionLabel text="开始" center />
+    <Section style={{ padding: '140px 0 160px', position: 'relative', zIndex: 1 }}>
+      <div style={{ maxWidth: 500, width: '100%', padding: '0 32px', textAlign: 'center' }}>
+        <SectionLabel text="BEGIN" center />
 
         <motion.h2
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.9 }}
           style={{
-            fontFamily: FONT_SERIF, fontSize: 26, fontWeight: 500,
-            lineHeight: 1.5, color: C.white, marginBottom: 24, letterSpacing: 1,
+            fontFamily: FONT_SERIF, fontSize: 28, fontWeight: 500,
+            lineHeight: 1.6, color: C.white, marginBottom: 40,
+            letterSpacing: 2, marginTop: 28,
           }}
         >
-          你不用等<span style={{ color: C.gold }}>所有条件都具备</span>。<br />
-          你只需要<span style={{ color: C.gold }}>开始</span>。
+          <span style={{ color: C.platinum }}>超越自我</span><br />
+          从当下这一刻开始
         </motion.h2>
 
         <motion.div
           initial={{ opacity: 0, scale: 0.96 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.9 }}
           style={{
-            marginTop: 40,
-            padding: '36px 28px',
-            background: `linear-gradient(160deg, ${C.goldGlow}, ${C.bgCard})`,
+            marginTop: 28,
+            padding: '44px 32px',
+            background: `linear-gradient(160deg, ${C.platinumGlow}, ${C.bgCard})`,
             border: `1px solid ${C.borderStrong}`,
-            borderRadius: 16,
+            position: 'relative',
           }}
         >
-          <div style={{ fontSize: 11, letterSpacing: 3, color: C.goldDim, marginBottom: 14 }}>
-            创造者模式 · 完整训练
+          <div style={{
+            position: 'absolute', top: 0, left: '50%', width: 40, height: 1,
+            background: C.platinum, transform: 'translateX(-50%)',
+          }} />
+
+          <div style={{ fontSize: 10, letterSpacing: 5, color: C.platinumDim, marginBottom: 20 }}>
+            QUANTUM · ACCESS
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', gap: 6, marginBottom: 10 }}>
-            <span style={{ fontSize: 14, color: C.textMid }}>¥</span>
+          <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', gap: 6, marginBottom: 8 }}>
+            <span style={{ fontSize: 14, color: C.silver }}>$</span>
             <span style={{
-              fontFamily: FONT_SERIF, fontSize: 48, fontWeight: 500,
-              color: C.gold, letterSpacing: 1,
+              fontFamily: FONT_SERIF, fontSize: 54, fontWeight: 400,
+              color: C.platinum, letterSpacing: 2,
             }}>
               ———
             </span>
-            <span style={{ fontSize: 13, color: C.textDim }}>/ 月</span>
           </div>
-          <div style={{ fontSize: 11, color: C.textDim, marginBottom: 28, letterSpacing: 1 }}>
-            价格待 ELENA 确认
+          <div style={{ fontSize: 10, color: C.textDim, marginBottom: 36, letterSpacing: 2 }}>
+            PRICE TBD · 价格待确认
           </div>
 
           <ul style={{
-            listStyle: 'none', padding: 0, margin: '0 0 32px',
-            display: 'flex', flexDirection: 'column', gap: 12,
+            listStyle: 'none', padding: 0, margin: '0 0 40px',
+            display: 'flex', flexDirection: 'column', gap: 14,
             fontSize: 13, color: C.white, textAlign: 'left',
           }}>
             {[
-              '四张地图 · 完整训练系统',
-              '核心 UX · 每日 3~5 分钟',
-              '未来自己 · 每天回来看你',
-              '7 天免费体验 · 随时取消',
+              '五个模块 · 完整课程',
+              '深度内在旅程 · 量子场实操',
+              '实时可衡量的转化证据',
+              '重新编程大脑与身体的科学',
             ].map((item, i) => (
-              <li key={i} style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
-                <span style={{ color: C.gold, fontSize: 10 }}>✦</span>
-                {item}
+              <li key={i} style={{
+                display: 'flex', gap: 12, alignItems: 'center',
+                paddingBottom: 10, borderBottom: `1px solid ${C.border}`,
+              }}>
+                <span style={{ color: C.platinum, fontSize: 9 }}>◆</span>
+                <span style={{ letterSpacing: 0.5 }}>{item}</span>
               </li>
             ))}
           </ul>
 
-          <CTAButton label="开始进入创造者模式" large />
-          <p style={{ fontSize: 10, color: C.textDim, marginTop: 16, letterSpacing: 1 }}>
-            不是课程 · 是训练系统 · 养一个未来版本的你
+          <CTAButton label="进入量子场" large />
+          <p style={{
+            fontSize: 10, color: C.textDim, marginTop: 20,
+            letterSpacing: 2, lineHeight: 1.8,
+          }}>
+            超越自我 · 重写未来
           </p>
         </motion.div>
       </div>
@@ -585,27 +564,25 @@ function Footer() {
       padding: '40px 28px 60px',
       textAlign: 'center',
       borderTop: `1px solid ${C.border}`,
-      fontSize: 10, letterSpacing: 2, color: C.textDim,
+      fontSize: 10, letterSpacing: 4, color: C.textDim,
+      position: 'relative', zIndex: 1,
     }}>
       LOVE · EGO · AI · 2026
     </div>
   )
 }
 
-/* ─── 共用组件 ─── */
+/* ─── 共用 ─── */
 function Section({
   children,
-  bg,
   style,
 }: {
   children: React.ReactNode
-  bg?: string
   style?: React.CSSProperties
 }) {
   return (
     <section style={{
       width: '100%',
-      background: bg || 'transparent',
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
@@ -622,13 +599,22 @@ function SectionLabel({ text, center }: { text: string; center?: boolean }) {
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.6 }}
+      transition={{ duration: 0.7 }}
       style={{
-        fontSize: 11, letterSpacing: 6, color: C.goldDim,
-        marginBottom: 20, textAlign: center ? 'center' : 'left',
+        fontSize: 10, letterSpacing: 8, color: C.platinumDim,
+        textAlign: center ? 'center' : 'left',
+        display: 'flex', alignItems: 'center',
+        gap: 14,
+        justifyContent: center ? 'center' : 'flex-start',
       }}
     >
-      — {text} —
+      <span style={{
+        width: 24, height: 1, background: C.platinumDim,
+      }} />
+      {text}
+      <span style={{
+        width: 24, height: 1, background: C.platinumDim,
+      }} />
     </motion.p>
   )
 }
@@ -639,14 +625,16 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
       initial={{ opacity: 0, y: 12 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-40px' }}
-      transition={{ duration: 0.8 }}
+      transition={{ duration: 0.9 }}
       style={{
         fontFamily: FONT_SERIF,
-        fontSize: 24,
+        fontSize: 26,
         fontWeight: 500,
         lineHeight: 1.6,
         color: C.white,
-        letterSpacing: 1,
+        letterSpacing: 1.5,
+        marginTop: 24,
+        textAlign: 'center',
       }}
     >
       {children}
@@ -657,21 +645,23 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
 function CTAButton({ label, large }: { label: string; large?: boolean }) {
   return (
     <motion.button
-      whileTap={{ scale: 0.96 }}
+      whileTap={{ scale: 0.97 }}
       whileHover={{ scale: 1.02 }}
       style={{
-        padding: large ? '16px 48px' : '14px 40px',
-        borderRadius: 32,
-        border: 'none',
-        background: `linear-gradient(135deg, ${C.gold}, #B8956A)`,
-        color: '#1C1917',
-        fontSize: large ? 15 : 14,
-        fontWeight: 600,
-        letterSpacing: 2,
+        padding: large ? '18px 52px' : '15px 44px',
+        borderRadius: 0,
+        border: `1px solid ${C.platinum}`,
+        background: 'transparent',
+        color: C.platinum,
+        fontSize: large ? 14 : 12,
+        fontWeight: 500,
+        letterSpacing: 5,
         cursor: 'pointer',
         outline: 'none',
         WebkitTapHighlightColor: 'transparent',
-        boxShadow: `0 8px 28px rgba(196,168,130,0.25)`,
+        fontFamily: FONT_SERIF,
+        position: 'relative',
+        overflow: 'hidden',
       }}
     >
       {label}
@@ -684,15 +674,15 @@ function ScrollHint() {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: [0, 1, 1, 0.3] }}
-      transition={{ duration: 2.4, delay: 1.5, repeat: Infinity, repeatDelay: 0.5 }}
+      transition={{ duration: 2.4, delay: 1.8, repeat: Infinity, repeatDelay: 0.6 }}
       style={{
-        marginTop: 72,
+        marginTop: 80,
         display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10,
       }}
     >
-      <div style={{ width: 1, height: 24, background: C.goldDim }} />
-      <span style={{ fontSize: 10, letterSpacing: 3, color: C.textDim }}>
-        向下了解
+      <div style={{ width: 1, height: 28, background: C.platinumDim }} />
+      <span style={{ fontSize: 9, letterSpacing: 4, color: C.textDim }}>
+        SCROLL
       </span>
     </motion.div>
   )
