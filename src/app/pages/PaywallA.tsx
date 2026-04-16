@@ -37,6 +37,7 @@ export default function PaywallA() {
       <Paragraph2 />
       <Paragraph3 />
       <Paragraph4 />
+      <VisionSection />
       <Modules />
       <PricingCTA />
       <Footer />
@@ -239,6 +240,71 @@ function Paragraph4() {
           }}
         >
           通过学习，您将学习如何改变您的能量，从过去中解脱出来，并创造一个新的未来。
+        </motion.p>
+      </div>
+    </Section>
+  )
+}
+
+/* ─── 愿景段（ELENA 原文方向：画饼 · 融资 / 上市 / 全世界喜爱的产品） ─── */
+function VisionSection() {
+  const lines = [
+    '你也可以融资。',
+    '你也可以上市。',
+    '你也可以做全世界人都喜爱的产品。',
+  ]
+  return (
+    <Section style={{
+      padding: '180px 0',
+      position: 'relative', zIndex: 1,
+      borderTop: `1px solid ${C.border}`,
+    }}>
+      <div style={{ maxWidth: 900, width: '100%', padding: '0 32px', textAlign: 'center' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 32, marginBottom: 72 }}>
+          {lines.map((line, i) => (
+            <motion.p
+              key={i}
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{ duration: 0.9, delay: i * 0.15 }}
+              style={{
+                fontSize: 'clamp(28px, 4.5vw, 56px)',
+                fontWeight: 800,
+                color: C.white,
+                letterSpacing: '-0.02em',
+                lineHeight: 1.15,
+                margin: 0,
+              }}
+            >
+              {line}
+            </motion.p>
+          ))}
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0, scaleX: 0 }}
+          whileInView={{ opacity: 1, scaleX: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.5 }}
+          style={{ width: 60, height: 2, background: C.white, margin: '0 auto 48px' }}
+        />
+
+        <motion.p
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1, delay: 0.7 }}
+          style={{
+            fontSize: 'clamp(18px, 2.5vw, 26px)',
+            fontWeight: 400,
+            color: C.textMid,
+            letterSpacing: '0.04em',
+            lineHeight: 1.7,
+            margin: 0,
+          }}
+        >
+          你需要的只是让灵光流过你。
         </motion.p>
       </div>
     </Section>
