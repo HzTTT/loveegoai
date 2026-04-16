@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Love Ego AI — 小红书账号主页规划</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;700&family=Noto+Sans+SC:wght@300;400;500&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #f0ebe5;
+    font-family: 'Noto Sans SC', sans-serif;
+    padding: 40px;
+  }
+
+  h1 { font-family: 'Noto Serif SC', serif; color: #3D2E2A; font-size: 28px; margin-bottom: 8px; }
+  .section-label { color: #8B9E9B; font-size: 14px; margin-bottom: 40px; letter-spacing: 2px; }
+
+  /* ===== 手机模拟框 ===== */
+  .phone {
+    width: 375px;
+    background: #fff;
+    border-radius: 32px;
+    overflow: hidden;
+    box-shadow: 0 12px 48px rgba(0,0,0,0.12);
+    margin: 0 auto 48px;
+  }
+
+  /* 状态栏 */
+  .status-bar {
+    height: 44px;
+    background: #FAF7F3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1A1412;
+  }
+
+  /* 头像区域 */
+  .profile-header {
+    background: linear-gradient(180deg, #FAF7F3 0%, #F5EDE4 100%);
+    padding: 24px 20px 20px;
+    text-align: center;
+  }
+
+  .avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #E8D5CC 0%, #C4A882 100%);
+    margin: 0 auto 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Noto Serif SC', serif;
+    font-size: 28px;
+    color: #FAF7F3;
+    font-weight: 700;
+  }
+
+  .profile-name {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: #1A1412;
+    margin-bottom: 4px;
+  }
+
+  .profile-id {
+    font-size: 12px;
+    color: #8B9E9B;
+    margin-bottom: 12px;
+  }
+
+  .profile-bio {
+    font-size: 13px;
+    line-height: 1.8;
+    color: #3D2E2A;
+    text-align: left;
+    padding: 0 8px;
+    margin-bottom: 16px;
+  }
+
+  .profile-bio .bio-highlight {
+    color: #C47D6D;
+    font-weight: 500;
+  }
+
+  .profile-stats {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    padding: 12px 0;
+    border-top: 1px solid #E8D5CC;
+  }
+
+  .stat { text-align: center; }
+  .stat-num { font-size: 18px; font-weight: 600; color: #1A1412; }
+  .stat-label { font-size: 11px; color: #8B9E9B; margin-top: 2px; }
+
+  /* 高光/置顶区 */
+  .highlights {
+    display: flex;
+    gap: 12px;
+    padding: 16px 20px;
+    overflow-x: auto;
+    background: #fff;
+  }
+
+  .highlight-item {
+    flex-shrink: 0;
+    width: 64px;
+    text-align: center;
+  }
+
+  .highlight-circle {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 500;
+    color: #FAF7F3;
+    margin-bottom: 4px;
+    line-height: 1.3;
+    text-align: center;
+    padding: 4px;
+  }
+
+  .highlight-label {
+    font-size: 10px;
+    color: #3D2E2A;
+    line-height: 1.3;
+  }
+
+  .hl-pain { background: linear-gradient(135deg, #C47D6D, #D4928A); }
+  .hl-reason { background: linear-gradient(135deg, #8B9E9B, #A0B3B0); }
+  .hl-transform { background: linear-gradient(135deg, #B8956A, #C4A882); }
+  .hl-practice { background: linear-gradient(135deg, #3D2E2A, #5A4540); }
+
+  /* 内容网格 */
+  .content-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    padding: 2px;
+    background: #fff;
+  }
+
+  .grid-item {
+    aspect-ratio: 3/4;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 8px;
+    text-align: center;
+    position: relative;
+  }
+
+  .grid-item .grid-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1.5;
+  }
+
+  .grid-item .grid-sub {
+    font-size: 9px;
+    margin-top: 4px;
+    opacity: 0.6;
+    line-height: 1.4;
+  }
+
+  .grid-pain {
+    background: linear-gradient(160deg, #F5EDE4, #E8D1C5);
+    color: #1A1412;
+  }
+  .grid-reason {
+    background: linear-gradient(160deg, #FAF7F3, #E5DED6);
+    color: #1A1412;
+  }
+  .grid-convert {
+    background: linear-gradient(160deg, #3D2E2A, #1A1412);
+    color: #FAF7F3;
+  }
+
+  /* 说明区 */
+  .notes {
+    max-width: 600px;
+    margin: 32px auto;
+    padding: 24px;
+    background: #FAF7F3;
+    border-radius: 12px;
+  }
+
+  .notes h2 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 18px;
+    color: #3D2E2A;
+    margin-bottom: 16px;
+  }
+
+  .notes p {
+    font-size: 14px;
+    line-height: 1.8;
+    color: #3D2E2A;
+    margin-bottom: 8px;
+  }
+
+  .notes .note-label {
+    font-weight: 500;
+    color: #C47D6D;
+  }
+</style>
+</head>
+<body>
+
+<h1>Love Ego AI — 小红书账号主页规划</h1>
+<p class="section-label">PROFILE DESIGN · V1</p>
+
+<div class="phone">
+  <div class="status-bar">9:41</div>
+
+  <div class="profile-header">
+    <div class="avatar">觉</div>
+    <div class="profile-name">Love Ego AI</div>
+    <div class="profile-id">@loveegoai</div>
+    <div class="profile-bio">
+      <span class="bio-highlight">你不是不知道，你是改不了。</span><br>
+      帮你停掉旧程序，训练新的反应方式。<br>
+      不是听课，是训练。不是道理，是身体。
+    </div>
+    <div class="profile-stats">
+      <div class="stat"><div class="stat-num">—</div><div class="stat-label">关注</div></div>
+      <div class="stat"><div class="stat-num">—</div><div class="stat-label">粉丝</div></div>
+      <div class="stat"><div class="stat-num">—</div><div class="stat-label">获赞与收藏</div></div>
+    </div>
+  </div>
+
+  <div class="highlights">
+    <div class="highlight-item">
+      <div class="highlight-circle hl-pain">旧<br>程序</div>
+      <div class="highlight-label">什么是<br>旧程序</div>
+    </div>
+    <div class="highlight-item">
+      <div class="highlight-circle hl-reason">为<br>什么</div>
+      <div class="highlight-label">为什么<br>改不了</div>
+    </div>
+    <div class="highlight-item">
+      <div class="highlight-circle hl-transform">训<br>练</div>
+      <div class="highlight-label">训练<br>是什么</div>
+    </div>
+    <div class="highlight-item">
+      <div class="highlight-circle hl-practice">体<br>验</div>
+      <div class="highlight-label">免费<br>体验</div>
+    </div>
+  </div>
+
+  <div class="content-grid">
+    <div class="grid-item grid-pain">
+      <div class="grid-title">你不是不努力<br>你是被困住了</div>
+    </div>
+    <div class="grid-item grid-pain">
+      <div class="grid-title">为什么发誓要变<br>一触发就打回原形</div>
+    </div>
+    <div class="grid-item grid-pain">
+      <div class="grid-title">你的人生<br>一直在重复</div>
+    </div>
+    <div class="grid-item grid-pain">
+      <div class="grid-title">你以为<br>你在做选择</div>
+    </div>
+    <div class="grid-item grid-pain">
+      <div class="grid-title">道理听了<br>一百遍</div>
+    </div>
+    <div class="grid-item grid-reason">
+      <div class="grid-title">旧程序在身体里<br>不在道理里</div>
+    </div>
+    <div class="grid-item grid-reason">
+      <div class="grid-title">你不是在创造<br>你是在防御</div>
+    </div>
+    <div class="grid-item grid-reason">
+      <div class="grid-title">小时候学会的<br>还在自动运行</div>
+    </div>
+    <div class="grid-item grid-convert">
+      <div class="grid-title">你缺的不是道理<br>是拉住你的系统</div>
+    </div>
+    <div class="grid-item grid-convert">
+      <div class="grid-title">触发时停住了<br>那就是转折点</div>
+    </div>
+    <div class="grid-item grid-reason">
+      <div class="grid-title">更多内容<br>持续更新…</div>
+      <div class="grid-sub">follow</div>
+    </div>
+    <div class="grid-item grid-pain">
+      <div class="grid-title">更多内容<br>持续更新…</div>
+      <div class="grid-sub">follow</div>
+    </div>
+  </div>
+</div>
+
+<div class="notes">
+  <h2>设计说明</h2>
+  <p><span class="note-label">头像：</span>暖金渐变圆形 +「觉」字。「觉」= 觉察，也是 awakening。简洁、有辨识度、不依赖照片。如果 ELENA 决定出镜，头像换成本人照片。</p>
+  <p><span class="note-label">简介：</span>第一行就是钩子（"你不是不知道，你是改不了"），后两行是定位。不提课程、不提冥想、不提灵修。</p>
+  <p><span class="note-label">高光：</span>4个高光故事，对应用户认知旅程：什么是旧程序 → 为什么改不了 → 训练是什么 → 免费体验入口。</p>
+  <p><span class="note-label">内容网格：</span>视觉上有节奏感——暖色（痛点）→ 灰色（原因）→ 深色（转化），用户滑动时能感受到"从痛到变"的渐进。</p>
+  <p><span class="note-label">整体调性：</span>温暖但不甜腻、有力但不压迫、专业但不冰冷。BEING 导向。</p>
+</div>
+
+</body>
+</html>

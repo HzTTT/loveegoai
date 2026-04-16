@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>考拉讲解视频 #04 — 头脑vs身体</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #111;
+    display: flex; justify-content: center; align-items: center;
+    min-height: 100vh;
+    font-family: -apple-system, "PingFang SC", "Helvetica Neue", sans-serif;
+  }
+
+  .frame {
+    width: 390px; height: 844px;
+    background: #1C1917;
+    position: relative; overflow: hidden; border-radius: 24px;
+  }
+
+  .glow {
+    position: absolute; top: -80px; left: 50%; transform: translateX(-50%);
+    width: 500px; height: 400px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(196,168,130,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .tag {
+    position: absolute; top: 40px; left: 0; right: 0; text-align: center;
+    font-size: 10px; letter-spacing: 4px; color: rgba(196,168,130,0.5);
+    opacity: 0; transition: opacity 0.6s;
+  }
+  .tag.show { opacity: 1; }
+
+  /* ─ Scene 1：开场 ─ */
+  .scene { position: absolute; inset: 0; opacity: 0; transition: opacity 0.6s ease; pointer-events: none; }
+  .scene.show { opacity: 1; }
+
+  .s1-wrap {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 0 36px; text-align: center; gap: 16px;
+  }
+
+  .s1-title {
+    font-size: 26px; font-weight: 300; color: #FAFAF9; line-height: 1.5;
+    opacity: 0; transform: translateY(18px);
+    transition: opacity 0.7s, transform 0.7s;
+  }
+  .s1-title.show { opacity: 1; transform: translateY(0); }
+  .s1-title strong { font-weight: 600; }
+
+  /* ─ Scene 2：对白卡片 ─ */
+  .s2-wrap {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: stretch; justify-content: center;
+    padding: 80px 28px 60px; gap: 12px;
+  }
+
+  .dialogue-label {
+    font-size: 10px; letter-spacing: 3px; margin-bottom: 6px;
+    opacity: 0; transition: opacity 0.4s;
+  }
+  .dialogue-label.show { opacity: 0.5; }
+
+  .dialogue-row {
+    display: flex; align-items: center; gap: 10px;
+    opacity: 0; transform: translateX(-14px);
+    transition: opacity 0.45s, transform 0.45s;
+  }
+  .dialogue-row.show { opacity: 1; transform: translateX(0); }
+
+  .side-tag {
+    font-size: 9px; letter-spacing: 1px; font-weight: 600;
+    width: 36px; flex-shrink: 0; text-align: center;
+    padding: 3px 0; border-radius: 4px;
+  }
+  .side-tag.brain { color: #c4a882; background: rgba(196,168,130,0.1); }
+  .side-tag.body  { color: #FAFAF9; background: rgba(255,255,255,0.08); }
+
+  .bubble {
+    flex: 1; padding: 10px 14px; border-radius: 10px;
+    font-size: 13px; line-height: 1.5;
+  }
+  .bubble.brain {
+    background: rgba(196,168,130,0.08);
+    border: 1px solid rgba(196,168,130,0.2);
+    color: #c4a882;
+  }
+  .bubble.body {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: #A8A29E;
+  }
+
+  .vs-divider {
+    text-align: center; font-size: 11px; color: rgba(168,162,158,0.4);
+    letter-spacing: 2px; margin: 4px 0;
+    opacity: 0; transition: opacity 0.4s;
+  }
+  .vs-divider.show { opacity: 1; }
+
+  /* ─ Scene 3：游泳比喻 ─ */
+  .s3-wrap {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 80px 32px 80px; gap: 20px; text-align: center;
+  }
+
+  .analogy-box {
+    width: 100%;
+    border: 1px solid rgba(196,168,130,0.15);
+    border-radius: 16px; padding: 20px;
+    background: rgba(250,250,249,0.03);
+    opacity: 0; transform: translateY(12px);
+    transition: opacity 0.5s, transform 0.5s;
+  }
+  .analogy-box.show { opacity: 1; transform: translateY(0); }
+
+  .analogy-top {
+    font-size: 13px; color: #FAFAF9; line-height: 1.7; margin-bottom: 14px;
+  }
+  .analogy-split {
+    display: flex; gap: 10px;
+  }
+  .analogy-half {
+    flex: 1; background: rgba(196,168,130,0.07); border-radius: 10px;
+    padding: 10px 12px; text-align: center;
+  }
+  .analogy-half .ah-icon { font-size: 20px; margin-bottom: 4px; }
+  .analogy-half .ah-label { font-size: 11px; color: rgba(196,168,130,0.8); font-weight: 500; }
+  .analogy-half .ah-desc { font-size: 10px; color: rgba(168,162,158,0.7); margin-top: 3px; line-height: 1.4; }
+
+  .insight-text {
+    font-size: 17px; font-weight: 300; color: #FAFAF9; line-height: 1.6;
+    border-left: 2px solid #c4a882; padding-left: 14px; text-align: left;
+    opacity: 0; transform: translateY(8px);
+    transition: opacity 0.5s 0.2s, transform 0.5s 0.2s;
+  }
+  .insight-text.show { opacity: 1; transform: translateY(0); }
+  .insight-text em { font-style: normal; color: #c4a882; font-weight: 500; }
+
+  /* ─ Scene 4：结尾 ─ */
+  .s4-wrap {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 16px;
+    background: #111;
+  }
+  .end-logo { font-size: 10px; letter-spacing: 4px; color: #c4a882; }
+  .end-text { font-size: 20px; font-weight: 300; color: #FAFAF9; text-align: center; line-height: 1.6; }
+  .end-sub { font-size: 11px; color: rgba(168,162,158,0.6); letter-spacing: 1px; margin-top: 4px; }
+
+  /* 考拉 */
+  .koala {
+    position: absolute; bottom: -50px; right: -20px; width: 190px;
+    opacity: 0; transform: translateX(60px) translateY(50px);
+    transition: opacity 0.9s cubic-bezier(0.34,1.56,0.64,1),
+                transform 0.9s cubic-bezier(0.34,1.56,0.64,1);
+    z-index: 5; pointer-events: none;
+  }
+  .koala.show { opacity: 1; transform: translateX(0) translateY(0); }
+
+  .progress {
+    position: absolute; bottom: 0; left: 0; height: 3px;
+    background: #c4a882; width: 0; border-radius: 0 2px 2px 0;
+  }
+</style>
+</head>
+<body>
+<div class="frame">
+  <div class="glow"></div>
+  <p class="tag" id="tag">原理科普 · 04</p>
+
+  <!-- Scene 1 -->
+  <div class="scene" id="s1">
+    <div class="s1-wrap">
+      <div class="s1-title" id="s1title">
+        头脑说<strong>「我要改变」</strong><br />身体说<strong>「不行」</strong>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scene 2：对白 -->
+  <div class="scene" id="s2">
+    <div class="s2-wrap">
+      <div class="dialogue-label show" style="color:#c4a882">你有没有过这种体验</div>
+
+      <div class="dialogue-row" id="d1">
+        <div class="side-tag brain">头脑</div>
+        <div class="bubble brain">放松。</div>
+      </div>
+      <div class="dialogue-row" id="d1b">
+        <div class="side-tag body">身体</div>
+        <div class="bubble body">在紧绷。</div>
+      </div>
+
+      <div class="vs-divider" id="vs1">· · ·</div>
+
+      <div class="dialogue-row" id="d2">
+        <div class="side-tag brain">头脑</div>
+        <div class="bubble brain">信任他。</div>
+      </div>
+      <div class="dialogue-row" id="d2b">
+        <div class="side-tag body">身体</div>
+        <div class="bubble body">在防备。</div>
+      </div>
+
+      <div class="vs-divider" id="vs2">· · ·</div>
+
+      <div class="dialogue-row" id="d3">
+        <div class="side-tag brain">头脑</div>
+        <div class="bubble brain">去行动。</div>
+      </div>
+      <div class="dialogue-row" id="d3b">
+        <div class="side-tag body">身体</div>
+        <div class="bubble body">在收缩。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scene 3：解释 + 游泳比喻 -->
+  <div class="scene" id="s3">
+    <div class="s3-wrap">
+      <div class="analogy-box" id="analogyBox">
+        <div class="analogy-top">
+          这不是意志力不够——<br />这是两个系统在用不同节奏运行。
+        </div>
+        <div class="analogy-split">
+          <div class="analogy-half">
+            <div class="ah-icon">🧠</div>
+            <div class="ah-label">头脑</div>
+            <div class="ah-desc">1秒接受<br />一个新观点</div>
+          </div>
+          <div class="analogy-half">
+            <div class="ah-icon">🫁</div>
+            <div class="ah-label">身体</div>
+            <div class="ah-desc">反复练习<br />才能建立新反应</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="insight-text" id="insightText">
+        理解「游泳原理」<br />只需要一秒钟。<br />
+        <em>学会游泳，需要下水很多次。</em>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scene 4 -->
+  <div class="scene" id="s4">
+    <div class="s4-wrap">
+      <p class="end-logo">LOVE EGO AI</p>
+      <p class="end-text">理解，<br />和身体层面的改变，<br />是两件不同的事。</p>
+      <p class="end-sub">关注了解更多</p>
+    </div>
+  </div>
+
+  <img class="koala" id="koala" src="koala-ip.png" alt="考拉" />
+  <div class="progress" id="progress"></div>
+</div>
+
+<script>
+const show = id => document.getElementById(id)?.classList.add('show');
+const TOTAL = 38000;
+
+const tl = [
+  [200,  () => show('tag')],
+  [500,  () => show('koala')],
+  [600,  () => show('s1')],
+  [900,  () => show('s1title')],
+
+  // → Scene 2: 对白
+  [4000, () => { hide('s1'); show('s2'); }],
+  [4400, () => show('d1')],
+  [5200, () => show('d1b')],
+  [6000, () => show('vs1')],
+  [6600, () => show('d2')],
+  [7400, () => show('d2b')],
+  [8200, () => show('vs2')],
+  [8800, () => show('d3')],
+  [9600, () => show('d3b')],
+
+  // → Scene 3: 解释
+  [14000, () => { hide('s2'); show('s3'); setTimeout(() => show('analogyBox'), 200); }],
+  [16000, () => show('insightText')],
+
+  // → Scene 4
+  [31000, () => { hide('s3'); show('s4'); }],
+];
+
+function hide(id) { document.getElementById(id)?.classList.remove('show'); }
+
+const progressEl = document.getElementById('progress');
+let startTime = null;
+function tick(ts) {
+  if (!startTime) startTime = ts;
+  const pct = Math.min((ts - startTime) / TOTAL * 100, 100);
+  progressEl.style.width = pct + '%';
+  if (ts - startTime < TOTAL) requestAnimationFrame(tick);
+}
+requestAnimationFrame(tick);
+
+tl.forEach(([d, fn]) => setTimeout(fn, d));
+setTimeout(() => location.reload(), TOTAL + 1000);
+</script>
+</body>
+</html>

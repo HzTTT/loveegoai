@@ -1,0 +1,10 @@
+
+> @figma/my-make-file@0.0.1 dev
+> vite --host 127.0.0.1 --port 5173
+
+12:57:33 [vite] (client) Re-optimizing dependencies because vite config has changed
+
+  VITE v6.3.5  ready in 915 ms
+
+  ➜  Local:   http://127.0.0.1:5173/
+13:28:30 [vite] (client) hmr update /src/app/pages/ChatDetail.tsx, /src/styles/index.css

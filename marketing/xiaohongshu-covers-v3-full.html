@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Love Ego AI — 小红书封面 V3 完整版（20张）</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;600&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #f0ebe5; font-family: 'Noto Sans SC', sans-serif; padding: 40px; }
+  h1 { font-family: 'Noto Serif SC', serif; color: #3D2E2A; font-size: 28px; margin-bottom: 8px; }
+  .section-label { color: #8B9E9B; font-size: 14px; margin-bottom: 40px; letter-spacing: 2px; }
+  .grid { display: flex; flex-wrap: wrap; gap: 32px; margin-bottom: 48px; }
+  .type-label { font-size: 16px; font-weight: 500; color: #3D2E2A; margin-top: 40px; margin-bottom: 16px; }
+  .cover-num { position: absolute; top: 16px; right: 20px; font-size: 11px; color: #8B9E9B; opacity: 0.5; }
+
+  /* ===== 科普封面基础 ===== */
+  .cover {
+    width: 360px;
+    height: 480px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    padding: 48px 36px;
+    position: relative;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+    overflow: hidden;
+  }
+
+  /* 风格A：白板科普 */
+  .cover-board { background: #FAFAF8; color: #2C2C2C; }
+  .cover-board .topic { font-size: 11px; font-weight: 500; color: #8B9E9B; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 20px; }
+  .cover-board .title { font-family: 'Noto Serif SC', serif; font-size: 26px; font-weight: 600; line-height: 1.5; color: #1A1412; margin-bottom: 24px; }
+  .cover-board .diagram { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 8px; }
+  .cover-board .arrow-chain { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
+  .cover-board .node { background: #F0EBE5; border: 1px solid #E0D8CE; border-radius: 20px; padding: 6px 14px; font-size: 13px; font-weight: 500; color: #3D2E2A; white-space: nowrap; }
+  .cover-board .node.highlight { background: #3D2E2A; border-color: #3D2E2A; color: #FAF7F3; }
+  .cover-board .arrow { font-size: 14px; color: #C4A882; }
+  .cover-board .footnote { font-size: 12px; color: #8B9E9B; margin-top: 16px; line-height: 1.6; }
+
+  /* 风格B：暖底知识卡 */
+  .cover-warm { background: #F5EDE4; color: #3D2E2A; }
+  .cover-warm .topic { font-size: 11px; font-weight: 500; color: #B8956A; letter-spacing: 3px; margin-bottom: 20px; }
+  .cover-warm .title { font-family: 'Noto Serif SC', serif; font-size: 24px; font-weight: 600; line-height: 1.5; color: #1A1412; margin-bottom: 20px; }
+  .cover-warm .body-text { font-size: 14px; line-height: 2; color: #3D2E2A; font-weight: 300; }
+  .cover-warm .body-text strong { font-weight: 500; color: #1A1412; }
+  .cover-warm .body-text .key { color: #B8956A; font-weight: 500; }
+  .cover-warm .source { position: absolute; bottom: 24px; font-size: 11px; color: #C4A882; opacity: 0.5; }
+
+  /* 风格C：深色科普 */
+  .cover-deep { background: linear-gradient(170deg, #2A2520 0%, #1A1412 100%); color: #E8D5CC; }
+  .cover-deep .topic { font-size: 11px; font-weight: 500; color: #B8956A; letter-spacing: 3px; margin-bottom: 20px; }
+  .cover-deep .title { font-family: 'Noto Serif SC', serif; font-size: 24px; font-weight: 600; line-height: 1.5; color: #FAF7F3; margin-bottom: 20px; }
+  .cover-deep .body-text { font-size: 14px; line-height: 2; color: #D0C4B8; font-weight: 300; }
+  .cover-deep .body-text strong { color: #FAF7F3; font-weight: 500; }
+  .cover-deep .body-text .key { color: #C4A882; font-weight: 500; }
+  .cover-deep .source { position: absolute; bottom: 24px; font-size: 11px; color: #B8956A; opacity: 0.4; }
+
+  /* 列表样式 */
+  .list-item { display: flex; gap: 10px; margin-bottom: 8px; font-size: 13px; line-height: 1.7; color: #3D2E2A; }
+  .cover-deep .list-item { color: #D0C4B8; }
+  .cover-warm .list-item { color: #3D2E2A; }
+  .list-num { flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%; background: #E8D5CC; color: #3D2E2A; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; }
+  .cover-deep .list-num { background: #3D2E2A; color: #C4A882; border: 1px solid #B8956A; }
+  .cover-warm .list-num { background: #E8D5CC; color: #3D2E2A; }
+
+  /* 对比块 */
+  .vs-block { display: flex; gap: 12px; margin: 12px 0; }
+  .vs-side { flex: 1; padding: 12px; border-radius: 8px; font-size: 12px; line-height: 1.7; }
+  .vs-left { background: rgba(0,0,0,0.05); }
+  .vs-right { background: rgba(0,0,0,0.1); }
+  .cover-deep .vs-left { background: rgba(255,255,255,0.05); }
+  .cover-deep .vs-right { background: rgba(196,168,130,0.15); }
+  .vs-label { font-weight: 600; font-size: 11px; margin-bottom: 4px; letter-spacing: 1px; }
+</style>
+</head>
+<body>
+
+<h1>Love Ego AI — 小红书封面 V3 完整版</h1>
+<p class="section-label">20张科普封面 · 一条一张</p>
+
+<!-- ==================== 第1条 ==================== -->
+<p class="type-label">#1 情绪链条是怎么形成的</p>
+<div class="grid">
+  <div class="cover cover-board">
+    <div class="cover-num">#1</div>
+    <div class="topic">原理科普</div>
+    <div class="title">一个情绪<br>是怎么形成的</div>
+    <div class="diagram">
+      <div class="arrow-chain">
+        <span class="node">事件发生</span>
+        <span class="arrow">→</span>
+        <span class="node">大脑判断</span>
+        <span class="arrow">→</span>
+        <span class="node highlight">身体感受</span>
+      </div>
+      <div class="arrow-chain" style="margin-top:4px;"><span class="arrow" style="margin-left:180px;">↓</span></div>
+      <div class="arrow-chain">
+        <span class="node">反复重复</span>
+        <span class="arrow">←</span>
+        <span class="node">情绪反应</span>
+        <span class="arrow">←</span>
+        <span class="node highlight">形成链条</span>
+      </div>
+      <div class="arrow-chain" style="margin-top:4px;"><span class="arrow">↓</span></div>
+      <div class="arrow-chain">
+        <span class="node highlight">性格</span>
+        <span class="arrow">→</span>
+        <span class="node">现实</span>
+      </div>
+    </div>
+    <div class="footnote">这条链子一旦形成，身体会跳过大脑直接触发反应</div>
+  </div>
+</div>
+
+<!-- ==================== 第2条 ==================== -->
+<p class="type-label">#2 身体记忆——身体会记住经历</p>
+<div class="grid">
+  <div class="cover cover-warm">
+    <div class="cover-num">#2</div>
+    <div class="topic">原理科普</div>
+    <div class="title">身体会记住<br>你的每一次经历</div>
+    <div class="body-text">
+      大脑可能忘了，<br>但身体<span class="key">从来不会忘</span>。<br><br>
+      小时候被忽视的瞬间，<br>身体记住的是<strong>收缩</strong>。<br><br>
+      被批评的那一刻，<br>身体记住的是<strong>紧绷</strong>。<br><br>
+      这些记忆不在大脑的故事里，<br>在你的<span class="key">肩膀、胸口、胃</span>里。
+    </div>
+    <div class="source">身体记忆 · body memory</div>
+  </div>
+</div>
+
+<!-- ==================== 第3条 ==================== -->
+<p class="type-label">#3 自动驾驶——多少行为是无意识的</p>
+<div class="grid">
+  <div class="cover cover-deep">
+    <div class="cover-num">#3</div>
+    <div class="topic">原理科普</div>
+    <div class="title">你有多少行为<br>是"自动驾驶"的</div>
+    <div class="body-text">
+      开车到公司，<br>完全不记得路上发生了什么。<br><br>
+      大脑把这段路变成了<span class="key">自动程序</span>。<br><br>
+      情绪反应也一样——<br>遇到某种人，<strong>自动产生某种感觉</strong>。<br><br>
+      这些不是你"选择"的，<br>是神经系统<span class="key">反复训练</span>形成的路径。<br><br>
+      好消息：新的路<strong>可以被建立</strong>。
+    </div>
+    <div class="source">神经自动化路径</div>
+  </div>
+</div>
+
+<!-- ==================== 第4条 ==================== -->
+<p class="type-label">#4 头脑和身体为什么不同步</p>
+<div class="grid">
+  <div class="cover cover-board">
+    <div class="cover-num">#4</div>
+    <div class="topic">原理科普</div>
+    <div class="title">头脑想通了<br>身体为什么没跟上</div>
+    <div class="diagram">
+      <div class="vs-block">
+        <div class="vs-side vs-left">
+          <div class="vs-label">头脑说</div>
+          "我知道不该生气"<br>
+          "我想通了"<br>
+          "下次一定改"
+        </div>
+        <div class="vs-side vs-right">
+          <div class="vs-label">身体说</div>
+          紧绷、心跳加速<br>
+          自动防御<br>
+          跟上次一模一样
+        </div>
+      </div>
+      <div class="footnote" style="margin-top:20px;">
+        头脑处理信息的速度是<strong>毫秒级</strong>。<br>
+        但身体的反应模式是<strong>年为单位</strong>积累的。<br><br>
+        想通 ≠ 做到。两个系统，两个速度。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== 第5条 ==================== -->
+<p class="type-label">#5 防御模式是怎么消耗能量的</p>
+<div class="grid">
+  <div class="cover cover-warm">
+    <div class="cover-num">#5</div>
+    <div class="topic">原理科普</div>
+    <div class="title">防御模式<br>是怎么消耗能量的</div>
+    <div class="body-text">
+      大脑的首要任务：<span class="key">让你活下来</span>。<br><br>
+      面对不确定 → 身体进入战斗/逃跑<br>
+      注意力锁定在<strong>过去</strong>和<strong>未来</strong><br>
+      所有能量用于<span class="key">防御</span><br><br>
+      这就是为什么你明明没做什么，<br>
+      但一天下来<strong>特别累</strong>。<br><br>
+      不是身体累，是防御系统在<span class="key">持续运转</span>。
+    </div>
+    <div class="source">能量守恒 · 防御 vs 创造</div>
+  </div>
+</div>
+
+<!-- ==================== 第6条 ==================== -->
+<p class="type-label">#6 性格不是天生的，是被训练出来的</p>
+<div class="grid">
+  <div class="cover cover-deep">
+    <div class="cover-num">#6</div>
+    <div class="topic">原理科普</div>
+    <div class="title">性格不是天生的<br>是被训练出来的</div>
+    <div class="body-text">
+      一个孩子哭了，<br>妈妈说"<span class="key">别哭，坚强点</span>"。<br><br>
+      孩子学到的是：<br>
+      <strong>表达脆弱 = 不被接纳</strong><br><br>
+      这个等式写进身体，<br>反复加固，<br>最终变成了"<span class="key">性格</span>"。<br><br>
+      你以为你天生如此，<br>
+      其实只是身体<strong>练了太多遍</strong>。
+    </div>
+    <div class="source">性格 = 自动化反应的集合</div>
+  </div>
+</div>
+
+<!-- ==================== 第7条 ==================== -->
+<p class="type-label">#7 果因论——也许是先有状态再有结果</p>
+<div class="grid">
+  <div class="cover cover-board">
+    <div class="cover-num">#7</div>
+    <div class="topic">核心概念</div>
+    <div class="title">也许是<br>先有状态<br>再有结果</div>
+    <div class="diagram">
+      <div class="vs-block">
+        <div class="vs-side vs-left">
+          <div class="vs-label">因果论</div>
+          等我有钱了<br>→ 我就快乐了<br>
+          等遇到对的人<br>→ 就有安全感了
+        </div>
+        <div class="vs-side vs-right">
+          <div class="vs-label" style="color:#B8956A;">果因论</div>
+          先建立快乐的感受<br>→ 选择和行动改变<br>→ 现实跟着改变
+        </div>
+      </div>
+      <div class="footnote" style="margin-top:16px;">
+        不是现实给你感受。<br>
+        是<strong>感受创造现实</strong>。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== 第8条 ==================== -->
+<p class="type-label">#8 情绪不是敌人，是身体的信号</p>
+<div class="grid">
+  <div class="cover cover-warm">
+    <div class="cover-num">#8</div>
+    <div class="topic">原理科普</div>
+    <div class="title">情绪不是敌人<br>是身体的信号</div>
+    <div class="body-text">
+      焦虑在告诉你：<br>
+      "<span class="key">有东西需要被看见</span>"<br><br>
+      愤怒在告诉你：<br>
+      "<span class="key">有边界被越过了</span>"<br><br>
+      悲伤在告诉你：<br>
+      "<span class="key">有东西还没有被放下</span>"<br><br>
+      情绪不需要被消灭。<br>
+      它需要被<strong>听到</strong>。
+    </div>
+    <div class="source">情绪 = 身体的语言</div>
+  </div>
+</div>
+
+<!-- ==================== 第9条 ==================== -->
+<p class="type-label">#9 觉察到底是什么</p>
+<div class="grid">
+  <div class="cover cover-deep">
+    <div class="cover-num">#9</div>
+    <div class="topic">核心概念</div>
+    <div class="title">觉察到底是什么</div>
+    <div class="body-text">
+      觉察不是<strong>分析</strong>——<br>
+      "我为什么会这样"<br><br>
+      觉察不是<strong>评判</strong>——<br>
+      "我又这样了，真没用"<br><br>
+      觉察是：<br>
+      <span class="key">"哦，我现在胸口在收缩。"</span><br><br>
+      只是看到。不解释，不修正。<br>
+      <strong>看到本身就是改变的起点。</strong>
+    </div>
+    <div class="source">觉察 ≠ 分析 · 觉察 = 看到</div>
+  </div>
+</div>
+
+<!-- ==================== 第10条 ==================== -->
+<p class="type-label">#10 收缩与扩张——身体的两种基本状态</p>
+<div class="grid">
+  <div class="cover cover-board">
+    <div class="cover-num">#10</div>
+    <div class="topic">原理科普</div>
+    <div class="title">身体只有两种<br>基本状态</div>
+    <div class="diagram">
+      <div class="vs-block">
+        <div class="vs-side vs-left">
+          <div class="vs-label">收缩</div>
+          肩膀上提<br>
+          胸口发紧<br>
+          呼吸变浅<br>
+          防御 · 恐惧 · 控制
+        </div>
+        <div class="vs-side vs-right">
+          <div class="vs-label">扩张</div>
+          肩膀放下<br>
+          胸口打开<br>
+          呼吸变深<br>
+          信任 · 创造 · 流动
+        </div>
+      </div>
+      <div class="footnote" style="margin-top:16px;">
+        任何时刻，你都可以问自己：<br>
+        <strong>"我现在是收缩还是扩张？"</strong><br>
+        这个问题本身就是觉察的入口。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== 第11条 ==================== -->
+<p class="type-label">#11 神经可塑性——大脑可以被重塑</p>
+<div class="grid">
+  <div class="cover cover-warm">
+    <div class="cover-num">#11</div>
+    <div class="topic">原理科普</div>
+    <div class="title">大脑可以被重塑<br>在任何年龄</div>
+    <div class="body-text">
+      神经科学发现：<br>
+      大脑不是固定的电路板，<br>
+      而是一块<span class="key">可塑的材料</span>。<br><br>
+      一条神经回路走多了 → 变粗<br>
+      一条新路径反复走 → <strong>也会变粗</strong><br><br>
+      旧的路不会消失，<br>
+      但新的路可以<span class="key">变成默认</span>。<br><br>
+      关键是：要用身体去走，<br>
+      不是用头脑去想。
+    </div>
+    <div class="source">neuroplasticity · 神经可塑性</div>
+  </div>
+</div>
+
+<!-- ==================== 第12条 ==================== -->
+<p class="type-label">#12 为什么"说出来"比"想明白"有用</p>
+<div class="grid">
+  <div class="cover cover-deep">
+    <div class="cover-num">#12</div>
+    <div class="topic">练习原理</div>
+    <div class="title">为什么"说出来"<br>比"想明白"有用</div>
+    <div class="body-text">
+      同样一句话，<br>在脑子里想 vs 说出声——<br>
+      效果<span class="key">完全不同</span>。<br><br>
+      声带振动 → 声波通过骨传导<br>
+      → 耳朵接收 → 大脑重新处理<br><br>
+      "说出来"让信息走了一条<br>
+      <span class="key">全新的神经通路</span>。<br><br>
+      声音是连接<strong>头脑和身体</strong>的桥。
+    </div>
+    <div class="source">声音 = 头脑与身体的桥梁</div>
+  </div>
+</div>
+
+<!-- ==================== 第13条 ==================== -->
+<p class="type-label">#13 控制消耗能量，臣服释放能量</p>
+<div class="grid">
+  <div class="cover cover-board">
+    <div class="cover-num">#13</div>
+    <div class="topic">核心概念</div>
+    <div class="title">控制消耗能量<br>臣服释放能量</div>
+    <div class="diagram">
+      <div class="arrow-chain">
+        <span class="node">恐惧</span>
+        <span class="arrow">→</span>
+        <span class="node">"我必须控制"</span>
+        <span class="arrow">→</span>
+        <span class="node highlight">能量消耗</span>
+      </div>
+      <div style="text-align:center;margin:16px 0;font-size:12px;color:#8B9E9B;">vs</div>
+      <div class="arrow-chain">
+        <span class="node">臣服</span>
+        <span class="arrow">→</span>
+        <span class="node">"我允许发生"</span>
+        <span class="arrow">→</span>
+        <span class="node highlight">能量释放</span>
+      </div>
+      <div class="footnote" style="margin-top:24px;">
+        臣服不是放弃。<br>
+        臣服是<strong>退出对抗模式</strong>，<br>
+        让能量从防御转向创造。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== 第14条 ==================== -->
+<p class="type-label">#14 反应模式的代际传递</p>
+<div class="grid">
+  <div class="cover cover-warm">
+    <div class="cover-num">#14</div>
+    <div class="topic">原理科普</div>
+    <div class="title">反应模式<br>会一代传一代</div>
+    <div class="body-text">
+      妈妈面对压力时<span class="key">收缩</span>，<br>
+      孩子在旁边看着，<br>
+      身体学会了同样的收缩。<br><br>
+      不是"遗传"。<br>
+      是<strong>身体在模仿身体</strong>。<br><br>
+      上一代没有处理的反应模式，<br>
+      会通过相处方式<span class="key">传给下一代</span>。<br><br>
+      看见这条链子，<br>
+      是打断它的第一步。
+    </div>
+    <div class="source">代际传递 · intergenerational patterns</div>
+  </div>
+</div>
+
+<!-- ==================== 第15条 ==================== -->
+<p class="type-label">#15 不同情绪对应不同能量层级</p>
+<div class="grid">
+  <div class="cover cover-deep">
+    <div class="cover-num">#15</div>
+    <div class="topic">原理科普</div>
+    <div class="title">每种情绪<br>都有自己的能量层级</div>
+    <div class="body-text">
+      <span style="opacity:0.5;">低</span><br>
+      羞耻 · 内疚 · 冷漠<br>
+      ——身体是<span class="key">收缩</span>的<br><br>
+      恐惧 · 愤怒 · 骄傲<br>
+      ——身体开始<strong>有力量</strong><br><br>
+      勇气 · 接纳 · 爱<br>
+      ——身体是<span class="key">扩张</span>的<br>
+      <span style="opacity:0.5;">高</span><br><br>
+      不是要"消灭"低频情绪，<br>
+      是让身体学会<strong>往上走</strong>的路。
+    </div>
+    <div class="source">能量层级 · energy levels</div>
+  </div>
+</div>
+
+<!-- ==================== 第16条 ==================== -->
+<p class="type-label">#16 学习新能力的四个阶段</p>
+<div class="grid">
+  <div class="cover cover-board">
+    <div class="cover-num">#16</div>
+    <div class="topic">原理科普</div>
+    <div class="title">改变一个反应模式<br>要经过四个阶段</div>
+    <div class="diagram">
+      <div class="list-item"><span class="list-num">1</span><span><strong>不知道且不能</strong><br>还没意识到旧程序的存在</span></div>
+      <div class="list-item"><span class="list-num">2</span><span><strong>知道但不能</strong><br>看见了，但还改不了 <span style="color:#C47D6D;font-size:12px;">← 大多数人卡在这里</span></span></div>
+      <div class="list-item"><span class="list-num">3</span><span><strong>知道且能够</strong><br>刻意练习中，能做到</span></div>
+      <div class="list-item"><span class="list-num">4</span><span><strong>不知道且能够</strong><br>成为本能，不再需要刻意</span></div>
+    </div>
+    <div class="footnote">从第2到第3阶段需要的是训练，不是更多知识</div>
+  </div>
+</div>
+
+<!-- ==================== 第17条 ==================== -->
+<p class="type-label">#17 DOING vs BEING</p>
+<div class="grid">
+  <div class="cover cover-warm">
+    <div class="cover-num">#17</div>
+    <div class="topic">核心概念</div>
+    <div class="title">DOING 和 BEING<br>是两套操作系统</div>
+    <div class="body-text">
+      <strong>DOING</strong> = 分析、计划、解决<br>
+      <span class="key">BEING</span> = 感受、当下、存在<br><br>
+      大多数方法教你在 DOING 层改变：<br>
+      更多道理、更好的计划。<br><br>
+      但旧程序在 <span class="key">BEING</span> 层——<br>
+      在你的身体里，不在脑子里。<br><br>
+      要改身体里的东西，<br>
+      得用<strong>身体的方式</strong>。
+    </div>
+    <div class="source">BEING ≠ 放空 · BEING = 与身体连接</div>
+  </div>
+</div>
+
+<!-- ==================== 第18条 ==================== -->
+<p class="type-label">#18 回到身体是最简单的觉察入口</p>
+<div class="grid">
+  <div class="cover cover-deep">
+    <div class="cover-num">#18</div>
+    <div class="topic">练习原理</div>
+    <div class="title">回到身体<br>就是回到当下</div>
+    <div class="body-text">
+      头脑可以同时想<br>过去和未来。<br><br>
+      但身体<span class="key">只存在于当下</span>。<br><br>
+      感受一下肩膀是紧还是松，<br>
+      胸口是收缩还是扩张——<br><br>
+      你就自动从头脑的时间线<br>
+      回到了<span class="key">此刻</span>。<br><br>
+      恐惧在时间里。<br>
+      <strong>创造在当下。</strong>
+    </div>
+    <div class="source">身体只在当下</div>
+  </div>
+</div>
+
+<!-- ==================== 第19条 ==================== -->
+<p class="type-label">#19 为什么练习比道理重要</p>
+<div class="grid">
+  <div class="cover cover-board">
+    <div class="cover-num">#19</div>
+    <div class="topic">原理科普</div>
+    <div class="title">为什么练习<br>比道理重要</div>
+    <div class="diagram">
+      <div class="arrow-chain">
+        <span class="node">听道理</span>
+        <span class="arrow">→</span>
+        <span class="node">头脑知道了</span>
+        <span class="arrow">→</span>
+        <span class="node" style="opacity:0.5;">身体没变</span>
+      </div>
+      <div style="text-align:center;margin:16px 0;font-size:12px;color:#8B9E9B;">vs</div>
+      <div class="arrow-chain">
+        <span class="node">练习</span>
+        <span class="arrow">→</span>
+        <span class="node">身体体验到</span>
+        <span class="arrow">→</span>
+        <span class="node highlight">新路径形成</span>
+      </div>
+      <div class="footnote" style="margin-top:24px;">
+        就像学游泳——<br>
+        看100个视频不如下一次水。<br><br>
+        改变反应模式也是一样：<br>
+        <strong>身体要亲自走过一遍。</strong>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== 第20条 ==================== -->
+<p class="type-label">#20 思想、感受、行动三个对齐</p>
+<div class="grid">
+  <div class="cover cover-warm">
+    <div class="cover-num">#20</div>
+    <div class="topic">核心概念</div>
+    <div class="title">思想、感受、行动<br>三个对齐</div>
+    <div class="body-text">
+      很多时候我们是<span class="key">分裂的</span>：<br><br>
+      思想说"我想要改变"<br>
+      感受说"<strong>我害怕</strong>"<br>
+      行动 = 原地不动<br><br>
+      三个方向不一致，<br>
+      能量互相<span class="key">抵消</span>。<br><br>
+      当思想、感受、行动<br>
+      指向<strong>同一个方向</strong>——<br>
+      这就是所谓的<span class="key">一致性</span>。<br>
+      改变从这里开始加速。
+    </div>
+    <div class="source">一致性 · coherence</div>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,14 @@
+version: "3.8"
+
+services:
+  loveegoai-backend:
+    build: .
+    container_name: loveegoai-backend
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    volumes:
+      - ./static:/app/static
+      - ./logs:/app/logs
+    restart: unless-stopped

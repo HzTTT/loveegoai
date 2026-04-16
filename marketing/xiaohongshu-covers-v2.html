@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Love Ego AI — 小红书封面 V2（个人分享风）</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600&family=Noto+Sans+SC:wght@300;400&family=ZCOOL+XiaoWei&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #f0ebe5;
+    font-family: 'Noto Sans SC', sans-serif;
+    padding: 40px;
+  }
+
+  h1 { font-family: 'Noto Serif SC', serif; color: #3D2E2A; font-size: 28px; margin-bottom: 8px; }
+  .section-label { color: #8B9E9B; font-size: 14px; margin-bottom: 40px; letter-spacing: 2px; }
+  .note { color: #8B9E9B; font-size: 13px; margin-bottom: 32px; line-height: 1.8; max-width: 720px; }
+
+  .grid { display: flex; flex-wrap: wrap; gap: 32px; margin-bottom: 48px; }
+
+  .type-label {
+    font-size: 16px; font-weight: 500; color: #3D2E2A;
+    margin-top: 40px; margin-bottom: 16px;
+  }
+
+  /* ===== V2: 个人笔记风封面 ===== */
+  .cover {
+    width: 360px;
+    height: 480px;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 56px 44px;
+    position: relative;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+  }
+
+  /* 风格A：纯文字笔记风 — 像手机备忘录截图 */
+  .cover-note {
+    background: #FAF7F3;
+    color: #3D2E2A;
+  }
+
+  .cover-note .text {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 2;
+    color: #1A1412;
+  }
+
+  .cover-note .text em {
+    font-style: normal;
+    border-bottom: 2px solid #C47D6D;
+    padding-bottom: 1px;
+  }
+
+  .cover-note .corner {
+    position: absolute;
+    bottom: 28px;
+    right: 32px;
+    font-size: 11px;
+    color: #C4A882;
+    opacity: 0.5;
+  }
+
+  /* 风格B：暗色手写感 — 像深夜写给自己的话 */
+  .cover-dark {
+    background: #1A1412;
+    color: #E8D5CC;
+  }
+
+  .cover-dark .text {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 2.1;
+    color: #E8D5CC;
+  }
+
+  .cover-dark .text em {
+    font-style: normal;
+    color: #C4A882;
+  }
+
+  .cover-dark .corner {
+    position: absolute;
+    bottom: 28px;
+    right: 32px;
+    font-size: 11px;
+    color: #B8956A;
+    opacity: 0.4;
+  }
+
+  /* 风格C：极简留白 — 一句话 + 大量空白 */
+  .cover-minimal {
+    background: #F5EDE4;
+    color: #3D2E2A;
+    justify-content: flex-end;
+    padding-bottom: 80px;
+  }
+
+  .cover-minimal .text {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 26px;
+    font-weight: 400;
+    line-height: 1.8;
+    color: #1A1412;
+  }
+
+  .cover-minimal .corner {
+    position: absolute;
+    top: 32px;
+    left: 44px;
+    font-size: 11px;
+    color: #8B9E9B;
+    opacity: 0.4;
+  }
+
+  /* 对比标注 */
+  .compare {
+    display: flex;
+    gap: 32px;
+    margin-bottom: 48px;
+    align-items: flex-start;
+  }
+  .compare-label {
+    writing-mode: vertical-rl;
+    font-size: 12px;
+    color: #C47D6D;
+    letter-spacing: 4px;
+    padding-top: 16px;
+    flex-shrink: 0;
+  }
+</style>
+</head>
+<body>
+
+<h1>Love Ego AI — 小红书封面 V2</h1>
+<p class="section-label">从「营销海报」到「个人分享」</p>
+
+<p class="note">
+  <strong>V1 的问题：</strong>标题太像广告（"你不是不努力，你是被困住了"），用户一看就知道在卖东西。<br>
+  <strong>V2 的方向：</strong>像一个真人在说自己的感受。不总结、不下结论、不教育。让她在里面看见自己。<br>
+  <strong>视觉变化：</strong>去掉品牌标识、去掉装饰圆、去掉分类标签。纯文字，像备忘录、像日记、像深夜发的朋友圈。
+</p>
+
+<!-- ==================== 对比：V1 vs V2 ==================== -->
+<p class="type-label">对比：V1（广告感） vs V2（个人感）</p>
+<div class="grid">
+
+  <!-- V1 旧版 -->
+  <div style="text-align:center">
+    <div class="cover" style="background:linear-gradient(160deg,#F5EDE4,#E8D1C5); position:relative;">
+      <div style="position:absolute;top:24px;left:24px;font-size:11px;letter-spacing:3px;color:#C47D6D;opacity:0.6;">PAIN POINT</div>
+      <div style="font-family:'Noto Serif SC',serif;font-size:32px;font-weight:700;text-align:center;color:#1A1412;line-height:1.45;">你不是不努力<br>你是被困住了</div>
+      <div style="font-size:16px;text-align:center;color:#3D2E2A;opacity:0.75;margin-top:16px;">明明知道不该焦虑，还是焦虑</div>
+      <div style="position:absolute;bottom:24px;font-size:12px;letter-spacing:4px;color:#C47D6D;opacity:0.4;left:0;right:0;text-align:center;">LOVE EGO AI</div>
+      <div style="position:absolute;width:200px;height:200px;border-radius:50%;background:#C47D6D;opacity:0.12;top:-60px;right:-60px;"></div>
+    </div>
+    <div style="margin-top:12px;font-size:12px;color:#C47D6D;">V1 — 一看就是广告</div>
+  </div>
+
+  <!-- V2 新版 -->
+  <div style="text-align:center">
+    <div class="cover cover-note">
+      <div class="text">
+        昨晚又翻手机翻了两小时。<br>
+        不是睡不着，<br>
+        是<em>不想停下来</em>。
+      </div>
+      <div class="corner">22:47</div>
+    </div>
+    <div style="margin-top:12px;font-size:12px;color:#8B9E9B;">V2 — 像她自己写的</div>
+  </div>
+
+</div>
+
+<!-- ==================== 风格A：笔记风（浅色） ==================== -->
+<p class="type-label">风格A：笔记风 — 像备忘录截图</p>
+<div class="grid">
+
+  <div class="cover cover-note">
+    <div class="text">
+      和他说了那句话之后，<br>
+      立刻后悔了。<br><br>
+      不是因为说错了，<br>
+      是因为说之前<br>
+      <em>就知道会后悔</em>，<br>
+      还是说了。
+    </div>
+    <div class="corner">备忘录</div>
+  </div>
+
+  <div class="cover cover-note">
+    <div class="text">
+      朋友说你变了。<br><br>
+      其实你知道<br>
+      你<em>一点都没变</em>。
+    </div>
+    <div class="corner">备忘录</div>
+  </div>
+
+  <div class="cover cover-note">
+    <div class="text">
+      又在做那个决定之前<br>
+      纠结了三天。<br><br>
+      然后选了<br>
+      <em>跟上次一模一样的</em>。
+    </div>
+    <div class="corner">备忘录</div>
+  </div>
+
+  <div class="cover cover-note">
+    <div class="text">
+      每次发完脾气<br>
+      都告诉自己<br>
+      下次不会了。<br><br>
+      <em>每次都会。</em>
+    </div>
+    <div class="corner">备忘录</div>
+  </div>
+
+  <div class="cover cover-note">
+    <div class="text">
+      收藏了 200 篇<br>
+      "如何停止内耗"。<br><br>
+      <em>还是在内耗。</em>
+    </div>
+    <div class="corner">备忘录</div>
+  </div>
+
+</div>
+
+<!-- ==================== 风格B：深夜感（深色） ==================== -->
+<p class="type-label">风格B：深夜感 — 像凌晨写给自己的话</p>
+<div class="grid">
+
+  <div class="cover cover-dark">
+    <div class="text">
+      有时候觉得，<br>
+      不是我在过日子，<br>
+      是日子在<em>过我</em>。
+    </div>
+    <div class="corner">2:13 AM</div>
+  </div>
+
+  <div class="cover cover-dark">
+    <div class="text">
+      想了很多，<br>
+      也想通了很多。<br><br>
+      但身体好像<br>
+      <em>没有听到</em>。
+    </div>
+    <div class="corner">1:47 AM</div>
+  </div>
+
+  <div class="cover cover-dark">
+    <div class="text">
+      其实我知道<br>
+      问题不在别人。<br><br>
+      但我就是<br>
+      <em>改不了反应的方式</em>。
+    </div>
+    <div class="corner">3:02 AM</div>
+  </div>
+
+</div>
+
+<!-- ==================== 风格C：极简一句话 ==================== -->
+<p class="type-label">风格C：极简 — 一句话 + 大量留白</p>
+<div class="grid">
+
+  <div class="cover cover-minimal">
+    <div class="corner">·</div>
+    <div class="text">
+      我好像一直在<br>
+      努力不掉下去，<br>
+      而不是在往前走。
+    </div>
+  </div>
+
+  <div class="cover cover-minimal">
+    <div class="corner">·</div>
+    <div class="text">
+      身体比你先知道<br>
+      答案是什么。
+    </div>
+  </div>
+
+  <div class="cover cover-minimal">
+    <div class="corner">·</div>
+    <div class="text">
+      今天第一次<br>
+      在那个瞬间停了一下。<br>
+      很小的事。<br>
+      但我知道不一样了。
+    </div>
+  </div>
+
+  <div class="cover cover-minimal">
+    <div class="corner">·</div>
+    <div class="text">
+      不是想通了才会变。<br>
+      是变了才会想通。
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

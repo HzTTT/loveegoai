@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Love Ego AI — 小红书正文图模板</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;700&family=Noto+Sans+SC:wght@300;400;500&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #f0ebe5;
+    font-family: 'Noto Sans SC', sans-serif;
+    padding: 40px;
+  }
+
+  h1 {
+    font-family: 'Noto Serif SC', serif;
+    color: #3D2E2A;
+    font-size: 28px;
+    margin-bottom: 8px;
+  }
+
+  .section-label {
+    color: #8B9E9B;
+    font-size: 14px;
+    margin-bottom: 32px;
+    letter-spacing: 2px;
+  }
+
+  .grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px;
+    margin-bottom: 64px;
+  }
+
+  /* 正文图 3:4 */
+  .page {
+    width: 360px;
+    height: 480px;
+    border-radius: 12px;
+    padding: 48px 36px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .page .page-num {
+    position: absolute;
+    top: 24px;
+    right: 28px;
+    font-size: 11px;
+    letter-spacing: 2px;
+    opacity: 0.35;
+  }
+
+  .page .brand {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 11px;
+    letter-spacing: 4px;
+    opacity: 0.3;
+  }
+
+  /* ===== 痛点类正文 ===== */
+  .page-pain {
+    background: #FAF7F3;
+    color: #3D2E2A;
+  }
+
+  .page-pain .page-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #1A1412;
+    margin-bottom: 28px;
+    line-height: 1.5;
+    padding-bottom: 16px;
+    border-bottom: 1.5px solid #E8D5CC;
+  }
+
+  .page-pain .para {
+    font-size: 15px;
+    line-height: 2;
+    color: #3D2E2A;
+    margin-bottom: 20px;
+    font-weight: 300;
+  }
+
+  .page-pain .highlight {
+    color: #C47D6D;
+    font-weight: 500;
+  }
+
+  .page-pain .emphasis {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: #1A1412;
+    text-align: center;
+    margin-top: auto;
+    margin-bottom: 32px;
+    line-height: 1.8;
+    padding: 16px 0;
+    border-top: 1px solid #E8D5CC;
+    border-bottom: 1px solid #E8D5CC;
+  }
+
+  /* ===== 原因类正文 ===== */
+  .page-reason {
+    background: #FAF7F3;
+    color: #3D2E2A;
+  }
+
+  .page-reason .page-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #1A1412;
+    margin-bottom: 28px;
+    line-height: 1.5;
+    padding-bottom: 16px;
+    border-bottom: 1.5px solid #D0DCD9;
+  }
+
+  .page-reason .para {
+    font-size: 15px;
+    line-height: 2;
+    color: #3D2E2A;
+    margin-bottom: 20px;
+    font-weight: 300;
+  }
+
+  .page-reason .highlight {
+    color: #6B8582;
+    font-weight: 500;
+  }
+
+  .page-reason .step-list {
+    margin: 8px 0 20px;
+    padding-left: 0;
+    list-style: none;
+  }
+
+  .page-reason .step-list li {
+    font-size: 14px;
+    line-height: 2;
+    color: #3D2E2A;
+    padding-left: 20px;
+    position: relative;
+    font-weight: 300;
+  }
+
+  .page-reason .step-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 12px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #8B9E9B;
+    opacity: 0.5;
+  }
+
+  .page-reason .emphasis {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: #1A1412;
+    text-align: center;
+    margin-top: auto;
+    margin-bottom: 32px;
+    line-height: 1.8;
+    padding: 16px 0;
+    border-top: 1px solid #D0DCD9;
+    border-bottom: 1px solid #D0DCD9;
+  }
+
+  /* ===== 转化类正文 ===== */
+  .page-convert {
+    background: #2A1F1B;
+    color: #E8D5CC;
+  }
+
+  .page-convert .page-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #FAF7F3;
+    margin-bottom: 28px;
+    line-height: 1.5;
+    padding-bottom: 16px;
+    border-bottom: 1.5px solid rgba(184,149,106,0.3);
+  }
+
+  .page-convert .para {
+    font-size: 15px;
+    line-height: 2;
+    color: #E8D5CC;
+    margin-bottom: 20px;
+    font-weight: 300;
+  }
+
+  .page-convert .highlight {
+    color: #C4A882;
+    font-weight: 500;
+  }
+
+  .page-convert .emphasis {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: #FAF7F3;
+    text-align: center;
+    margin-top: auto;
+    margin-bottom: 32px;
+    line-height: 1.8;
+    padding: 16px 0;
+    border-top: 1px solid rgba(184,149,106,0.3);
+    border-bottom: 1px solid rgba(184,149,106,0.3);
+  }
+
+  .page-convert .page-num { color: #B8956A; }
+  .page-convert .brand { color: #B8956A; }
+
+  .type-label {
+    font-size: 18px;
+    font-weight: 500;
+    color: #3D2E2A;
+    margin-top: 48px;
+    margin-bottom: 16px;
+  }
+
+  .type-label span {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+</style>
+</head>
+<body>
+
+<h1>Love Ego AI — 小红书正文图模板</h1>
+<p class="section-label">CONTENT PAGES · SWIPE AFTER COVER</p>
+
+<!-- ===== 痛点类示例：第1条完整内容 ===== -->
+<p class="type-label"><span style="background:#C47D6D"></span>痛点类示例 ——「你不是不努力，你是被困住了」</p>
+<div class="grid">
+
+  <div class="page page-pain">
+    <div class="page-num">2 / 4</div>
+    <div class="page-title">你有没有过这种感觉</div>
+    <div class="para">明明知道不该焦虑，<span class="highlight">还是焦虑</span>。</div>
+    <div class="para">明明知道该放下，<span class="highlight">就是放不下</span>。</div>
+    <div class="para">明明知道要行动，<span class="highlight">身体就是动不了</span>。</div>
+    <div class="emphasis">不是你不努力<br>是有一套程序<br>在你反应之前<br>就替你做了选择</div>
+    <div class="brand">LOVE EGO AI</div>
+  </div>
+
+  <div class="page page-pain">
+    <div class="page-num">3 / 4</div>
+    <div class="page-title">为什么会这样？</div>
+    <div class="para">你身体里有一套从小装上的程序。</div>
+    <div class="para">这套程序在你<span class="highlight">有意识之前</span>就已经替你做出了反应——紧张、逃避、讨好、控制。</div>
+    <div class="para">你以为是你在活。</div>
+    <div class="para">其实很多时候，<span class="highlight">是那套程序在替你活</span>。</div>
+    <div class="emphasis">你不是不够好<br>你只是被困在<br>一套旧的程序里</div>
+    <div class="brand">LOVE EGO AI</div>
+  </div>
+
+  <div class="page page-pain">
+    <div class="page-num">4 / 4</div>
+    <div class="page-title">你可以不再被困住</div>
+    <div class="para">改变不是从「想通」开始的。</div>
+    <div class="para">而是从<span class="highlight">看见那套程序</span>开始的。</div>
+    <div class="para">当你能在被触发的瞬间停一下，不再自动反应——那就是改变的起点。</div>
+    <div class="emphasis">改变从看见开始<br>不是从想通开始</div>
+    <div class="brand">LOVE EGO AI</div>
+  </div>
+
+</div>
+
+<!-- ===== 原因类示例 ===== -->
+<p class="type-label"><span style="background:#8B9E9B"></span>原因类示例 ——「旧程序在身体里，不在道理里」</p>
+<div class="grid">
+
+  <div class="page page-reason">
+    <div class="page-num">2 / 3</div>
+    <div class="page-title">一条链子是怎么形成的</div>
+    <ul class="step-list">
+      <li>小时候发生一件事</li>
+      <li>你的养育者教你怎么<span class="highlight">解读</span>这件事</li>
+      <li>这个解读变成身体的<span class="highlight">自动反应</span></li>
+      <li>自动反应变成你的<span class="highlight">性格</span></li>
+      <li>性格不断制造同样的<span class="highlight">现实</span></li>
+    </ul>
+    <div class="emphasis">改变不可能只靠想明白<br>因为程序不在头脑里<br>在身体里</div>
+    <div class="brand">LOVE EGO AI</div>
+  </div>
+
+  <div class="page page-reason">
+    <div class="page-num">3 / 3</div>
+    <div class="page-title">所以真正需要改变的是什么</div>
+    <div class="para">不是你的<span class="highlight">想法</span>——你已经想得够多了。</div>
+    <div class="para">不是你的<span class="highlight">环境</span>——你已经换过了。</div>
+    <div class="para">是你<span class="highlight">身体里那套自动运行的旧程序</span>。</div>
+    <div class="para">只有身体学会了新的反应方式，你的人生才会真正开始不同。</div>
+    <div class="emphasis">头脑改不了身体<br>身体要用身体的方式改</div>
+    <div class="brand">LOVE EGO AI</div>
+  </div>
+
+</div>
+
+<!-- ===== 转化类示例 ===== -->
+<p class="type-label"><span style="background:#B8956A"></span>转化类示例 ——「当你第一次在触发时停住了」</p>
+<div class="grid">
+
+  <div class="page page-convert">
+    <div class="page-num">2 / 3</div>
+    <div class="page-title">那个瞬间长什么样</div>
+    <div class="para">以前遇到那件事，你会立刻<span class="highlight">爆掉、逃跑、讨好、控制</span>。</div>
+    <div class="para">但有一天，你发现自己<span class="highlight">停了一下</span>。</div>
+    <div class="para">没有像以前那样自动反应。</div>
+    <div class="para">你先感受了一下身体，再做了一个<span class="highlight">不一样的选择</span>。</div>
+    <div class="emphasis">那不是顿悟<br>那是身体开始学会<br>新的反应</div>
+    <div class="brand">LOVE EGO AI</div>
+  </div>
+
+  <div class="page page-convert">
+    <div class="page-num">3 / 3</div>
+    <div class="page-title">改变就是这样发生的</div>
+    <div class="para">不是一夜之间翻天覆地。</div>
+    <div class="para">是一个又一个<span class="highlight">微小的瞬间</span>——你选择了不同的反应。</div>
+    <div class="para">这些瞬间积累起来，就是一个全新的你。</div>
+    <div class="emphasis">你需要的不是更多道理<br>而是一个帮你<br>在关键时刻停住的系统</div>
+    <div class="brand">LOVE EGO AI</div>
+  </div>
+
+</div>
+
+</body>
+</html>

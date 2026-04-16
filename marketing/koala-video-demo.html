@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>考拉讲解视频 Demo — 情绪链条</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #111;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: -apple-system, "PingFang SC", "Helvetica Neue", sans-serif;
+  }
+
+  /* 竖屏 9:16 */
+  .frame {
+    width: 390px;
+    height: 844px;
+    background: #F3EEEA;
+    position: relative;
+    overflow: hidden;
+    border-radius: 24px;
+  }
+
+  /* ─── 品牌标识 ─── */
+  .brand {
+    position: absolute;
+    top: 36px;
+    left: 28px;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: #8a7a6a;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+  }
+  .brand.show { opacity: 1; }
+
+  /* ─── 开场问句 ─── */
+  .question {
+    position: absolute;
+    top: 80px;
+    left: 28px;
+    right: 28px;
+    font-size: 22px;
+    font-weight: 300;
+    color: #1a1a1a;
+    line-height: 1.4;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .question.show { opacity: 1; transform: translateY(0); }
+  .question strong { font-weight: 600; }
+
+  /* ─── 链条区域 ─── */
+  .chain-area {
+    position: absolute;
+    top: 160px;
+    left: 28px;
+    right: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    transition: transform 0.8s ease, opacity 0.8s ease;
+  }
+  .chain-area.shrink {
+    transform: translateY(-60px) scale(0.85);
+    opacity: 0.5;
+  }
+
+  .chain-row {
+    display: flex;
+    align-items: center;
+    opacity: 0;
+    transform: translateX(-16px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .chain-row.show { opacity: 1; transform: translateX(0); }
+
+  /* 节点圆圈 */
+  .node {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    border: 2px solid #c4a882;
+    background: #F3EEEA;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+  }
+  .node-num {
+    font-size: 9px;
+    color: #c4a882;
+    font-weight: 500;
+  }
+  .node-label {
+    font-size: 10px;
+    color: #4a3f35;
+    font-weight: 500;
+    text-align: center;
+    line-height: 1.2;
+    margin-top: 1px;
+  }
+
+  /* 高亮节点 */
+  .node.highlight {
+    background: #c4a882;
+    border-color: #b8946a;
+    transform: scale(1.2);
+    box-shadow: 0 0 0 6px rgba(196, 168, 130, 0.2);
+  }
+  .node.highlight .node-num { color: white; }
+  .node.highlight .node-label { color: white; }
+
+  /* 节点右侧文字 */
+  .node-desc {
+    margin-left: 12px;
+    font-size: 12px;
+    color: #8a7a6a;
+    line-height: 1.4;
+  }
+  .node-desc strong {
+    display: block;
+    font-size: 13px;
+    color: #1a1a1a;
+    font-weight: 500;
+    margin-bottom: 1px;
+  }
+
+  /* 箭头行 */
+  .arrow-row {
+    display: flex;
+    align-items: center;
+    padding-left: 25px;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    height: 20px;
+  }
+  .arrow-row.show { opacity: 1; }
+  .arrow-line {
+    width: 1px;
+    height: 20px;
+    background: linear-gradient(to bottom, #c4a882, #c4a88288);
+  }
+  .arrow-tip {
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 6px solid #c4a882;
+    margin-left: -3.5px;
+    margin-top: -1px;
+  }
+  .arrow-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* ─── 高亮说明 ─── */
+  .highlight-note {
+    position: absolute;
+    top: 390px;
+    left: 28px;
+    right: 28px;
+    background: rgba(196, 168, 130, 0.12);
+    border-left: 2px solid #c4a882;
+    border-radius: 0 8px 8px 0;
+    padding: 10px 12px;
+    font-size: 12px;
+    color: #4a3f35;
+    line-height: 1.6;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .highlight-note.show { opacity: 1; transform: translateY(0); }
+
+  /* ─── 洞见文字 ─── */
+  .insight {
+    position: absolute;
+    top: 540px;
+    left: 28px;
+    right: 120px;
+    font-size: 18px;
+    font-weight: 300;
+    color: #1a1a1a;
+    line-height: 1.5;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .insight.show { opacity: 1; transform: translateY(0); }
+  .insight em {
+    font-style: normal;
+    color: #c4a882;
+    font-weight: 500;
+  }
+
+  /* ─── 结尾卡片 ─── */
+  .end-card {
+    position: absolute;
+    inset: 0;
+    background: #1a1a1a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+    pointer-events: none;
+  }
+  .end-card.show { opacity: 1; }
+  .end-logo {
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: #c4a882;
+  }
+  .end-tagline {
+    font-size: 20px;
+    font-weight: 300;
+    color: #F3EEEA;
+    text-align: center;
+    line-height: 1.5;
+  }
+  .end-sub {
+    font-size: 11px;
+    color: #8a7a6a;
+    letter-spacing: 1px;
+    margin-top: 4px;
+  }
+
+  /* ─── 考拉 IP ─── */
+  .koala {
+    position: absolute;
+    bottom: -50px;
+    right: -20px;
+    width: 200px;
+    opacity: 0;
+    transform: translateX(60px) translateY(50px);
+    transition: opacity 0.9s cubic-bezier(0.34, 1.56, 0.64, 1),
+                transform 0.9s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .koala.show {
+    opacity: 1;
+    transform: translateX(0) translateY(0);
+  }
+  /* 指向姿态：水平翻转 + 轻微旋转 */
+  .koala.pointing {
+    transform: scaleX(-1) translateX(-20px) translateY(0);
+  }
+
+  /* ─── 进度条 ─── */
+  .progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    background: #c4a882;
+    width: 0;
+    border-radius: 0 2px 2px 0;
+    transition: width linear;
+  }
+</style>
+</head>
+<body>
+
+<div class="frame" id="frame">
+
+  <p class="brand" id="brand">LOVE EGO AI</p>
+
+  <!-- 开场问句 -->
+  <h1 class="question" id="question">
+    你知道<br /><strong>情绪是怎么来的吗？</strong>
+  </h1>
+
+  <!-- 链条 -->
+  <div class="chain-area" id="chainArea">
+
+    <div class="chain-row" id="n1">
+      <div class="node" id="node1">
+        <span class="node-num">①</span>
+        <span class="node-label">事件<br/>发生</span>
+      </div>
+      <div class="node-desc">
+        <strong>事件发生</strong>
+        外部刺激进入感知系统
+      </div>
+    </div>
+
+    <div class="arrow-row" id="a1">
+      <div class="arrow-inner">
+        <div class="arrow-line"></div>
+        <div class="arrow-tip"></div>
+      </div>
+    </div>
+
+    <div class="chain-row" id="n2">
+      <div class="node" id="node2">
+        <span class="node-num">②</span>
+        <span class="node-label">大脑<br/>判断</span>
+      </div>
+      <div class="node-desc">
+        <strong>大脑做出判断</strong>
+        在你意识到之前已经发生
+      </div>
+    </div>
+
+    <div class="arrow-row" id="a2">
+      <div class="arrow-inner">
+        <div class="arrow-line"></div>
+        <div class="arrow-tip"></div>
+      </div>
+    </div>
+
+    <div class="chain-row" id="n3">
+      <div class="node" id="node3">
+        <span class="node-num">③</span>
+        <span class="node-label">身体<br/>感受</span>
+      </div>
+      <div class="node-desc">
+        <strong>身体产生感受</strong>
+        胸口收紧、腹部下沉
+      </div>
+    </div>
+
+    <div class="arrow-row" id="a3">
+      <div class="arrow-inner">
+        <div class="arrow-line"></div>
+        <div class="arrow-tip"></div>
+      </div>
+    </div>
+
+    <div class="chain-row" id="n4">
+      <div class="node" id="node4">
+        <span class="node-num">④</span>
+        <span class="node-label">情绪<br/>形成</span>
+      </div>
+      <div class="node-desc">
+        <strong>感受变成情绪</strong>
+        感受 + 判断 = 情绪
+      </div>
+    </div>
+
+    <div class="arrow-row" id="a4">
+      <div class="arrow-inner">
+        <div class="arrow-line"></div>
+        <div class="arrow-tip"></div>
+      </div>
+    </div>
+
+    <div class="chain-row" id="n5">
+      <div class="node" id="node5">
+        <span class="node-num">⑤</span>
+        <span class="node-label">自动<br/>反应</span>
+      </div>
+      <div class="node-desc">
+        <strong>情绪驱动反应</strong>
+        旧程序启动，替你做决定
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 高亮说明 -->
+  <div class="highlight-note" id="highlightNote">
+    这个判断，大部分不是你当下做出的——<br/>
+    <strong>是你很早以前就学会的。</strong>
+  </div>
+
+  <!-- 洞见 -->
+  <div class="insight" id="insight">
+    看见链条，<br />
+    才有机会<br />
+    在某个环节<br /><em>停下来。</em>
+  </div>
+
+  <!-- 考拉 IP -->
+  <img class="koala" id="koala" src="koala-ip.png" alt="考拉" />
+
+  <!-- 结尾卡片 -->
+  <div class="end-card" id="endCard">
+    <p class="end-logo">LOVE EGO AI</p>
+    <p class="end-tagline">情绪不是敌人<br />它只是一个结果</p>
+    <p class="end-sub">关注了解更多</p>
+  </div>
+
+  <!-- 进度条 -->
+  <div class="progress" id="progress"></div>
+
+</div>
+
+<script>
+// ─── 时间轴控制器 ───────────────────────────────
+const show = (id) => document.getElementById(id)?.classList.add('show');
+const hide = (id) => document.getElementById(id)?.classList.remove('show');
+
+const TOTAL = 40000;
+
+// ─── TTS 旁白 ───────────────────────────────────
+// 使用浏览器内置 SpeechSynthesis（支持中文，无需外部服务）
+const narration = [
+  { delay: 1500,  text: '你知道情绪是怎么来的吗？' },
+  { delay: 4000,  text: '很多人以为情绪是随机的。其实每一次情绪，都有一条完整的链条。' },
+  { delay: 9000,  text: '一件事发生了，大脑瞬间做出判断，判断触发身体感受，感受变成情绪，情绪驱动你的反应。' },
+  { delay: 14500, text: '这条链条跑得非常快。但中间有一个关键环节——判断。而这个判断，大部分不是你当下做出的，是你很早以前就学会的。' },
+  { delay: 22000, text: '理解了链条，你就知道——情绪不是敌人，它只是一个结果。' },
+];
+
+function speak(text) {
+  if (!window.speechSynthesis) return;
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'zh-CN';
+  u.rate = 0.88;   // 稍慢，更有质感
+  u.pitch = 1.0;
+  // 优先选女声
+  const voices = speechSynthesis.getVoices();
+  const zhVoice = voices.find(v => v.lang.startsWith('zh') && v.name.includes('Female'))
+                || voices.find(v => v.lang.startsWith('zh'));
+  if (zhVoice) u.voice = zhVoice;
+  speechSynthesis.speak(u);
+}
+
+// voices 可能异步加载，等加载完再绑定
+function scheduleNarration() {
+  narration.forEach(({ delay, text }) => {
+    setTimeout(() => speak(text), delay);
+  });
+}
+
+if (speechSynthesis.getVoices().length > 0) {
+  scheduleNarration();
+} else {
+  speechSynthesis.addEventListener('voiceschanged', scheduleNarration, { once: true });
+}
+
+// ─── 动画时间轴 ─────────────────────────────────
+const timeline = [
+  [300,   () => show('brand')],
+  [800,   () => show('koala')],
+  [1500,  () => show('question')],
+  [3800,  () => hide('question')],
+  [4200,  () => show('n1')],
+  [5400,  () => show('a1')],
+  [6000,  () => show('n2')],
+  [7200,  () => show('a2')],
+  [7800,  () => show('n3')],
+  [9000,  () => show('a3')],
+  [9600,  () => show('n4')],
+  [10800, () => show('a4')],
+  [11400, () => show('n5')],
+  [13200, () => {
+    document.getElementById('node2')?.classList.add('highlight');
+    document.getElementById('koala')?.classList.add('pointing');
+  }],
+  [14200, () => show('highlightNote')],
+  [20500, () => {
+    hide('highlightNote');
+    document.getElementById('node2')?.classList.remove('highlight');
+    document.getElementById('koala')?.classList.remove('pointing');
+    document.getElementById('chainArea')?.classList.add('shrink');
+  }],
+  [21500, () => show('insight')],
+  [28000, () => hide('insight')],
+  [33000, () => {
+    hide('chainArea');
+    show('endCard');
+  }],
+];
+
+// 进度条
+const progressEl = document.getElementById('progress');
+let startTime = null;
+function tick(ts) {
+  if (!startTime) startTime = ts;
+  const pct = Math.min((ts - startTime) / TOTAL * 100, 100);
+  progressEl.style.width = pct + '%';
+  if (ts - startTime < TOTAL) requestAnimationFrame(tick);
+}
+requestAnimationFrame(tick);
+
+timeline.forEach(([delay, fn]) => setTimeout(fn, delay));
+
+// 40秒后重播（停掉所有 TTS 再重载）
+setTimeout(() => {
+  speechSynthesis.cancel();
+  location.reload();
+}, TOTAL + 1000);
+</script>
+
+</body>
+</html>

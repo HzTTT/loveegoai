@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Love Ego AI — 小红书正文图 V3（科普风）</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;600&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #f0ebe5; font-family: 'Noto Sans SC', sans-serif; padding: 40px; }
+  h1 { font-family: 'Noto Serif SC', serif; color: #3D2E2A; font-size: 28px; margin-bottom: 8px; }
+  .section-label { color: #8B9E9B; font-size: 14px; margin-bottom: 40px; letter-spacing: 2px; }
+  .grid { display: flex; flex-wrap: wrap; gap: 32px; margin-bottom: 64px; }
+  .type-label { font-size: 16px; font-weight: 500; color: #3D2E2A; margin-top: 48px; margin-bottom: 16px; }
+
+  /* ===== 正文页基础 ===== */
+  .page {
+    width: 360px;
+    height: 480px;
+    border-radius: 8px;
+    padding: 44px 32px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .page .page-num {
+    position: absolute;
+    top: 20px;
+    right: 24px;
+    font-size: 11px;
+    letter-spacing: 2px;
+    opacity: 0.35;
+  }
+
+  .page .brand-mark {
+    position: absolute;
+    bottom: 18px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 10px;
+    letter-spacing: 4px;
+    opacity: 0.25;
+  }
+
+  /* ===== 白板科普页 ===== */
+  .page-board {
+    background: #FAFAF8;
+    color: #2C2C2C;
+  }
+  .page-board .page-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: #1A1412;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    padding-bottom: 14px;
+    border-bottom: 1.5px solid #E8E4DE;
+  }
+  .page-board .para {
+    font-size: 14px;
+    line-height: 2;
+    color: #3D2E2A;
+    font-weight: 300;
+    margin-bottom: 14px;
+  }
+  .page-board .para .hl { color: #3D2E2A; font-weight: 600; }
+  .page-board .para .key { color: #B8956A; font-weight: 500; }
+  .page-board .node-inline {
+    display: inline-block;
+    background: #F0EBE5;
+    border: 1px solid #E0D8CE;
+    border-radius: 14px;
+    padding: 2px 10px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #3D2E2A;
+    margin: 0 2px;
+  }
+  .page-board .node-inline.dark {
+    background: #3D2E2A;
+    border-color: #3D2E2A;
+    color: #FAF7F3;
+  }
+  .page-board .emphasis {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1A1412;
+    text-align: center;
+    margin-top: auto;
+    margin-bottom: 28px;
+    line-height: 1.8;
+    padding: 14px 0;
+    border-top: 1px solid #E8E4DE;
+    border-bottom: 1px solid #E8E4DE;
+  }
+  .page-board .page-num { color: #8B9E9B; }
+  .page-board .brand-mark { color: #C4A882; }
+
+  /* ===== 暖底知识页 ===== */
+  .page-warm {
+    background: #F5EDE4;
+    color: #3D2E2A;
+  }
+  .page-warm .page-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: #1A1412;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    padding-bottom: 14px;
+    border-bottom: 1.5px solid #E0D8CE;
+  }
+  .page-warm .para {
+    font-size: 14px;
+    line-height: 2;
+    color: #3D2E2A;
+    font-weight: 300;
+    margin-bottom: 14px;
+  }
+  .page-warm .para .hl { color: #1A1412; font-weight: 600; }
+  .page-warm .para .key { color: #B8956A; font-weight: 500; }
+  .page-warm .numbered-list {
+    margin: 8px 0 16px;
+    padding: 0;
+    list-style: none;
+    counter-reset: item;
+  }
+  .page-warm .numbered-list li {
+    counter-increment: item;
+    display: flex;
+    gap: 10px;
+    font-size: 13px;
+    line-height: 1.8;
+    color: #3D2E2A;
+    font-weight: 300;
+    margin-bottom: 6px;
+  }
+  .page-warm .numbered-list li::before {
+    content: counter(item);
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #E8D5CC;
+    color: #3D2E2A;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .page-warm .emphasis {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1A1412;
+    text-align: center;
+    margin-top: auto;
+    margin-bottom: 28px;
+    line-height: 1.8;
+    padding: 14px 0;
+    border-top: 1px solid #E0D8CE;
+    border-bottom: 1px solid #E0D8CE;
+  }
+  .page-warm .page-num { color: #B8956A; }
+  .page-warm .brand-mark { color: #C4A882; }
+
+  /* ===== 深色科普页 ===== */
+  .page-deep {
+    background: linear-gradient(170deg, #2A2520 0%, #1A1412 100%);
+    color: #E8D5CC;
+  }
+  .page-deep .page-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: #FAF7F3;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    padding-bottom: 14px;
+    border-bottom: 1.5px solid rgba(184,149,106,0.2);
+  }
+  .page-deep .para {
+    font-size: 14px;
+    line-height: 2;
+    color: #D0C4B8;
+    font-weight: 300;
+    margin-bottom: 14px;
+  }
+  .page-deep .para .hl { color: #FAF7F3; font-weight: 500; }
+  .page-deep .para .key { color: #C4A882; font-weight: 500; }
+  .page-deep .emphasis {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: #FAF7F3;
+    text-align: center;
+    margin-top: auto;
+    margin-bottom: 28px;
+    line-height: 1.8;
+    padding: 14px 0;
+    border-top: 1px solid rgba(184,149,106,0.2);
+    border-bottom: 1px solid rgba(184,149,106,0.2);
+  }
+  .page-deep .page-num { color: #B8956A; }
+  .page-deep .brand-mark { color: #B8956A; }
+
+  /* 对比块 */
+  .vs-block { display: flex; gap: 10px; margin: 10px 0; }
+  .vs-side { flex: 1; padding: 10px; border-radius: 8px; font-size: 12px; line-height: 1.7; }
+  .page-board .vs-left { background: rgba(0,0,0,0.03); }
+  .page-board .vs-right { background: rgba(0,0,0,0.06); }
+  .page-deep .vs-left { background: rgba(255,255,255,0.04); }
+  .page-deep .vs-right { background: rgba(196,168,130,0.1); }
+  .page-warm .vs-left { background: rgba(0,0,0,0.04); }
+  .page-warm .vs-right { background: rgba(184,149,106,0.12); }
+  .vs-label { font-weight: 600; font-size: 11px; margin-bottom: 3px; letter-spacing: 1px; }
+</style>
+</head>
+<body>
+
+<h1>Love Ego AI — 小红书正文图 V3</h1>
+<p class="section-label">科普正文 · 滑动后查看</p>
+
+<!-- ==================== #1 情绪链条 ==================== -->
+<p class="type-label">#1 情绪链条是怎么形成的（正文页 2-4）</p>
+<div class="grid">
+
+  <div class="page page-board">
+    <div class="page-num">2 / 4</div>
+    <div class="page-title">一条链条的完整路径</div>
+    <div class="para">
+      每一次情绪反应，其实都有一条<span class="hl">固定的链条</span>在身体里运行：
+    </div>
+    <div class="para" style="text-align:center;margin:8px 0 12px;">
+      <span class="node-inline">事件</span> → <span class="node-inline">判断</span> → <span class="node-inline dark">身体感受</span> → <span class="node-inline">情绪</span> → <span class="node-inline">反应</span>
+    </div>
+    <div class="para">
+      这条链条跑得非常快。<br>
+      快到你<span class="key">来不及意识到</span>，反应就已经发生了。
+    </div>
+    <div class="emphasis">身体会跳过大脑<br>直接调用旧的反应</div>
+    <div class="brand-mark">LOVE EGO AI</div>
+  </div>
+
+  <div class="page page-warm">
+    <div class="page-num">3 / 4</div>
+    <div class="page-title">链条中间的关键环节</div>
+    <div class="para">
+      链条的第二步是<span class="key">"判断"</span>。
+    </div>
+    <div class="para">
+      但这个判断，大部分<span class="hl">不是你当下做出的</span>——是你很早以前就学会的。
+    </div>
+    <div class="para">
+      小时候的一次经历 → 养育者教你如何解读 → 这个解读写进了身体 → 变成了自动反应。
+    </div>
+    <div class="para">
+      所以你以为是"你"在做选择，<br>
+      其实很多时候是<span class="key">旧程序在替你做选择</span>。
+    </div>
+    <div class="emphasis">判断不是当下的<br>是身体记住的</div>
+    <div class="brand-mark">LOVE EGO AI</div>
+  </div>
+
+  <div class="page page-board">
+    <div class="page-num">4 / 4</div>
+    <div class="page-title">看见链条，就有了选择</div>
+    <div class="para">
+      好消息是：<br>
+      链条不是不可改变的。
+    </div>
+    <div class="para">
+      当你能在被触发的那个瞬间<span class="key">觉察到链条在启动</span>——哪怕只是停了一秒——你就不再是完全自动的。
+    </div>
+    <div class="para">
+      那一秒的停顿，就是从<span class="hl">旧程序</span>到<span class="hl">新选择</span>的空间。
+    </div>
+    <div class="emphasis">看见链条<br>才有机会在某个环节<br>停下来</div>
+    <div class="brand-mark">LOVE EGO AI</div>
+  </div>
+
+</div>
+
+<!-- ==================== #4 头脑身体不同步 ==================== -->
+<p class="type-label">#4 头脑和身体为什么不同步（正文页 2-3）</p>
+<div class="grid">
+
+  <div class="page page-deep">
+    <div class="page-num">2 / 3</div>
+    <div class="page-title">两个系统，两个速度</div>
+    <div class="para">
+      <span class="hl">头脑</span>处理信息的方式是：分析、归纳、得出结论。
+    </div>
+    <div class="para">
+      <span class="key">身体</span>储存信息的方式是：反复体验，形成自动化反应。
+    </div>
+    <div class="vs-block">
+      <div class="vs-side vs-left">
+        <div class="vs-label">头脑说</div>
+        "我知道不该生气"<br>
+        "我想通了"<br>
+        "下次一定改"
+      </div>
+      <div class="vs-side vs-right">
+        <div class="vs-label" style="color:#C4A882;">身体说</div>
+        胸口收紧<br>
+        心跳加速<br>
+        跟上次一模一样
+      </div>
+    </div>
+    <div class="para">
+      头脑可以在一秒内想通。<br>
+      身体的反应模式是<span class="key">年为单位</span>积累的。
+    </div>
+    <div class="brand-mark" style="color:#B8956A;">LOVE EGO AI</div>
+  </div>
+
+  <div class="page page-deep">
+    <div class="page-num">3 / 3</div>
+    <div class="page-title">所以"想通"不等于"做到"</div>
+    <div class="para">
+      这不是你不够努力。<br>
+      是你用了<span class="key">头脑的方式</span>去改身体里的东西。
+    </div>
+    <div class="para">
+      就像你不能<span class="hl">用想的方式学会游泳</span>——你必须下水，让身体体验到。
+    </div>
+    <div class="para">
+      改变反应模式也是一样：<br>
+      身体要<span class="key">亲自走过一遍</span>新的路径，才会真正记住。
+    </div>
+    <div class="emphasis">头脑改不了身体<br>身体要用身体的方式改</div>
+    <div class="brand-mark" style="color:#B8956A;">LOVE EGO AI</div>
+  </div>
+
+</div>
+
+<!-- ==================== #9 觉察是什么 ==================== -->
+<p class="type-label">#9 觉察到底是什么（正文页 2-3）</p>
+<div class="grid">
+
+  <div class="page page-warm">
+    <div class="page-num">2 / 3</div>
+    <div class="page-title">觉察不是分析，也不是评判</div>
+    <div class="para">
+      很多人以为觉察就是<span class="hl">"搞清楚为什么"</span>。
+    </div>
+    <div class="para">
+      觉察不是分析——<br>
+      <span style="color:#8B9E9B;">"我为什么会这样？因为小时候..."</span>
+    </div>
+    <div class="para">
+      觉察也不是评判——<br>
+      <span style="color:#8B9E9B;">"我又这样了，真没用。"</span>
+    </div>
+    <div class="para">
+      觉察是：<br>
+      <span class="key">"哦，我现在胸口在收缩。"</span>
+    </div>
+    <div class="para">
+      只是看到。不解释，不修正。
+    </div>
+    <div class="emphasis">看到本身<br>就是改变的起点</div>
+    <div class="brand-mark">LOVE EGO AI</div>
+  </div>
+
+  <div class="page page-warm">
+    <div class="page-num">3 / 3</div>
+    <div class="page-title">觉察为什么有用</div>
+    <div class="para">
+      当你觉察到链条在启动的那个瞬间，你和反应之间就出现了一个<span class="key">空间</span>。
+    </div>
+    <div class="para">
+      没有觉察时：<br>
+      触发 → <span class="hl">直接反应</span>（自动驾驶）
+    </div>
+    <div class="para">
+      有了觉察：<br>
+      触发 → <span class="key">看到</span> → 空间 → <span class="hl">选择</span>
+    </div>
+    <div class="para">
+      有了空间，就有了选择。<br>
+      有了选择，就不再是自动驾驶。
+    </div>
+    <div class="emphasis">觉察 → 空间 → 选择</div>
+    <div class="brand-mark">LOVE EGO AI</div>
+  </div>
+
+</div>
+
+<!-- ==================== #13 控制vs臣服 ==================== -->
+<p class="type-label">#13 控制消耗能量，臣服释放能量（正文页 2-3）</p>
+<div class="grid">
+
+  <div class="page page-board">
+    <div class="page-num">2 / 3</div>
+    <div class="page-title">控制的代价</div>
+    <div class="para">
+      当大脑感到不确定，第一反应是<span class="key">控制</span>。
+    </div>
+    <div class="para">
+      控制别人的看法。<br>
+      控制事情的走向。<br>
+      控制自己的情绪。
+    </div>
+    <div class="para">
+      但控制需要大量的<span class="hl">能量</span>——你的注意力、身体的紧绷、持续的计算。
+    </div>
+    <div class="para">
+      这就是为什么你明明没做什么体力活，一天下来<span class="key">特别累</span>。
+    </div>
+    <div class="emphasis">控制的不是事情<br>是你自己的能量</div>
+    <div class="brand-mark">LOVE EGO AI</div>
+  </div>
+
+  <div class="page page-board">
+    <div class="page-num">3 / 3</div>
+    <div class="page-title">臣服不是放弃</div>
+    <div class="para">
+      臣服 ≠ 放弃 ≠ 躺平
+    </div>
+    <div class="para">
+      臣服 = <span class="key">"我允许事情发生"</span>
+    </div>
+    <div class="para">
+      当你放下控制：<br>
+      神经系统放松 → 注意力回到当下 → 进入心流 → <span class="hl">创造力自然释放</span>。
+    </div>
+    <div class="para">
+      创造力不是努力产生的。<br>
+      是阻碍消失后的<span class="key">自然流动</span>。
+    </div>
+    <div class="emphasis">放下控制<br>不是失去力量<br>是找回力量</div>
+    <div class="brand-mark">LOVE EGO AI</div>
+  </div>
+
+</div>
+
+<!-- ==================== #17 DOING vs BEING ==================== -->
+<p class="type-label">#17 DOING vs BEING（正文页 2-3）</p>
+<div class="grid">
+
+  <div class="page page-deep">
+    <div class="page-num">2 / 3</div>
+    <div class="page-title">两套操作系统</div>
+    <div class="vs-block">
+      <div class="vs-side vs-left">
+        <div class="vs-label">DOING</div>
+        分析<br>计划<br>解决<br>逻辑<br><br>
+        <span style="font-size:11px;opacity:0.6;">大多数方法在这个层面工作</span>
+      </div>
+      <div class="vs-side vs-right">
+        <div class="vs-label" style="color:#C4A882;">BEING</div>
+        感受<br>当下<br>存在<br>身体<br><br>
+        <span style="font-size:11px;color:#C4A882;">旧程序住在这个层面</span>
+      </div>
+    </div>
+    <div class="para">
+      用 DOING 的方式去改 BEING 层面的东西，就像<span class="key">用说明书学游泳</span>。
+    </div>
+    <div class="para">
+      你可以把理论背得滚瓜烂熟，下水还是不会。
+    </div>
+    <div class="brand-mark" style="color:#B8956A;">LOVE EGO AI</div>
+  </div>
+
+  <div class="page page-deep">
+    <div class="page-num">3 / 3</div>
+    <div class="page-title">回到身体，就是回到 BEING</div>
+    <div class="para">
+      BEING 不是放空。<br>
+      BEING 不是什么都不做。
+    </div>
+    <div class="para">
+      BEING = <span class="key">与身体的连接</span>。
+    </div>
+    <div class="para">
+      感受肩膀是紧还是松，<br>
+      胸口是收缩还是扩张，<br>
+      呼吸是浅还是深。
+    </div>
+    <div class="para">
+      当你把注意力放在身体上，<br>
+      你就自动从头脑的时间线<br>
+      回到了<span class="key">此刻</span>。
+    </div>
+    <div class="emphasis">恐惧在时间里<br>创造在当下<br>身体只在当下</div>
+    <div class="brand-mark" style="color:#B8956A;">LOVE EGO AI</div>
+  </div>
+
+</div>
+
+</body>
+</html>

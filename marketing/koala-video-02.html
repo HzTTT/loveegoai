@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>考拉讲解视频 #02 — 身体记忆</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #111;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: -apple-system, "PingFang SC", "Helvetica Neue", sans-serif;
+  }
+
+  .frame {
+    width: 390px;
+    height: 844px;
+    background: #F3EEEA;
+    position: relative;
+    overflow: hidden;
+    border-radius: 24px;
+  }
+
+  /* ─── 品牌 ─── */
+  .brand {
+    position: absolute;
+    top: 36px;
+    left: 28px;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: #8a7a6a;
+    opacity: 0;
+    transition: opacity 0.6s;
+  }
+  .brand.show { opacity: 1; }
+
+  .episode {
+    position: absolute;
+    top: 36px;
+    right: 28px;
+    font-size: 10px;
+    color: #c4a882;
+    letter-spacing: 1px;
+    opacity: 0;
+    transition: opacity 0.6s;
+  }
+  .episode.show { opacity: 1; }
+
+  /* ─── 标题区 ─── */
+  .title-block {
+    position: absolute;
+    top: 72px;
+    left: 28px;
+    right: 28px;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.6s, transform 0.6s;
+  }
+  .title-block.show { opacity: 1; transform: translateY(0); }
+  .title-block h1 {
+    font-size: 24px;
+    font-weight: 300;
+    color: #1a1a1a;
+    line-height: 1.3;
+  }
+  .title-block h1 strong { font-weight: 600; }
+  .title-block p {
+    margin-top: 6px;
+    font-size: 12px;
+    color: #8a7a6a;
+    letter-spacing: 0.5px;
+  }
+
+  /* ─── 核心说法卡片 ─── */
+  .fact-card {
+    position: absolute;
+    left: 28px;
+    right: 28px;
+    background: #EDE8E3;
+    border-radius: 14px;
+    padding: 16px 18px;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.55s, transform 0.55s;
+  }
+  .fact-card.show { opacity: 1; transform: translateY(0); }
+  .fact-card .label {
+    font-size: 10px;
+    color: #c4a882;
+    letter-spacing: 2px;
+    margin-bottom: 6px;
+  }
+  .fact-card .body {
+    font-size: 14px;
+    color: #1a1a1a;
+    line-height: 1.6;
+  }
+  .fact-card .body em {
+    font-style: normal;
+    color: #c4a882;
+    font-weight: 500;
+  }
+
+  /* 卡片位置 */
+  #card1 { top: 160px; }
+  #card2 { top: 272px; }
+  #card3 { top: 384px; }
+
+  /* ─── 时间线对比图 ─── */
+  .timeline-box {
+    position: absolute;
+    top: 420px;
+    left: 28px;
+    right: 28px;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.6s, transform 0.6s;
+  }
+  .timeline-box.show { opacity: 1; transform: translateY(0); }
+
+  .tl-label {
+    font-size: 11px;
+    color: #8a7a6a;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+  }
+
+  .tl-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  .tl-name {
+    font-size: 11px;
+    color: #4a3f35;
+    width: 52px;
+    flex-shrink: 0;
+    text-align: right;
+  }
+  .tl-bar-wrap {
+    flex: 1;
+    height: 24px;
+    background: #E5DDD5;
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+  }
+  .tl-bar {
+    height: 100%;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    padding-left: 8px;
+    font-size: 10px;
+    color: white;
+    font-weight: 500;
+    width: 0;
+    transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .tl-bar.body-bar { background: #c4a882; }
+  .tl-bar.brain-bar { background: #4a3f35; }
+  .tl-bar.body-bar.expand  { width: 55%; }
+  .tl-bar.brain-bar.expand { width: 100%; }
+
+  .tl-gap {
+    margin-top: 4px;
+    font-size: 11px;
+    color: #c4a882;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.5s 0.8s;
+  }
+  .tl-gap.show { opacity: 1; }
+
+  /* ─── 洞见 ─── */
+  .insight {
+    position: absolute;
+    top: 590px;
+    left: 28px;
+    right: 150px;
+    font-size: 16px;
+    font-weight: 300;
+    color: #1a1a1a;
+    line-height: 1.6;
+    border-left: 2px solid #c4a882;
+    padding-left: 12px;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.6s, transform 0.6s;
+  }
+  .insight.show { opacity: 1; transform: translateY(0); }
+  .insight em { font-style: normal; color: #c4a882; font-weight: 500; }
+
+  /* ─── 结尾卡 ─── */
+  .end-card {
+    position: absolute;
+    inset: 0;
+    background: #1a1a1a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    opacity: 0;
+    transition: opacity 0.8s;
+    pointer-events: none;
+  }
+  .end-card.show { opacity: 1; }
+  .end-logo { font-size: 11px; letter-spacing: 4px; color: #c4a882; }
+  .end-tagline {
+    font-size: 20px;
+    font-weight: 300;
+    color: #F3EEEA;
+    text-align: center;
+    line-height: 1.5;
+  }
+  .end-sub { font-size: 11px; color: #8a7a6a; letter-spacing: 1px; }
+
+  /* ─── 考拉 ─── */
+  .koala {
+    position: absolute;
+    bottom: -50px;
+    right: -20px;
+    width: 190px;
+    opacity: 0;
+    transform: translateX(60px) translateY(50px);
+    transition: opacity 0.9s cubic-bezier(0.34,1.56,0.64,1),
+                transform 0.9s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  .koala.show { opacity: 1; transform: translateX(0) translateY(0); }
+
+  /* ─── 进度条 ─── */
+  .progress {
+    position: absolute;
+    bottom: 0; left: 0;
+    height: 3px;
+    background: #c4a882;
+    width: 0;
+    border-radius: 0 2px 2px 0;
+  }
+</style>
+</head>
+<body>
+
+<div class="frame">
+
+  <p class="brand" id="brand">LOVE EGO AI</p>
+  <p class="episode" id="episode">原理科普 #02</p>
+
+  <!-- 标题 -->
+  <div class="title-block" id="titleBlock">
+    <h1>你的身体<br /><strong>会记住经历</strong></h1>
+    <p>即使你的头脑已经忘了</p>
+  </div>
+
+  <!-- 卡片 1 -->
+  <div class="fact-card" id="card1">
+    <div class="label">记忆存在哪里？</div>
+    <div class="body">
+      人的记忆不只存在大脑里。<br />
+      <em>身体也会记。</em>
+    </div>
+  </div>
+
+  <!-- 卡片 2 -->
+  <div class="fact-card" id="card2">
+    <div class="label">身体在重播</div>
+    <div class="body">
+      每次遇到类似的场景，<br />
+      身体会<em>自动</em>收缩、紧绷、心跳加速。<br />
+      <span style="font-size:12px;color:#8a7a6a">——这不是"你在害怕"，是身体在重播旧记录。</span>
+    </div>
+  </div>
+
+  <!-- 卡片 3 / 时间线（替换卡片3显示） -->
+  <div class="timeline-box" id="timelineBox">
+    <div class="tl-label">神经科学数据</div>
+    <div class="tl-row">
+      <div class="tl-name">身体反应</div>
+      <div class="tl-bar-wrap">
+        <div class="tl-bar body-bar" id="bodyBar">先行</div>
+      </div>
+    </div>
+    <div class="tl-row">
+      <div class="tl-name">意识感知</div>
+      <div class="tl-bar-wrap">
+        <div class="tl-bar brain-bar" id="brainBar">滞后</div>
+      </div>
+    </div>
+    <div class="tl-gap" id="tlGap">↑ 身体比意识快 <strong>0.5 秒</strong></div>
+  </div>
+
+  <!-- 洞见 -->
+  <div class="insight" id="insight">
+    你<em>"知道"</em>没什么<br />
+    好怕的，<br />
+    身体还是在怕。<br />
+    <span style="font-size:12px;color:#8a7a6a;font-weight:400">因为身体有自己的<br />记忆系统。</span>
+  </div>
+
+  <!-- 考拉 -->
+  <img class="koala" id="koala" src="koala-ip.png" alt="考拉" />
+
+  <!-- 结尾 -->
+  <div class="end-card" id="endCard">
+    <p class="end-logo">LOVE EGO AI</p>
+    <p class="end-tagline">身体的记忆<br />比头脑更诚实</p>
+    <p class="end-sub">关注了解更多</p>
+  </div>
+
+  <div class="progress" id="progress"></div>
+</div>
+
+<script>
+const show = id => document.getElementById(id)?.classList.add('show');
+const hide = id => document.getElementById(id)?.classList.remove('show');
+const TOTAL = 38000;
+
+// ─── TTS 旁白 ───────────────────────────────────
+const narration = [
+  { delay: 1400,  text: '你知道吗，你的身体会记住经历，即使你的头脑已经忘了。' },
+  { delay: 5000,  text: '人的记忆，不只存在大脑里。身体也会记。' },
+  { delay: 9000,  text: '你可能早就忘了小时候某次被吓到的经历，但身体记住了。每次遇到类似的场景，身体会自动收缩、紧绷、心跳加速。' },
+  { delay: 17000, text: '神经科学有一个数据：身体的反应速度，比意识快零点五秒。也就是说，在你意识到自己在害怕之前，身体已经替你做出了反应。' },
+  { delay: 26000, text: '这就是为什么，你明明知道没什么好怕的，身体还是在怕。因为身体，有自己的记忆系统。' },
+];
+
+function speak(text) {
+  if (!window.speechSynthesis) return;
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'zh-CN';
+  u.rate = 0.88;
+  u.pitch = 1.0;
+  const voices = speechSynthesis.getVoices();
+  const zhVoice = voices.find(v => v.lang.startsWith('zh') && v.name.includes('Female'))
+                || voices.find(v => v.lang.startsWith('zh'));
+  if (zhVoice) u.voice = zhVoice;
+  speechSynthesis.speak(u);
+}
+
+function scheduleNarration() {
+  narration.forEach(({ delay, text }) => setTimeout(() => speak(text), delay));
+}
+if (speechSynthesis.getVoices().length > 0) {
+  scheduleNarration();
+} else {
+  speechSynthesis.addEventListener('voiceschanged', scheduleNarration, { once: true });
+}
+
+// ─── 动画时间轴 ─────────────────────────────────
+const timeline = [
+  [300,   () => show('brand')],
+  [300,   () => show('episode')],
+  [800,   () => show('koala')],
+  [1400,  () => show('titleBlock')],
+
+  // 卡片依次出现
+  [4800,  () => show('card1')],
+  [8800,  () => show('card2')],
+
+  // 时间线图解
+  [16000, () => {
+    show('timelineBox');
+    setTimeout(() => {
+      document.getElementById('bodyBar')?.classList.add('expand');
+    }, 400);
+    setTimeout(() => {
+      document.getElementById('brainBar')?.classList.add('expand');
+      document.getElementById('tlGap')?.classList.add('show');
+    }, 900);
+  }],
+
+  // 洞见
+  [25500, () => show('insight')],
+
+  // 结尾
+  [33000, () => show('endCard')],
+];
+
+// 进度条
+const progressEl = document.getElementById('progress');
+let startTime = null;
+function tick(ts) {
+  if (!startTime) startTime = ts;
+  const pct = Math.min((ts - startTime) / TOTAL * 100, 100);
+  progressEl.style.width = pct + '%';
+  if (ts - startTime < TOTAL) requestAnimationFrame(tick);
+}
+requestAnimationFrame(tick);
+
+timeline.forEach(([delay, fn]) => setTimeout(fn, delay));
+
+setTimeout(() => {
+  speechSynthesis.cancel();
+  location.reload();
+}, TOTAL + 1000);
+</script>
+</body>
+</html>

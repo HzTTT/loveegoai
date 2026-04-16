@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Love Ego AI — 小红书账号主页 V2（科普方向）</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;700&family=Noto+Sans+SC:wght@300;400;500&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #f0ebe5; font-family: 'Noto Sans SC', sans-serif; padding: 40px; }
+  h1 { font-family: 'Noto Serif SC', serif; color: #3D2E2A; font-size: 28px; margin-bottom: 8px; }
+  .section-label { color: #8B9E9B; font-size: 14px; margin-bottom: 40px; letter-spacing: 2px; }
+
+  .phone {
+    width: 375px;
+    background: #fff;
+    border-radius: 32px;
+    overflow: hidden;
+    box-shadow: 0 12px 48px rgba(0,0,0,0.12);
+    margin: 0 auto 48px;
+  }
+
+  .status-bar {
+    height: 44px;
+    background: #FAF7F3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1A1412;
+  }
+
+  .profile-header {
+    background: linear-gradient(180deg, #FAF7F3 0%, #F5EDE4 100%);
+    padding: 24px 20px 20px;
+    text-align: center;
+  }
+
+  .avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin: 0 auto 12px;
+    overflow: hidden;
+  }
+  .avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+  .profile-name {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: #1A1412;
+    margin-bottom: 4px;
+  }
+
+  .profile-id {
+    font-size: 12px;
+    color: #8B9E9B;
+    margin-bottom: 12px;
+  }
+
+  .profile-bio {
+    font-size: 13px;
+    line-height: 1.8;
+    color: #3D2E2A;
+    text-align: left;
+    padding: 0 8px;
+    margin-bottom: 16px;
+  }
+  .profile-bio .bio-highlight {
+    color: #B8956A;
+    font-weight: 500;
+  }
+
+  .profile-stats {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    padding: 12px 0;
+    border-top: 1px solid #E8D5CC;
+  }
+  .stat { text-align: center; }
+  .stat-num { font-size: 18px; font-weight: 600; color: #1A1412; }
+  .stat-label { font-size: 11px; color: #8B9E9B; margin-top: 2px; }
+
+  .highlights {
+    display: flex;
+    gap: 12px;
+    padding: 16px 20px;
+    overflow-x: auto;
+    background: #fff;
+  }
+  .highlight-item {
+    flex-shrink: 0;
+    width: 64px;
+    text-align: center;
+  }
+  .highlight-circle {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 500;
+    color: #FAF7F3;
+    margin-bottom: 4px;
+    line-height: 1.3;
+    text-align: center;
+    padding: 4px;
+  }
+  .highlight-label {
+    font-size: 10px;
+    color: #3D2E2A;
+    line-height: 1.3;
+  }
+
+  .hl-chain { background: linear-gradient(135deg, #B8956A, #C4A882); }
+  .hl-body { background: linear-gradient(135deg, #8B9E9B, #A0B3B0); }
+  .hl-being { background: linear-gradient(135deg, #C47D6D, #D4928A); }
+  .hl-practice { background: linear-gradient(135deg, #3D2E2A, #5A4540); }
+
+  .content-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    padding: 2px;
+    background: #fff;
+  }
+  .grid-item {
+    aspect-ratio: 3/4;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 8px;
+    text-align: center;
+    position: relative;
+  }
+  .grid-item .grid-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1.5;
+  }
+  .grid-item .grid-sub {
+    font-size: 9px;
+    margin-top: 4px;
+    opacity: 0.5;
+    line-height: 1.4;
+    letter-spacing: 1px;
+  }
+  .grid-item .grid-tag {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    font-size: 7px;
+    letter-spacing: 1px;
+    opacity: 0.4;
+  }
+
+  /* 三种网格色彩：白板/暖底/深色 */
+  .grid-board {
+    background: #FAFAF8;
+    color: #1A1412;
+  }
+  .grid-warm {
+    background: linear-gradient(160deg, #F5EDE4, #EDE3D8);
+    color: #1A1412;
+  }
+  .grid-deep {
+    background: linear-gradient(160deg, #2A2520, #1A1412);
+    color: #FAF7F3;
+  }
+
+  .notes {
+    max-width: 600px;
+    margin: 32px auto;
+    padding: 24px;
+    background: #FAF7F3;
+    border-radius: 12px;
+  }
+  .notes h2 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 18px;
+    color: #3D2E2A;
+    margin-bottom: 16px;
+  }
+  .notes p {
+    font-size: 14px;
+    line-height: 1.8;
+    color: #3D2E2A;
+    margin-bottom: 8px;
+  }
+  .notes .note-label {
+    font-weight: 500;
+    color: #B8956A;
+  }
+</style>
+</head>
+<body>
+
+<h1>Love Ego AI — 小红书账号主页 V2</h1>
+<p class="section-label">PROFILE DESIGN · 科普方向</p>
+
+<div class="phone">
+  <div class="status-bar">9:41</div>
+
+  <div class="profile-header">
+    <div class="avatar">
+      <img src="koala-ip.png" alt="考拉IP">
+    </div>
+    <div class="profile-name">Love Ego AI</div>
+    <div class="profile-id">@loveegoai</div>
+    <div class="profile-bio">
+      <span class="bio-highlight">讲清楚人是怎么运作的。</span><br>
+      情绪链条 · 身体记忆 · BEING与DOING<br>
+      不卖课，只科普。懂的人自然会来。
+    </div>
+    <div class="profile-stats">
+      <div class="stat"><div class="stat-num">—</div><div class="stat-label">关注</div></div>
+      <div class="stat"><div class="stat-num">—</div><div class="stat-label">粉丝</div></div>
+      <div class="stat"><div class="stat-num">—</div><div class="stat-label">获赞与收藏</div></div>
+    </div>
+  </div>
+
+  <div class="highlights">
+    <div class="highlight-item">
+      <div class="highlight-circle hl-chain">情绪<br>链条</div>
+      <div class="highlight-label">情绪是<br>怎么来的</div>
+    </div>
+    <div class="highlight-item">
+      <div class="highlight-circle hl-body">身体<br>记忆</div>
+      <div class="highlight-label">身体为什么<br>比你快</div>
+    </div>
+    <div class="highlight-item">
+      <div class="highlight-circle hl-being">觉察<br>练习</div>
+      <div class="highlight-label">觉察<br>是什么</div>
+    </div>
+    <div class="highlight-item">
+      <div class="highlight-circle hl-practice">体<br>验</div>
+      <div class="highlight-label">免费<br>体验</div>
+    </div>
+  </div>
+
+  <div class="content-grid">
+    <!-- Row 1: 白板风 -->
+    <div class="grid-item grid-board">
+      <div class="grid-tag">原理科普</div>
+      <div class="grid-title">一个情绪<br>是怎么形成的</div>
+    </div>
+    <div class="grid-item grid-warm">
+      <div class="grid-tag">原理科普</div>
+      <div class="grid-title">身体会记住<br>你的每一次经历</div>
+    </div>
+    <div class="grid-item grid-deep">
+      <div class="grid-tag">原理科普</div>
+      <div class="grid-title">你有多少行为<br>是"自动驾驶"的</div>
+    </div>
+
+    <!-- Row 2 -->
+    <div class="grid-item grid-board">
+      <div class="grid-tag">原理科普</div>
+      <div class="grid-title">头脑想通了<br>身体为什么没跟上</div>
+    </div>
+    <div class="grid-item grid-warm">
+      <div class="grid-tag">原理科普</div>
+      <div class="grid-title">防御模式<br>是怎么消耗能量的</div>
+    </div>
+    <div class="grid-item grid-deep">
+      <div class="grid-tag">原理科普</div>
+      <div class="grid-title">性格不是天生的<br>是被训练出来的</div>
+    </div>
+
+    <!-- Row 3 -->
+    <div class="grid-item grid-board">
+      <div class="grid-tag">核心概念</div>
+      <div class="grid-title">也许是<br>先有状态<br>再有结果</div>
+    </div>
+    <div class="grid-item grid-warm">
+      <div class="grid-tag">原理科普</div>
+      <div class="grid-title">情绪不是敌人<br>是身体的信号</div>
+    </div>
+    <div class="grid-item grid-deep">
+      <div class="grid-tag">核心概念</div>
+      <div class="grid-title">觉察到底<br>是什么</div>
+    </div>
+
+    <!-- Row 4 -->
+    <div class="grid-item grid-board">
+      <div class="grid-tag">原理科普</div>
+      <div class="grid-title">身体只有两种<br>基本状态</div>
+      <div class="grid-sub">收缩 vs 扩张</div>
+    </div>
+    <div class="grid-item grid-warm">
+      <div class="grid-tag">原理科普</div>
+      <div class="grid-title">大脑可以被重塑<br>在任何年龄</div>
+    </div>
+    <div class="grid-item grid-deep">
+      <div class="grid-tag">更多内容</div>
+      <div class="grid-title">持续更新…</div>
+      <div class="grid-sub">FOLLOW</div>
+    </div>
+  </div>
+</div>
+
+<div class="notes">
+  <h2>V2 设计说明</h2>
+  <p><span class="note-label">头像：</span>换成考拉 IP 形象。有辨识度，配合视频里的考拉讲解建立品牌一致性。</p>
+  <p><span class="note-label">简介：</span>从"你不是不知道，你是改不了"（痛点钩子）改为"讲清楚人是怎么运作的"（科普定位）。不再暗示用户有问题，而是展示我们在做什么。</p>
+  <p><span class="note-label">高光：</span>从认知旅程（旧程序→改不了→训练→体验）改为科普主题分类（情绪链条→身体记忆→觉察练习→免费体验），用户一眼知道这个号在讲什么。</p>
+  <p><span class="note-label">内容网格：</span>三种视觉风格交替（白板 / 暖底 / 深色），每张都是科普主题，整体有节奏感但不再按"痛→因→转"的营销逻辑排列。</p>
+  <p><span class="note-label">调性：</span>科普、专业、温暖。初心是让人越来越好，不是告诉他们有病。</p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Love Ego AI — 小红书封面模板</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;700&family=Noto+Sans+SC:wght@400;500&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #f0ebe5;
+    font-family: 'Noto Sans SC', sans-serif;
+    padding: 40px;
+  }
+
+  h1 {
+    font-family: 'Noto Serif SC', serif;
+    color: #3D2E2A;
+    font-size: 28px;
+    margin-bottom: 8px;
+  }
+
+  .section-label {
+    color: #8B9E9B;
+    font-size: 14px;
+    margin-bottom: 32px;
+    letter-spacing: 2px;
+  }
+
+  .grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px;
+    margin-bottom: 64px;
+  }
+
+  /* 小红书封面 3:4 比例，缩放到屏幕可见 */
+  .cover {
+    width: 360px;
+    height: 480px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 48px 40px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+  }
+
+  .cover .tag {
+    position: absolute;
+    top: 24px;
+    left: 24px;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    opacity: 0.6;
+  }
+
+  .cover .main-title {
+    font-family: 'Noto Serif SC', serif;
+    font-weight: 700;
+    text-align: center;
+    line-height: 1.45;
+    margin-bottom: 20px;
+  }
+
+  .cover .subtitle {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-weight: 400;
+    text-align: center;
+    line-height: 1.7;
+    opacity: 0.75;
+  }
+
+  .cover .brand {
+    position: absolute;
+    bottom: 24px;
+    font-size: 12px;
+    letter-spacing: 4px;
+    opacity: 0.4;
+  }
+
+  .cover .deco {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.15;
+  }
+
+  /* ===== A. 痛点类 — 柔红系 ===== */
+  .cover-pain {
+    background: linear-gradient(160deg, #F5EDE4 0%, #EEDDD3 50%, #E8D1C5 100%);
+    color: #1A1412;
+  }
+  .cover-pain .tag { color: #C47D6D; }
+  .cover-pain .main-title { font-size: 32px; color: #1A1412; }
+  .cover-pain .subtitle { font-size: 16px; color: #3D2E2A; }
+  .cover-pain .brand { color: #C47D6D; }
+  .cover-pain .deco {
+    background: #C47D6D;
+  }
+  .cover-pain .deco-1 { width: 200px; height: 200px; top: -60px; right: -60px; }
+  .cover-pain .deco-2 { width: 120px; height: 120px; bottom: 60px; left: -40px; }
+
+  /* ===== B. 原因类 — 青灰系 ===== */
+  .cover-reason {
+    background: linear-gradient(160deg, #FAF7F3 0%, #F0EBE5 50%, #E5DED6 100%);
+    color: #1A1412;
+  }
+  .cover-reason .tag { color: #8B9E9B; }
+  .cover-reason .main-title { font-size: 30px; color: #1A1412; }
+  .cover-reason .subtitle { font-size: 16px; color: #3D2E2A; }
+  .cover-reason .brand { color: #8B9E9B; }
+  .cover-reason .deco { background: #8B9E9B; }
+  .cover-reason .deco-1 { width: 180px; height: 180px; top: -50px; left: -50px; }
+  .cover-reason .deco-2 { width: 100px; height: 100px; bottom: 80px; right: -30px; }
+
+  /* ===== C. 证据/真实感类 — 柔金系 ===== */
+  .cover-evidence {
+    background: linear-gradient(160deg, #F5EDE4 0%, #EDE3D6 50%, #E8DBCC 100%);
+    color: #1A1412;
+  }
+  .cover-evidence .tag { color: #C4A882; }
+  .cover-evidence .main-title { font-size: 30px; color: #1A1412; }
+  .cover-evidence .subtitle { font-size: 16px; color: #3D2E2A; }
+  .cover-evidence .brand { color: #C4A882; }
+  .cover-evidence .deco { background: #C4A882; }
+  .cover-evidence .deco-1 { width: 240px; height: 240px; bottom: -80px; right: -80px; }
+  .cover-evidence .deco-2 { width: 80px; height: 80px; top: 60px; left: -20px; }
+
+  /* ===== E. 练习感知类 — 暖紫系 ===== */
+  .cover-practice {
+    background: linear-gradient(160deg, #F0EAF0 0%, #E5DBE8 50%, #D8CDE0 100%);
+    color: #1A1412;
+  }
+  .cover-practice .tag { color: #9B7EA8; }
+  .cover-practice .main-title { font-size: 30px; color: #1A1412; }
+  .cover-practice .subtitle { font-size: 16px; color: #3D2E2A; }
+  .cover-practice .brand { color: #9B7EA8; }
+  .cover-practice .deco { background: #9B7EA8; }
+  .cover-practice .deco-1 { width: 200px; height: 200px; top: -70px; left: -70px; }
+  .cover-practice .deco-2 { width: 140px; height: 140px; bottom: 40px; right: -50px; }
+
+  /* ===== D. 转化类 — 琥珀/深色系 ===== */
+  .cover-convert {
+    background: linear-gradient(160deg, #3D2E2A 0%, #2A1F1B 50%, #1A1412 100%);
+    color: #FAF7F3;
+  }
+  .cover-convert .tag { color: #B8956A; }
+  .cover-convert .main-title { font-size: 30px; color: #FAF7F3; }
+  .cover-convert .subtitle { font-size: 16px; color: #E8D5CC; }
+  .cover-convert .brand { color: #B8956A; }
+  .cover-convert .deco { background: #B8956A; opacity: 0.1; }
+  .cover-convert .deco-1 { width: 300px; height: 300px; top: -100px; right: -100px; }
+  .cover-convert .deco-2 { width: 150px; height: 150px; bottom: -40px; left: -40px; }
+
+  .type-label {
+    font-size: 18px;
+    font-weight: 500;
+    color: #3D2E2A;
+    margin-top: 48px;
+    margin-bottom: 16px;
+    padding-left: 4px;
+  }
+
+  .type-label span {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+</style>
+</head>
+<body>
+
+<h1>Love Ego AI — 小红书封面模板</h1>
+<p class="section-label">BEING-ORIENTED VISUAL SYSTEM · V1</p>
+
+<!-- ==================== 痛点类 ==================== -->
+<p class="type-label"><span style="background:#C47D6D"></span>痛点类（5条）</p>
+<div class="grid">
+
+  <div class="cover cover-pain">
+    <div class="deco deco-1"></div>
+    <div class="deco deco-2"></div>
+    <div class="tag">PAIN POINT</div>
+    <div class="main-title">你不是不努力<br>你是被困住了</div>
+    <div class="subtitle">明明知道不该焦虑，还是焦虑<br>明明知道要行动，身体就是动不了</div>
+    <div class="brand">LOVE EGO AI</div>
+  </div>
+
+  <div class="cover cover-pain">
+    <div class="deco deco-1"></div>
+    <div class="deco deco-2"></div>
+    <div class="tag">PAIN POINT</div>
+    <div class="main-title">为什么你发誓要变<br>一被触发就打回原形</div>
+    <div class="subtitle">你的头脑想改变<br>你的身体在自动驾驶</div>
+    <div class="brand">LOVE EGO AI</div>
+  </div>
+
+  <div class="cover cover-pain">
+    <div class="deco deco-1"></div>
+    <div class="deco deco-2"></div>
+    <div class="tag">PAIN POINT</div>
+    <div class="main-title">你的人生一直在重复<br>不是因为运气差</div>
+    <div class="subtitle">变的只是外面<br>不变的是里面运行程序的方式</div>
+    <div class="brand">LOVE EGO AI</div>
+  </div>
+
+  <div class="cover cover-pain">
+    <div class="deco deco-1"></div>
+    <div class="deco deco-2"></div>
+    <div class="tag">PAIN POINT</div>
+    <div class="main-title">你以为你在做选择<br>其实是旧反应<br>在替你选</div>
+    <div class="subtitle">大部分时候，你没有在选择<br>你只是在被旧程序带着走</div>
+    <div class="brand">LOVE EGO AI</div>
+  </div>
+
+  <div class="cover cover-pain">
+    <div class="deco deco-1"></div>
+    <div class="deco deco-2"></div>
+    <div class="tag">PAIN POINT</div>
+    <div class="main-title">道理听了一百遍<br>人生还是没有变</div>
+    <div class="subtitle">你学到的东西在头脑里<br>卡住你的东西在身体里</div>
+    <div class="brand">LOVE EGO AI</div>
+  </div>
+
+</div>
+
+<!-- ==================== 原因类 ==================== -->
+<p class="type-label"><span style="background:#8B9E9B"></span>原因类（3条）</p>
+<div class="grid">
+
+  <div class="cover cover-reason">
+    <div class="deco deco-1"></div>
+    <div class="deco deco-2"></div>
+    <div class="tag">WHY</div>
+    <div class="main-title">旧程序在身体里<br>不在道理里</div>
+    <div class="subtitle">你现在的人生<br>很多时候不是你自由创造的<br>而是过去的程序自动跑出来的</div>
+    <div class="brand">LOVE EGO AI</div>
+  </div>
+
+  <div class="cover cover-reason">
+    <div class="deco deco-1"></div>
+    <div class="deco deco-2"></div>
+    <div class="tag">WHY</div>
+    <div class="main-title">你不是在创造人生<br>你是在防御人生</div>
+    <div class="subtitle">焦虑、紧张、压力<br>全是防御信号<br>防御占用了你所有的能量</div>
+    <div class="brand">LOVE EGO AI</div>
+  </div>
+
+  <div class="cover cover-reason">
+    <div class="deco deco-1"></div>
+    <div class="deco deco-2"></div>
+    <div class="tag">WHY</div>
+    <div class="main-title">你小时候学会的<br>反应方式<br>现在还在自动运行<br>你的人生</div>
+    <div class="subtitle">不是你学不会新方法<br>是旧方法已经写进了身体</div>
+    <div class="brand">LOVE EGO AI</div>
+  </div>
+
+</div>
+
+<!-- ==================== 转化类 ==================== -->
+<p class="type-label"><span style="background:#B8956A"></span>转化类（2条）</p>
+<div class="grid">
+
+  <div class="cover cover-convert">
+    <div class="deco deco-1"></div>
+    <div class="deco deco-2"></div>
+    <div class="tag">TRANSFORM</div>
+    <div class="main-title">你缺的不是道理<br>是一个在关键时刻<br>拉住你的系统</div>
+    <div class="subtitle">不是让你「想通」<br>而是让你的身体学会新的反应</div>
+    <div class="brand">LOVE EGO AI</div>
+  </div>
+
+  <div class="cover cover-convert">
+    <div class="deco deco-1"></div>
+    <div class="deco deco-2"></div>
+    <div class="tag">TRANSFORM</div>
+    <div class="main-title">当你第一次<br>在触发时停住了<br>那就是转折点</div>
+    <div class="subtitle">那个瞬间，不是「顿悟」<br>那是你的身体开始学会新的反应</div>
+    <div class="brand">LOVE EGO AI</div>
+  </div>
+
+</div>
+
+<!-- ==================== 第二批：深度原因类 ==================== -->
+<p class="type-label"><span style="background:#8B9E9B"></span>深度原因类（3条）— 第二批</p>
+<div class="grid">
+
+  <div class="cover cover-reason">
+    <div class="deco deco-1"></div>
+    <div class="deco deco-2"></div>
+    <div class="tag">DEEP WHY</div>
+    <div class="main-title">你的情绪<br>不是凭空来的<br>是有链条的</div>
+    <div class="subtitle">事件→判断→身体感受→情绪→反应<br>→性格→现实</div>
+    <div class="brand">LOVE EGO AI</div>
+  </div>
+
+  <div class="cover cover-reason">
+    <div class="deco deco-1"></div>
+    <div class="deco deco-2"></div>
+    <div class="tag">DEEP WHY</div>
+    <div class="main-title">光想通没用<br>因为改变发生在<br>更深的地方</div>
+    <div class="subtitle">头脑说放松，身体说紧绷<br>真正的改变必须让身体也学会</div>
+    <div class="brand">LOVE EGO AI</div>
+  </div>
+
+  <div class="cover cover-reason">
+    <div class="deco deco-1"></div>
+    <div class="deco deco-2"></div>
+    <div class="tag">DEEP WHY</div>
+    <div class="main-title">你累<br>是因为能量<br>都花在防御上了</div>
+    <div class="subtitle">什么都没做就已经很累了<br>不是懒，是身体一直在打仗</div>
+    <div class="brand">LOVE EGO AI</div>
+  </div>
+
+</div>
+
+<!-- ==================== 第二批：证据/真实感类 ==================== -->
+<p class="type-label"><span style="background:#C4A882"></span>证据/真实感类（3条）— 第二批</p>
+<div class="grid">
+
+  <div class="cover cover-evidence">
+    <div class="deco deco-1"></div>
+    <div class="deco deco-2"></div>
+    <div class="tag">EVIDENCE</div>
+    <div class="main-title">如果有一天<br>你在那个瞬间<br>停住了</div>
+    <div class="subtitle">那不是顿悟，不是奇迹<br>是你的身体开始学新的东西了</div>
+    <div class="brand">LOVE EGO AI</div>
+  </div>
+
+  <div class="cover cover-evidence">
+    <div class="deco deco-1"></div>
+    <div class="deco deco-2"></div>
+    <div class="tag">EVIDENCE</div>
+    <div class="main-title">从被带着走<br>到自己选<br>感觉是什么样的</div>
+    <div class="subtitle">那种感觉，很不一样<br>很安静，很稳</div>
+    <div class="brand">LOVE EGO AI</div>
+  </div>
+
+  <div class="cover cover-evidence">
+    <div class="deco deco-1"></div>
+    <div class="deco deco-2"></div>
+    <div class="tag">EVIDENCE</div>
+    <div class="main-title">当你的反应变了<br>身边的事<br>开始不一样</div>
+    <div class="subtitle">不是外面变了<br>是你输出的不一样了</div>
+    <div class="brand">LOVE EGO AI</div>
+  </div>
+
+</div>
+
+<!-- ==================== 第二批：练习感知类 ==================== -->
+<p class="type-label"><span style="background:#9B7EA8"></span>练习感知类（2条）— 第二批</p>
+<div class="grid">
+
+  <div class="cover cover-practice">
+    <div class="deco deco-1"></div>
+    <div class="deco deco-2"></div>
+    <div class="tag">PRACTICE</div>
+    <div class="main-title">回到身体<br>不是放空<br>是感受正在发生什么</div>
+    <div class="subtitle">故事在头脑里可以无限旋转<br>身体只在当下</div>
+    <div class="brand">LOVE EGO AI</div>
+  </div>
+
+  <div class="cover cover-practice">
+    <div class="deco deco-1"></div>
+    <div class="deco deco-2"></div>
+    <div class="tag">PRACTICE</div>
+    <div class="main-title">用声音<br>打断旧程序</div>
+    <div class="subtitle">每一次你出声了<br>身体就记录了一次：我可以停一下</div>
+    <div class="brand">LOVE EGO AI</div>
+  </div>
+
+</div>
+
+<!-- ==================== 第二批：强转化类 ==================== -->
+<p class="type-label"><span style="background:#B8956A"></span>强转化类（2条）— 第二批</p>
+<div class="grid">
+
+  <div class="cover cover-convert">
+    <div class="deco deco-1"></div>
+    <div class="deco deco-2"></div>
+    <div class="tag">CONVERT</div>
+    <div class="main-title">你不需要<br>再听一个道理了</div>
+    <div class="subtitle">这是训练，不是课程<br>是系统，不是道理</div>
+    <div class="brand">LOVE EGO AI</div>
+  </div>
+
+  <div class="cover cover-convert">
+    <div class="deco deco-1"></div>
+    <div class="deco deco-2"></div>
+    <div class="tag">CONVERT</div>
+    <div class="main-title">不是让你懂更多<br>是让你活出来</div>
+    <div class="subtitle">从懂到活出来<br>中间有一段路，叫训练</div>
+    <div class="brand">LOVE EGO AI</div>
+  </div>
+
+</div>
+
+</body>
+</html>

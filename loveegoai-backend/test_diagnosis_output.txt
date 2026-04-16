@@ -1,0 +1,104 @@
+[OK] Pinecone index exists: loveegoai-knowledge
+============================================================
+查询: 我觉得自己一无是处
+命名空间: changemind, top_k: 3
+============================================================
+[ERROR] Embedding生成失败: Connection error.
+Traceback (most recent call last):
+  File "C:\Users\Xiayu Zhang\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\httpx\_transports\default.py", line 101, in map_httpcore_exceptions
+    yield
+  File "C:\Users\Xiayu Zhang\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\httpx\_transports\default.py", line 394, in handle_async_request
+    resp = await self._pool.handle_async_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Xiayu Zhang\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\httpcore\_async\connection_pool.py", line 256, in handle_async_request
+    raise exc from None
+  File "C:\Users\Xiayu Zhang\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\httpcore\_async\connection_pool.py", line 236, in handle_async_request
+    response = await connection.handle_async_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Xiayu Zhang\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\httpcore\_async\http_proxy.py", line 316, in handle_async_request
+    stream = await stream.start_tls(**kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Xiayu Zhang\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\httpcore\_async\http11.py", line 376, in start_tls
+    return await self._stream.start_tls(ssl_context, server_hostname, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Xiayu Zhang\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\httpcore\_backends\anyio.py", line 67, in start_tls
+    with map_exceptions(exc_map):
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 158, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\Users\Xiayu Zhang\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\httpcore\_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore.ConnectError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Xiayu Zhang\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\openai\_base_client.py", line 1582, in _request
+    response = await self._client.send(
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Xiayu Zhang\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\httpx\_client.py", line 1629, in send
+    response = await self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Xiayu Zhang\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\httpx\_client.py", line 1657, in _send_handling_auth
+    response = await self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Xiayu Zhang\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\httpx\_client.py", line 1694, in _send_handling_redirects
+    response = await self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Xiayu Zhang\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\httpx\_client.py", line 1730, in _send_single_request
+    response = await transport.handle_async_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Xiayu Zhang\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\httpx\_transports\default.py", line 393, in handle_async_request
+    with map_httpcore_exceptions():
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 158, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\Users\Xiayu Zhang\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\httpx\_transports\default.py", line 118, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ConnectError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\loveegoai-backend\test_rag_diagnosis.py", line 83, in <module>
+    asyncio.run(diagnose())
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\asyncio\runners.py", line 190, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\asyncio\base_events.py", line 654, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "D:\loveegoai-backend\test_rag_diagnosis.py", line 24, in diagnose
+    docs = await vector_service.search(query=query, namespace=namespace, top_k=top_k)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\loveegoai-backend\app\services\vector_service.py", line 135, in search
+    query_embedding = await self.get_embedding(query)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\loveegoai-backend\app\services\vector_service.py", line 75, in get_embedding
+    response = await self.embed_client.embeddings.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Xiayu Zhang\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\openai\resources\embeddings.py", line 236, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "C:\Users\Xiayu Zhang\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\openai\_base_client.py", line 1849, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Xiayu Zhang\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\openai\_base_client.py", line 1543, in request
+    return await self._request(
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Xiayu Zhang\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\openai\_base_client.py", line 1606, in _request
+    return await self._retry_request(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Xiayu Zhang\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\openai\_base_client.py", line 1676, in _retry_request
+    return await self._request(
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Xiayu Zhang\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\openai\_base_client.py", line 1606, in _request
+    return await self._retry_request(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Xiayu Zhang\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\openai\_base_client.py", line 1676, in _retry_request
+    return await self._request(
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Xiayu Zhang\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\openai\_base_client.py", line 1616, in _request
+    raise APIConnectionError(request=request) from err
+openai.APIConnectionError: Connection error.

@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>LOVE EGO AI · 女性能量系统</title>
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #1C1917;
+      --text: #FAFAF9;
+      --gold: #C4A882;
+      --gold-light: #D4BC9A;
+      --gold-dim: rgba(196, 168, 130, 0.3);
+      --gold-glow: rgba(196, 168, 130, 0.10);
+      --text-muted: rgba(250, 250, 249, 0.45);
+      --text-dim: rgba(250, 250, 249, 0.72);
+      --card-bg: rgba(250, 250, 249, 0.04);
+      --card-border: rgba(196, 168, 130, 0.14);
+      --max-w: 430px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB",
+                   "Microsoft YaHei", "Noto Sans SC", sans-serif;
+      line-height: 1.9;
+      letter-spacing: 0.5px;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 28px;
+    }
+
+    /* ── scroll reveal ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .d1 { transition-delay: 0.08s; }
+    .d2 { transition-delay: 0.18s; }
+    .d3 { transition-delay: 0.28s; }
+    .d4 { transition-delay: 0.38s; }
+    .d5 { transition-delay: 0.48s; }
+
+    /* ── shared section ── */
+    section { padding: 84px 0; position: relative; }
+
+    .sec-label {
+      font-size: 11px;
+      letter-spacing: 2.8px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 18px;
+    }
+    .sec-title {
+      font-size: 25px;
+      font-weight: 500;
+      line-height: 1.5;
+      color: var(--text);
+      margin-bottom: 40px;
+    }
+
+    /* ══════════════════════════
+       HERO
+    ══════════════════════════ */
+    #hero {
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 72px 0 88px;
+      overflow: hidden;
+    }
+
+    /* breathing orb */
+    .orb-wrap {
+      position: relative;
+      width: 256px;
+      height: 256px;
+      margin: 0 auto 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .orb-ring {
+      position: absolute;
+      border-radius: 50%;
+      animation: breathe 5.2s ease-in-out infinite;
+    }
+    .orb-ring:nth-child(1) {
+      width: 100%; height: 100%;
+      border: 1px solid rgba(196,168,130,0.07);
+      animation-delay: 0s;
+    }
+    .orb-ring:nth-child(2) {
+      width: 74%; height: 74%;
+      border: 1px solid rgba(196,168,130,0.14);
+      animation-delay: 0.45s;
+    }
+    .orb-ring:nth-child(3) {
+      width: 50%; height: 50%;
+      border: 1px solid rgba(196,168,130,0.24);
+      animation-delay: 0.9s;
+    }
+    .orb-core {
+      width: 28%; height: 28%;
+      border-radius: 50%;
+      background: radial-gradient(circle,
+        rgba(196,168,130,0.60) 0%,
+        rgba(196,168,130,0.18) 55%,
+        transparent 100%);
+      box-shadow: 0 0 44px rgba(196,168,130,0.28);
+      animation: pulse-core 5.2s ease-in-out infinite;
+      position: relative;
+      z-index: 2;
+    }
+
+    @keyframes breathe {
+      0%,100% { transform: scale(1); opacity: 0.65; }
+      50%      { transform: scale(1.075); opacity: 1; }
+    }
+    @keyframes pulse-core {
+      0%,100% { transform: scale(1);    box-shadow: 0 0 32px rgba(196,168,130,0.22); }
+      50%      { transform: scale(1.14); box-shadow: 0 0 58px rgba(196,168,130,0.44); }
+    }
+
+    .hero-tag {
+      font-size: 11px;
+      letter-spacing: 3.2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 30px;
+      font-weight: 400;
+    }
+
+    .hero-h1 {
+      font-size: 37px;
+      font-weight: 300;
+      line-height: 1.3;
+      letter-spacing: 1px;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .hero-h1-sub {
+      font-size: 37px;
+      font-weight: 600;
+      line-height: 1.3;
+      letter-spacing: 1px;
+      color: var(--gold);
+      margin-bottom: 34px;
+    }
+
+    .hero-desc {
+      font-size: 15px;
+      color: var(--text-dim);
+      line-height: 2.0;
+      max-width: 310px;
+      margin: 0 auto 50px;
+    }
+
+    .btn-gold {
+      display: inline-block;
+      background: linear-gradient(135deg, #C4A882 0%, #AD9070 100%);
+      color: #1C1917;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      padding: 16px 38px;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.22s ease, box-shadow 0.22s ease;
+      box-shadow: 0 8px 32px rgba(196,168,130,0.30);
+    }
+    .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 14px 44px rgba(196,168,130,0.40); }
+
+    .scroll-hint {
+      margin-top: 68px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-muted);
+      font-size: 10px;
+      letter-spacing: 2.5px;
+    }
+    .scroll-line {
+      width: 1px;
+      height: 34px;
+      background: linear-gradient(to bottom, transparent, var(--gold-dim));
+      animation: line-fade 2.2s ease-in-out infinite;
+    }
+    @keyframes line-fade {
+      0%,100% { opacity: 0.35; transform: scaleY(1); }
+      50%      { opacity: 1;    transform: scaleY(1.15); }
+    }
+
+    /* ══════════════════════════
+       SITUATION
+    ══════════════════════════ */
+    #situation {
+      background: linear-gradient(180deg, rgba(196,168,130,0.025) 0%, transparent 100%);
+    }
+
+    .situation-list {
+      margin-bottom: 44px;
+    }
+    .sit-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 20px 0;
+      border-bottom: 1px solid rgba(250,250,249,0.06);
+    }
+    .sit-item:first-child { border-top: 1px solid rgba(250,250,249,0.06); }
+    .sit-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--gold);
+      margin-top: 11px;
+      flex-shrink: 0;
+      opacity: 0.65;
+    }
+    .sit-text {
+      font-size: 15px;
+      color: var(--text-dim);
+      line-height: 1.85;
+    }
+
+    .sit-footer {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.95;
+      border-left: 2px solid var(--gold-dim);
+      padding-left: 16px;
+    }
+
+    /* ══════════════════════════
+       PROMISE
+    ══════════════════════════ */
+    #promise { text-align: center; }
+
+    /* expand/contract visual */
+    .being-visual {
+      position: relative;
+      width: 170px;
+      height: 170px;
+      margin: 0 auto 56px;
+    }
+    .bv-outer {
+      position: absolute; inset: 0;
+      border-radius: 50%;
+      border: 1px solid rgba(196,168,130,0.20);
+      animation: bv-expand 4.5s ease-in-out infinite;
+    }
+    .bv-inner {
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 54px; height: 54px;
+      transform: translate(-50%,-50%);
+      border-radius: 50%;
+      background: rgba(196,168,130,0.09);
+      border: 1px solid rgba(196,168,130,0.30);
+      animation: bv-contract 4.5s ease-in-out infinite;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .bv-inner-text {
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      color: var(--gold);
+    }
+    .bv-label {
+      position: absolute;
+      top: 8px; left: 50%;
+      transform: translateX(-50%);
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    @keyframes bv-expand {
+      0%,100% { transform: scale(1); opacity: 0.6; }
+      50%      { transform: scale(1.07); opacity: 1; }
+    }
+    @keyframes bv-contract {
+      0%,100% { transform: translate(-50%,-50%) scale(1); }
+      50%      { transform: translate(-50%,-50%) scale(0.87); }
+    }
+
+    .promise-items { text-align: left; display: flex; flex-direction: column; gap: 22px; }
+    .p-item { display: flex; align-items: flex-start; gap: 14px; }
+    .p-star { color: var(--gold); font-size: 12px; margin-top: 4px; flex-shrink: 0; }
+    .p-text { font-size: 15px; color: var(--text-dim); line-height: 1.88; }
+
+    /* ══════════════════════════
+       HOW
+    ══════════════════════════ */
+    #how {
+      background: linear-gradient(180deg, transparent 0%,
+        rgba(196,168,130,0.022) 50%, transparent 100%);
+    }
+
+    .how-cards { display: flex; flex-direction: column; gap: 14px; margin-bottom: 36px; }
+    .how-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 26px 22px;
+      transition: border-color 0.28s, background 0.28s;
+    }
+    .how-card:hover {
+      border-color: rgba(196,168,130,0.28);
+      background: rgba(250,250,249,0.06);
+    }
+    .how-icon { font-size: 22px; margin-bottom: 12px; display: block; }
+    .how-title {
+      font-size: 15px; font-weight: 600;
+      color: var(--text); margin-bottom: 8px; letter-spacing: 0.4px;
+    }
+    .how-desc { font-size: 13px; color: var(--text-muted); line-height: 1.85; }
+
+    .how-note {
+      font-size: 13px; color: var(--gold);
+      text-align: center; letter-spacing: 1px;
+      padding: 18px 22px;
+      border: 1px solid var(--gold-dim);
+      border-radius: 12px;
+      background: var(--gold-glow);
+    }
+
+    /* ══════════════════════════
+       TESTIMONIALS
+    ══════════════════════════ */
+    #testimonials { text-align: center; }
+
+    .t-cards { display: flex; flex-direction: column; gap: 14px; margin-bottom: 48px; }
+    .t-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 26px 22px;
+      text-align: left;
+    }
+    .t-mark {
+      font-size: 34px; line-height: 1;
+      color: var(--gold-dim);
+      font-family: Georgia, serif;
+      margin-bottom: 10px;
+      display: block;
+    }
+    .t-text { font-size: 15px; color: var(--text-dim); line-height: 2.0; margin-bottom: 14px; }
+    .t-author { font-size: 11px; color: var(--text-muted); letter-spacing: 1.8px; }
+
+    .social-proof {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      padding: 18px 24px;
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      background: var(--card-bg);
+    }
+    .sp-num { font-size: 30px; font-weight: 300; color: var(--gold); letter-spacing: 1px; }
+    .sp-text { font-size: 13px; color: var(--text-muted); line-height: 1.65; text-align: left; }
+
+    /* ══════════════════════════
+       PRICING
+    ══════════════════════════ */
+    #pricing {
+      background: linear-gradient(180deg, rgba(196,168,130,0.025) 0%, transparent 100%);
+    }
+
+    .pricing-grid { display: flex; flex-direction: column; gap: 14px; margin-bottom: 26px; }
+
+    .pc {
+      border-radius: 20px;
+      padding: 30px 24px;
+      position: relative;
+    }
+    .pc.basic {
+      background: rgba(250,250,249,0.04);
+      border: 1px solid rgba(196,168,130,0.17);
+    }
+    .pc.featured {
+      background: linear-gradient(140deg,
+        rgba(196,168,130,0.11) 0%,
+        rgba(196,168,130,0.05) 100%);
+      border: 1px solid rgba(196,168,130,0.34);
+    }
+
+    .pc-badge {
+      position: absolute; top: 16px; right: 16px;
+      background: var(--gold);
+      color: #1C1917;
+      font-size: 10px; font-weight: 800;
+      letter-spacing: 1.5px;
+      padding: 3px 10px;
+      border-radius: 20px;
+    }
+
+    .pc-name {
+      font-size: 12px; letter-spacing: 2.2px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+    .pc-price {
+      font-size: 42px; font-weight: 300;
+      color: var(--gold); line-height: 1;
+      margin-bottom: 3px;
+    }
+    .pc-price sup {
+      font-size: 18px; vertical-align: super;
+      line-height: 0;
+    }
+    .pc-period { font-size: 13px; color: var(--text-muted); margin-bottom: 4px; }
+    .pc-note { font-size: 13px; color: var(--gold); font-weight: 500; margin-bottom: 22px; min-height: 20px; }
+
+    .pc-divider { height: 1px; background: var(--card-border); margin-bottom: 18px; }
+
+    .pc-features {
+      list-style: none;
+      display: flex; flex-direction: column; gap: 11px;
+      margin-bottom: 26px;
+    }
+    .pc-features li {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 14px; color: var(--text-dim); line-height: 1.7;
+    }
+    .pc-features li::before {
+      content: "·";
+      color: var(--gold); font-size: 20px; line-height: 1.3;
+      flex-shrink: 0;
+    }
+
+    .btn-outline {
+      display: block; width: 100%; text-align: center;
+      padding: 14px;
+      border-radius: 50px;
+      font-size: 15px; font-weight: 600; letter-spacing: 0.8px;
+      cursor: pointer; text-decoration: none; border: none;
+      background: transparent;
+      border: 1px solid rgba(196,168,130,0.38);
+      color: var(--gold);
+      transition: background 0.22s, border-color 0.22s;
+    }
+    .btn-outline:hover { background: var(--gold-glow); border-color: var(--gold); }
+
+    .btn-fill {
+      display: block; width: 100%; text-align: center;
+      padding: 15px;
+      border-radius: 50px;
+      font-size: 15px; font-weight: 700; letter-spacing: 0.8px;
+      cursor: pointer; text-decoration: none; border: none;
+      background: linear-gradient(135deg, #C4A882 0%, #AD9070 100%);
+      color: #1C1917;
+      box-shadow: 0 6px 24px rgba(196,168,130,0.26);
+      transition: transform 0.22s, box-shadow 0.22s;
+    }
+    .btn-fill:hover { transform: translateY(-2px); box-shadow: 0 12px 36px rgba(196,168,130,0.36); }
+
+    .pricing-footer {
+      text-align: center;
+      font-size: 13px; color: var(--text-muted); letter-spacing: 1px;
+    }
+    .pricing-footer .sep { margin: 0 8px; color: var(--gold-dim); }
+
+    /* ══════════════════════════
+       FINAL CTA
+    ══════════════════════════ */
+    #final-cta {
+      text-align: center;
+      padding: 108px 0 88px;
+    }
+
+    .final-title {
+      font-size: 27px; font-weight: 300;
+      line-height: 1.6; letter-spacing: 0.8px;
+      color: var(--text); margin-bottom: 50px;
+    }
+    .final-title em { font-style: normal; color: var(--gold); font-weight: 600; }
+
+    .btn-final {
+      display: block;
+      background: linear-gradient(135deg, #C4A882 0%, #AD9070 100%);
+      color: #1C1917;
+      font-size: 18px; font-weight: 800;
+      letter-spacing: 1.5px;
+      padding: 20px 52px;
+      border-radius: 50px;
+      border: none; cursor: pointer; text-decoration: none;
+      box-shadow: 0 10px 40px rgba(196,168,130,0.32);
+      transition: transform 0.25s, box-shadow 0.25s;
+      margin-bottom: 24px;
+    }
+    .btn-final:hover { transform: translateY(-3px); box-shadow: 0 18px 52px rgba(196,168,130,0.42); }
+
+    .final-sub { font-size: 13px; color: var(--text-muted); letter-spacing: 1.2px; margin-top: 20px; }
+
+    /* ── footer ── */
+    footer {
+      padding: 30px 0 48px;
+      border-top: 1px solid rgba(250,250,249,0.06);
+      text-align: center;
+    }
+    .footer-brand { font-size: 11px; letter-spacing: 3px; color: var(--text-muted); text-transform: uppercase; }
+
+    /* ── wide screen centering ── */
+    @media (min-width: 431px) {
+      body { display: flex; flex-direction: column; align-items: center; }
+      section, footer { width: 100%; }
+    }
+
+    @media (max-width: 374px) {
+      .hero-h1, .hero-h1-sub { font-size: 30px; }
+      .sec-title, .final-title { font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ════ HERO ════ -->
+  <section id="hero">
+    <div class="container">
+
+      <p class="hero-tag reveal">LOVE EGO AI · 女性能量系统</p>
+
+      <div class="orb-wrap reveal d1">
+        <div class="orb-ring"></div>
+        <div class="orb-ring"></div>
+        <div class="orb-ring"></div>
+        <div class="orb-core"></div>
+      </div>
+
+      <div class="reveal d2">
+        <h1 class="hero-h1">你的魅力不在技巧里。</h1>
+        <p class="hero-h1-sub">在身体里。</p>
+      </div>
+
+      <p class="hero-desc reveal d3">
+        从 DOING 回到 BEING——找回身体里本就有的阴性能量，极性吸引自然回来。
+      </p>
+
+      <div class="reveal d4">
+        <a href="#pricing" class="btn-gold">开始养成更有魅力的自己</a>
+      </div>
+
+      <div class="scroll-hint reveal d5">
+        <div class="scroll-line"></div>
+        <span>向下</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ════ SITUATION ════ -->
+  <section id="situation">
+    <div class="container">
+      <p class="sec-label reveal">你现在在哪里</p>
+      <h2 class="sec-title reveal d1">在关系里，很多女性处在这种状态</h2>
+
+      <div class="situation-list">
+        <div class="sit-item reveal d1">
+          <div class="sit-dot"></div>
+          <p class="sit-text">越用力越没吸引力，越想留住越留不住</p>
+        </div>
+        <div class="sit-item reveal d2">
+          <div class="sit-dot"></div>
+          <p class="sit-text">在关系里反复：讨好 → 失望 → 切断 → 又开始讨好</p>
+        </div>
+        <div class="sit-item reveal d3">
+          <div class="sit-dot"></div>
+          <p class="sit-text">知道不该发那条消息，但手比头脑快</p>
+        </div>
+        <div class="sit-item reveal d4">
+          <div class="sit-dot"></div>
+          <p class="sit-text">脑子一直在分析他在想什么，身体早就不在了</p>
+        </div>
+        <div class="sit-item reveal d5">
+          <div class="sit-dot"></div>
+          <p class="sit-text">感觉不到自己的重量——像漂着，不像站着</p>
+        </div>
+      </div>
+
+      <p class="sit-footer reveal">
+        这不是你的问题。这是 DOING 能量在接管你本有的 BEING 状态。
+      </p>
+    </div>
+  </section>
+
+  <!-- ════ PROMISE ════ -->
+  <section id="promise">
+    <div class="container">
+      <p class="sec-label reveal">结果承诺</p>
+      <h2 class="sec-title reveal d1">BEING 能量回来是什么感觉</h2>
+
+      <div class="being-visual reveal d2">
+        <div class="bv-outer"></div>
+        <div class="bv-inner"><span class="bv-inner-text">BEING</span></div>
+        <p class="bv-label">自然流动</p>
+      </div>
+
+      <div class="promise-items">
+        <div class="p-item reveal d1">
+          <span class="p-star">✦</span>
+          <p class="p-text">身体的阴性能量回来，不用"撩"不用"作"，只是在，就够了</p>
+        </div>
+        <div class="p-item reveal d2">
+          <span class="p-star">✦</span>
+          <p class="p-text">在关系里稳而柔——不抓，不躲，不讨好</p>
+        </div>
+        <div class="p-item reveal d3">
+          <span class="p-star">✦</span>
+          <p class="p-text">他变不变不重要了，因为你先回到了自己</p>
+        </div>
+        <div class="p-item reveal d4">
+          <span class="p-star">✦</span>
+          <p class="p-text">极性吸引恢复——你不是在追他，是他开始向你流动</p>
+        </div>
+        <div class="p-item reveal d5">
+          <span class="p-star">✦</span>
+          <p class="p-text">与生俱来的价值感——不是"被爱"才有价值，是存在本身就有</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ HOW ════ -->
+  <section id="how">
+    <div class="container">
+      <p class="sec-label reveal">产品怎么帮</p>
+      <h2 class="sec-title reveal d1">三件事在这里发生</h2>
+
+      <div class="how-cards">
+        <div class="how-card reveal d1">
+          <span class="how-icon">🌸</span>
+          <h3 class="how-title">识别旧程序</h3>
+          <p class="how-desc">看见在关系里自动启动的讨好 / 切断 / 控制链条，从无意识反应走向清醒觉知。</p>
+        </div>
+        <div class="how-card reveal d2">
+          <span class="how-icon">💫</span>
+          <h3 class="how-title">回到身体</h3>
+          <p class="how-desc">用身体热区、呼吸和 BEING 感知训练，找回阴性能量——不是概念，是真实的身体感受。</p>
+        </div>
+        <div class="how-card reveal d3">
+          <span class="how-icon">🌊</span>
+          <h3 class="how-title">关系模式图谱</h3>
+          <p class="how-desc">看见你在关系里重复的模式，从被动循环变为有意识选择。</p>
+        </div>
+      </div>
+
+      <div class="how-note reveal d4">
+        每天 5–15 分钟 &nbsp;·&nbsp; 不是情感课，是能量训练
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ TESTIMONIALS ════ -->
+  <section id="testimonials">
+    <div class="container">
+      <p class="sec-label reveal">用户证据</p>
+      <h2 class="sec-title reveal d1">她们在说什么</h2>
+
+      <div class="t-cards">
+        <div class="t-card reveal d1">
+          <span class="t-mark">"</span>
+          <p class="t-text">那条消息我没有马上回。她没有慌。这是第一次。</p>
+          <p class="t-author">— 某用户</p>
+        </div>
+        <div class="t-card reveal d2">
+          <span class="t-mark">"</span>
+          <p class="t-text">他变了？没有，是我先回到身体了。他只是感受到了。</p>
+          <p class="t-author">— 某用户</p>
+        </div>
+        <div class="t-card reveal d3">
+          <span class="t-mark">"</span>
+          <p class="t-text">以前以为魅力是外在的。现在才知道，原来是从里面流出来的。</p>
+          <p class="t-author">— 某用户</p>
+        </div>
+      </div>
+
+      <div class="social-proof reveal d4">
+        <span class="sp-num">2,000+</span>
+        <span class="sp-text">女性<br>开始找回 BEING 能量</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ PRICING ════ -->
+  <section id="pricing">
+    <div class="container">
+      <p class="sec-label reveal">选择你的训练周期</p>
+      <h2 class="sec-title reveal d1">选择你的能量训练周期</h2>
+
+      <div class="pricing-grid">
+
+        <!-- basic -->
+        <div class="pc basic reveal d1">
+          <p class="pc-name">月度训练</p>
+          <p class="pc-price"><sup>¥</sup>199</p>
+          <p class="pc-period">/ 月</p>
+          <p class="pc-note">&nbsp;</p>
+          <div class="pc-divider"></div>
+          <ul class="pc-features">
+            <li>全部训练章节</li>
+            <li>关系模式图谱</li>
+            <li>AI 能量陪练（无限次）</li>
+            <li>被忽视 / 讨好 / 控制的即时翻译</li>
+          </ul>
+          <a href="#" class="btn-outline">开始月度训练</a>
+        </div>
+
+        <!-- featured -->
+        <div class="pc featured reveal d2">
+          <span class="pc-badge">最受欢迎</span>
+          <p class="pc-name">年度训练</p>
+          <p class="pc-price"><sup>¥</sup>1,299</p>
+          <p class="pc-period">/ 年</p>
+          <p class="pc-note">相当于 ¥108 / 月</p>
+          <div class="pc-divider"></div>
+          <ul class="pc-features">
+            <li>以上全部功能</li>
+            <li>女性能量深度训练</li>
+            <li>边界与魅力专项练习</li>
+            <li>7 天免费体验</li>
+          </ul>
+          <a href="#" class="btn-fill">开始年度训练</a>
+        </div>
+
+      </div>
+
+      <p class="pricing-footer reveal">随时取消 <span class="sep">·</span> 7 天退款保证</p>
+    </div>
+  </section>
+
+  <!-- ════ FINAL CTA ════ -->
+  <section id="final-cta">
+    <div class="container">
+      <h2 class="final-title reveal">
+        那个更<em>稳</em>、更<em>柔</em>、<br>更有<em>魅力</em>的自己，<br>正在等你回来。
+      </h2>
+      <div class="reveal d2">
+        <a href="#pricing" class="btn-final">现在开始</a>
+        <p class="final-sub">回到身体，只需要一个决定。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ FOOTER ════ -->
+  <footer>
+    <div class="container">
+      <p class="footer-brand">LOVE EGO AI · 女性能量系统</p>
+    </div>
+  </footer>
+
+  <script>
+    // Scroll reveal via IntersectionObserver
+    const revealEls = document.querySelectorAll('.reveal');
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.11, rootMargin: '0px 0px -36px 0px' });
+
+    revealEls.forEach(el => io.observe(el));
+
+    // Hero elements visible immediately
+    document.querySelectorAll('#hero .reveal').forEach((el, i) => {
+      setTimeout(() => el.classList.add('visible'), 80 + i * 90);
+    });
+
+    // Smooth scroll anchors
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

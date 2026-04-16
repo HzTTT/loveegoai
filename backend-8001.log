@@ -1,0 +1,20 @@
+[OK] Pinecone index exists: loveegoai-knowledge
+[32m2026-04-03 13:12:06[0m | [1mINFO    [0m | [36mapp.main[0m - [1mStarting Love Ego AI Backend v1.0.0[0m
+>> Connecting to MongoDB: mongodb+srv://xiaonan0418_db_user:tTdw5dLSZHozXJWt@cluster0.8t1lvqs.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+>> MongoDB connected: loveegoai
+[32m2026-04-03 13:12:08[0m | [1mINFO    [0m | [36mapp.main[0m - [1mMongoDB connected[0m
+[32m2026-04-03 13:12:08[0m | [1mINFO    [0m | [36mapp.main[0m - [1mScheduler started: daily letter at 00:00[0m
+[32m2026-04-03 13:12:08[0m | [1mINFO    [0m | [36mapp.main[0m - [1mApplication started successfully![0m
+[32m2026-04-03 13:12:28[0m | [1mINFO    [0m | [36mapp.api.meditation[0m - [1mGenerating meditation: duration=1min[0m
+[32m2026-04-03 13:12:28[0m | [1mINFO    [0m | [36mapp.services.rag_service[0m - [1m[Meditation] Search query: 'I want to relax' -> 'I want to relax'[0m
+[32m2026-04-03 13:12:28[0m | [1mINFO    [0m | [36mapp.api.chat[0m - [1mChat request: mode=changemind, history_len=0[0m
+[32m2026-04-03 13:12:28[0m | [1mINFO    [0m | [36mapp.services.rag_service[0m - [1m[RAG] Skip retrieval for low-context message: 'hello'[0m
+[32m2026-04-03 13:12:28[0m | [1mINFO    [0m | [36mapp.api.letters[0m - [1mLetter cache hit: 2026-04-03, language=en[0m
+INFO:     127.0.0.1:62277 - "GET /api/v1/letters/today?language=en HTTP/1.1" 200 OK
+[32m2026-04-03 13:12:32[0m | [1mINFO    [0m | [36mapp.services.rag_service[0m - [1m[Meditation] Found 3 docs, scores=[0.399, 0.348, 0.325][0m
+INFO:     127.0.0.1:62280 - "POST /api/v1/chat/message HTTP/1.1" 200 OK
+[32m2026-04-03 13:12:39[0m | [1mINFO    [0m | [36mapp.api.meditation[0m - [1mScript generated: 1019 chars, language=en[0m
+[OK] MiniMax TTS generated: voice_483062f0.mp3 (voice=female-shaonv)
+[OK] BGM mixed: meditation_Meditation_1min_4e5f886a.mp3
+[32m2026-04-03 13:12:43[0m | [1mINFO    [0m | [36mapp.api.meditation[0m - [1mAudio generated: /static/audios/meditation_Meditation_1min_4e5f886a.mp3[0m
+INFO:     127.0.0.1:62278 - "POST /api/v1/meditation/generate HTTP/1.1" 200 OK
