@@ -22,6 +22,7 @@ export default defineConfig({
 
   // 开发环境 API 代理：/api/* → 后端 8000 端口
   server: {
+    host: true,
     proxy: {
       '/api': {
         target: 'http://localhost:8000',
