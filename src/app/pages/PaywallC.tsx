@@ -123,17 +123,14 @@ export default function PaywallC() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.6, ease: 'easeOut' }}
           >
-            <Label>什么是内在工程</Label>
+            <Label>Inner Engineering</Label>
             <h1 style={{
-              fontSize: 'clamp(28px, 5vw, 48px)', fontWeight: 300, letterSpacing: '0.04em',
-              lineHeight: 1.55, margin: '0 0 36px', color: C.text,
+              fontSize: 'clamp(36px, 6vw, 56px)', fontWeight: 300, letterSpacing: '0.06em',
+              lineHeight: 1.45, margin: '0 0 48px', color: C.text,
             }}>
-              一门源自创造<br />
-              <em style={{ color: C.gold, fontStyle: 'italic' }}>内在幸福</em>的技术
+              什么是<br />
+              <em style={{ color: C.gold, fontStyle: 'italic' }}>内在工程</em>
             </h1>
-            <p style={{ fontSize: 14, color: C.textMid, fontFamily: FONT_SANS, letterSpacing: 0.5, lineHeight: 2 }}>
-              改变你对生活、工作<br />以及所生活的世界的认知与感受
-            </p>
           </motion.div>
 
           <div style={{ display: 'flex', justifyContent: 'center', margin: '48px 0' }}>
@@ -163,7 +160,7 @@ export default function PaywallC() {
       <section style={{ background: C.bgAlt, padding: '72px 0' }}>
         <div style={{ ...MODULE_PAD }}>
           {[
-            '内在工程是一门个人成长的综合课程，会改变你对生活、工作、以及所生活的世界的认知与感受。',
+            '内在工程是一门源自创造内在幸福的技术。它是一门个人成长的综合课程，会改变你对生活、工作、以及所生活的世界的认知与感受。',
             '让你通过强大的自我转化过程、探索自己最大的潜能，解决生活中的关键问题，获取古代智慧的秘密。内在工程为自我探索和转化提供了一个独特的机会，带领我们走向充实和快乐的生活。',
             '这些工具具备改变你生活、行为和体验生命的方式的潜力。你可以在自己的空间里，按你自己的节奏与我们一起体验内在工程课程。',
           ].map((p, i) => (
@@ -306,7 +303,7 @@ export default function PaywallC() {
             { title: '唯一的束缚', quote: '释放你的欲望，不要把它限制在有限之中。在欲望的无限里面，是你的终极本性。' },
             { title: '活着并全然地活', quote: '只有当"你是谁"不断地扩展，生命才允许你全然地活。全然地活或者活到极致，是你这个生命所能知晓的唯一成就。' },
             { title: '你不是你所想的', quote: '在绝对的自愿中度过你生命的每一刻，你会创造出天堂。你在不情愿中所做的一切必然是地狱。' },
-            { title: '头脑·奇迹', quote: '大多数人都在试图控制自己的头脑。我想让你解放你的头脑，让它达到最高的可能性。' },
+            { title: '头脑-奇迹', quote: '大多数人都在试图控制自己的头脑。我想让你解放你的头脑，让它达到最高的可能性。' },
             { title: '创造的声音', quote: '文字和意义属于人类头脑的领域，声音则是创造必不可少的一部分。' },
             { title: '创造你想要的', quote: '你的健康和你的疾病，你的快乐和你的痛苦，都来自于内在。如果你想要幸福，是时候转向内在了。' },
           ].map((q, i) => (
@@ -365,31 +362,11 @@ export default function PaywallC() {
                 $1,200
               </div>
               <div style={{
-                fontSize: 10, color: C.textDim,
-                letterSpacing: 3, marginBottom: 44,
+                fontSize: 11, color: C.textDim,
+                letterSpacing: 3, marginBottom: 8,
                 fontFamily: FONT_SANS,
               }}>
-                USD · 一次付款 · 永久使用
-              </div>
-
-              <div style={{ height: 1, background: C.border, marginBottom: 32 }} />
-
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-                {[
-                  '内在工程完整课程',
-                  '古代智慧与现代科学的融合',
-                  'AI 内在工程陪练（私密对话）',
-                  '呼吸练习 · 冥想引导音频',
-                ].map((item, i) => (
-                  <div key={i} style={{
-                    display: 'flex', gap: 14, alignItems: 'center',
-                    fontSize: 13, color: C.text, lineHeight: 1.6,
-                    fontFamily: FONT_SANS,
-                  }}>
-                    <span style={{ color: C.goldSoft, flexShrink: 0 }}>—</span>
-                    {item}
-                  </div>
-                ))}
+                USD
               </div>
             </div>
 
@@ -407,10 +384,6 @@ export default function PaywallC() {
             >
               现在就可以开始
             </motion.a>
-
-            <p style={{ fontSize: 10, color: C.textDim, marginTop: 20, letterSpacing: 2, fontFamily: FONT_SANS }}>
-              你可以在自己的空间里，按你自己的节奏开始
-            </p>
           </motion.div>
         </div>
       </section>
