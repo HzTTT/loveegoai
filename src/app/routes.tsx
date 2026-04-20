@@ -22,7 +22,7 @@ import TrainingStory from "./pages/TrainingStory";
 import PaywallA from "./pages/PaywallA";
 import PaywallB from "./pages/PaywallB";
 import PaywallC from "./pages/PaywallC";
-import Demo from "./pages/Demo";
+import IntegratedDemo from "./pages/IntegratedDemo";
 
 export const router = createBrowserRouter([
   { path: "/koala-video", Component: KoalaVideoDemo },
@@ -32,7 +32,7 @@ export const router = createBrowserRouter([
   { path: "/paywall-a", Component: PaywallA },
   { path: "/paywall-b", Component: PaywallB },
   { path: "/paywall-c", Component: PaywallC },
-  { path: "/demo", Component: Demo },
+  { path: "/demo", Component: IntegratedDemo },
   {
     path: "/",
     Component: Layout,
